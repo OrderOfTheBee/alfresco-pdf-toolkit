@@ -28,7 +28,7 @@ http://www.youtube.com/watch?v=cJYpFgx037E
 
 Functionality in development:
 
-Extract Pages
-Delete Pages
-Transform to PDF/A
-Minimally requires Alfresco 3.4
+* Extract Pages
+* Delete Pages
+* Transform to PDF/A
+* Minimally requires Alfresco 3.4
