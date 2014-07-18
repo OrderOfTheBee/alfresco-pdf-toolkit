@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+    
+   <bean id="transformer.iText.TextToPdf"
+         class="org.alfresco.extension.pdftoolkit.transformer.ITextTransformerTextToPDF"
+         parent="baseContentTransformer" >
+      <property name="explicitTransformations">
+         <list>
+            <bean class="org.alfresco.repo.content.transform.ExplictTransformationDetails" >
+                <constructor-arg><value>text/plain</value></constructor-arg>
+                <constructor-arg><value>application/pdf</value></constructor-arg>
+            </bean>
+            <bean class="org.alfresco.repo.content.transform.ExplictTransformationDetails" >
+                <constructor-arg><value>text/csv</value></constructor-arg>
+                <constructor-arg><value>application/pdf</value></constructor-arg>
+            </bean>
+            <bean class="org.alfresco.repo.content.transform.ExplictTransformationDetails" >
+                <constructor-arg><value>text/xml</value></constructor-arg>
+                <constructor-arg><value>application/pdf</value></constructor-arg>
+            </bean>
+         </list>
+      </property>
+   </bean>
+ 
+    <bean id="transformer.iText.TiffToPdf"
+         class="org.alfresco.extension.pdftoolkit.transformer.ITextTransformerTIFFToPDF"
+         parent="baseContentTransformer" >
+      <property name="explicitTransformations">
+         <list>
+            <bean class="org.alfresco.repo.content.transform.ExplictTransformationDetails" >
+                <constructor-arg><value>image/tiff</value></constructor-arg>
+                <constructor-arg><value>application/pdf</value></constructor-arg>
+            </bean>
+         </list>
+      </property>
+   </bean>
+  
+     <!-- Page count web script -->
+    <bean id="webscript.org.alfresco.extension.pdftoolkit.pagecount.get" class="org.alfresco.extension.pdftoolkit.webscripts.GetPageCount" parent="webscript">
+		<property name="ServiceRegistry" ref="ServiceRegistry"/>
+	</bean>
+</beans>

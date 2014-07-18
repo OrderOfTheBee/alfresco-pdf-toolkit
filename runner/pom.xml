@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>runner</artifactId>
+    <name>Alfresco, Share and Solr Tomcat Runner</name>
+    <packaging>pom</packaging>
+    <description>Alfresco, Share and Solr Tomcat Runner</description>
+
+    <parent>
+        <groupId>org.alfresco.extension</groupId>
+        <artifactId>pdf-toolkit</artifactId>
+        <version>1.2-SNAPSHOT</version>
+    </parent>
+
+    <profiles>
+        <profile>
+            <id>run</id>
+            <properties>
+                <solr.project.dir>${project.basedir}/../solr</solr.project.dir>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.tomcat.maven</groupId>
+                        <artifactId>tomcat7-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>run-wars</id>
+                                <goals>
+                                    <goal>run-war-only</goal>
+                                </goals>
+                                <phase>integration-test</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <!-- Runs Solr as the "fake" main webapp. This is useful due to the currently poor OOTB zip packaging of Alfresco Solr -->
+                            <warDirectory>${solr.project.dir}/target/solr-overlay</warDirectory>
+                            <path>/solr</path>
+                            <systemProperties>
+                                <solr.solr.home>${solr.project.dir}/solr_home</solr.solr.home>
+                            </systemProperties>
+                            <!-- Configures the custom Alfresco and Share to run as embedded webapps -->
+                            <webapps>
+                                <webapp>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>alfresco</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>war</type>
+                                    <asWebapp>true</asWebapp>
+                                    <contextPath>alfresco</contextPath>
+                                </webapp>
+                                <webapp>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>share</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>war</type>
+                                    <asWebapp>true</asWebapp>
+                                    <contextPath>share</contextPath>
+                                </webapp>
+                            </webapps> 
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

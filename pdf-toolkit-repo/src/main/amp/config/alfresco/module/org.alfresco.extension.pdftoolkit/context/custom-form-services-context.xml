@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+   	<!-- define an action filter registry -->
+   	<bean id="pdfActionFilterRegistry" class="org.alfresco.repo.forms.processor.FilterRegistry" />
+   
+  	<!-- 
+  	override the actionFormProcessor bean and add the actionFilterRegistry
+  	doing this because the ootb action form processor does not have a filter registry
+  	and I don't want to modify any core objects if I can avoid it.
+  	 -->
+   	<bean id="pdfActionFormProcessor" class="org.alfresco.repo.forms.processor.action.ActionFormProcessor" init-method="register">
+      	<property name="processorRegistry" ref="formProcessorRegistry" />
+    	<property name="filterRegistry" ref="pdfActionFilterRegistry" />
+      	<property name="matchPattern">
+        	<value>pdf-action</value>
+      	</property>
+      	<property name="actionService" ref="ActionService" />
+      	<property name="dictionaryService" ref="DictionaryService" />
+      	<property name="namespaceService" ref="NamespaceService" />
+   </bean>
+   
+   	<!-- add the form filter -->
+   	<bean id="pdftoolkit.actionFormFilter" class="org.alfresco.extension.pdftoolkit.form.PDFActionFormFilter" parent="baseFormFilter">
+   		<property name="filterRegistry" ref="pdfActionFilterRegistry" />
+   		<property name="serviceRegistry" ref="ServiceRegistry"/>
+   	</bean>
+</beans>

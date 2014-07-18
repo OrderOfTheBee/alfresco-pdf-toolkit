@@ -1,0 +1,462 @@
+<alfresco-config>
+
+	<!-- Configure visibility of pdft:signed aspect in Share -->
+	<config replace="false" evaluator="string-compare" condition="DocumentLibrary">
+		<aspects>
+		    <visible>
+				<aspect name="pdft:signed" />
+				<aspect name="pdft:encrypted" />
+			</visible>
+			<addable>
+			</addable>
+			<removeable>
+			</removeable>
+		</aspects>
+	</config>
+	
+	<!--  Configure forms for pdft:signed aspect in Share -->
+	<config evaluator="aspect" condition="pdft:signed"> 
+		<forms>
+       		<form>
+	            <field-visibility>
+					<show id="pdft:signaturedate" />
+					<show id="pdft:reason" /> 
+					<show id="pdft:location" /> 
+					<show id="pdft:signedby" />
+				</field-visibility> 
+				<appearance>
+					<field id="pdft:signaturedate" label-id="prop.pdft_signaturedate" />
+					<field id="pdft:reason" label-id="prop.pdft_reason" /> 
+					<field id="pdft:location" label-id="prop.pdft_location" />
+					<field id="pdft:signedby" label-id="prop.pdft_signedby" />
+				</appearance>
+			</form>
+		</forms>
+	</config>
+
+	<!--  Configure forms for pdft:encrpyted aspect in Share -->
+	<config evaluator="aspect" condition="pdft:encrypted"> 
+		<forms>
+       		<form>
+	            <field-visibility>
+					<show id="pdft:encryptiondate" />
+					<show id="pdft:encryptedby" /> 
+				</field-visibility> 
+				<appearance>
+					<field id="pdft:encryptiondate" label-id="prop.pdft_encryptiondate" />
+					<field id="pdft:encryptedby" label-id="prop.pdft_encryptedby" /> 
+				</appearance>
+			</form>
+		</forms>
+	</config>
+	
+	<!-- Configure advanced search for pdft:signed aspect in Share -->
+	<config evaluator="string-compare" condition="AdvancedSearch">
+	    <advanced-search>
+	        <forms>
+	            <form labelId="pdftoolkit.aspect.signed.search.type" 
+	            	descriptionId="pdftoolkit.aspect.signed.search.description" id="signedpdfsearch">cm:content</form>
+	            <form labelId="pdftoolkit.aspect.encrypted.search.type" 
+	            	descriptionId="pdftoolkit.aspect.encrypted.search.description" id="encryptedpdfsearch">cm:content</form>
+	        </forms>
+	    </advanced-search>
+	</config>
+	
+	<!-- Advanced search form for items with pdft:signed aspect -->
+	<config evaluator="model-type" condition="cm:content">
+    	<forms>
+    		<!-- search for signed PDF documents -->
+    		<form id="signedpdfsearch">
+				<field-visibility>
+					<show id="cm:name" force="true" />
+					<show id="cm:title" force="true" /> 
+					<show id="cm:description" force="true" /> 
+					<show id="cm:modified" force="true" />
+					<show id="cm:modifier" force="true" />
+					<show id="pdft:signaturedate" force="true" />
+					<show id="pdft:reason" force="true" />
+					<show id="pdft:location" force="true" />
+					<show id="pdft:signer" force="true" />
+	            </field-visibility>
+	            
+	            <appearance>
+	                <field id="cm:modifier">
+	                    <control>
+	                        <control-param name="forceEditable">true</control-param>
+	                    </control>
+	                </field>
+	                <field id="cm:modified">
+	                    <control template="/org/alfresco/components/form/controls/daterange.ftl" />
+					</field>
+	                <field id="pdft:signaturedate" label-id="prop.pdft_signaturedate">
+	                    <control template="/org/alfresco/components/form/controls/daterange.ftl" />
+	                </field>
+	                <field id="pdft:reason" label-id="prop.pdft_reason">
+	                    <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+	                </field>
+	                <field id="pdft:location" label-id="prop.pdft_location">
+	                    <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+	                </field>
+	                <field id="pdft:signer" label-id="prop.pdft_signer">
+	                    <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+	                </field>
+				</appearance>
+	        </form>
+	        
+	        <!-- search for for encrypted PDF documents -->
+    		<form id="encryptedpdfsearch">
+				<field-visibility>
+					<show id="cm:name" force="true" />
+					<show id="cm:title" force="true" /> 
+					<show id="cm:description" force="true" /> 
+					<show id="cm:modified" force="true" />
+					<show id="cm:modifier" force="true" />
+					<show id="pdft:encryptiondate" force="true" />
+					<show id="pdft:encryptedby" force="true" />
+	            </field-visibility>
+	            
+	            <appearance>
+	                <field id="cm:modifier">
+	                    <control>
+	                        <control-param name="forceEditable">true</control-param>
+	                    </control>
+	                </field>
+	                <field id="cm:modified">
+	                    <control template="/org/alfresco/components/form/controls/daterange.ftl" />
+					</field>
+	                <field id="pdft:encryptiondate" label-id="prop.pdft_encryptiondate">
+	                    <control template="/org/alfresco/components/form/controls/daterange.ftl" />
+	                </field>
+	                <field id="pdft:encryptedby" label-id="prop.pdft_encryptedby">
+	                    <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+	                </field>
+				</appearance>
+	        </form>
+    	</forms>
+    </config>
+    
+    <!-- Actions are now enabled / disabled via Share modules -->
+    <!--
+	<config evaluator="string-compare" condition="DocLibActions">
+		<actions>
+			<action id="pdf-append"
+				type="javascript"
+				label="actions.pdftoolkit.mergePDF">
+				
+        		<param name="function">onActionFormDialog</param>
+        		<param name="itemKind">pdf-action</param>
+        		<param name="itemId">pdf-append</param>
+        		<param name="mode">create</param>
+        		<param name="destination">{node.nodeRef}</param>
+        		<param name="successMessage">message.pdf-append.success</param>
+        		<param name="failureMessage">message.pdf-append.failure</param>
+        		
+        		<evaluator>evaluator.pdftoolkit.doclib.action.pdfToolkitMimetype</evaluator>
+			</action>
+			
+			<action id="pdf-encryption"
+				type="javascript"
+				label="actions.pdftoolkit.encryptPDF">
+				
+				<param name="function">onActionFormDialog</param>
+        		<param name="itemKind">pdf-action</param>
+        		<param name="itemId">pdf-encryption</param>
+        		<param name="mode">create</param>
+        		<param name="destination">{node.nodeRef}</param>
+        		<param name="successMessage">message.pdf-encryption.success</param>
+        		<param name="failureMessage">message.pdf-encryption.failure</param>
+        		
+        		<evaluator>evaluator.pdftoolkit.doclib.action.pdfToolkitMimetype</evaluator>
+			</action>
+			
+			<action id="pdf-insert-at-page"
+				type="javascript"
+				label="actions.pdftoolkit.insertPDF">
+				
+				<param name="function">onActionFormDialog</param>
+        		<param name="itemKind">pdf-action</param>
+        		<param name="itemId">pdf-insert-at-page</param>
+        		<param name="mode">create</param>
+        		<param name="destination">{node.nodeRef}</param>
+        		<param name="successMessage">message.pdf-insert-at-page.success</param>
+        		<param name="failureMessage">message.pdf-insert-at-page.failure</param>
+        		
+        		<evaluator>evaluator.pdftoolkit.doclib.action.pdfToolkitMimetype</evaluator>
+			</action>
+			
+			<action id="pdf-split"
+				type="javascript"
+				label="actions.pdftoolkit.splitPDF">
+				
+        		<param name="function">onActionFormDialog</param>
+        		<param name="itemKind">pdf-action</param>
+        		<param name="itemId">pdf-split</param>
+        		<param name="mode">create</param>
+        		<param name="destination">{node.nodeRef}</param>
+        		<param name="successMessage">message.pdf-split.success</param>
+        		<param name="failureMessage">message.pdf-split.failure</param>
+        		
+        		<evaluator>evaluator.pdftoolkit.doclib.action.pdfToolkitMimetype</evaluator>
+			</action>
+			
+			<action id="pdf-split-at-page"
+				type="javascript"
+				label="actions.pdftoolkit.splitPDFatpage">
+				
+        		<param name="function">onActionFormDialog</param>
+        		<param name="itemKind">pdf-action</param>
+        		<param name="itemId">pdf-split-at-page</param>
+        		<param name="mode">create</param>
+        		<param name="destination">{node.nodeRef}</param>
+        		<param name="successMessage">message.pdf-split-at-page.success</param>
+        		<param name="failureMessage">message.pdf-split-at-page.failure</param>
+        		
+        		<evaluator>evaluator.pdftoolkit.doclib.action.pdfToolkitMimetype</evaluator>
+			</action>
+			
+			<action id="pdf-signature"
+				type="javascript"
+				label="actions.pdftoolkit.signPDF">
+				
+				<param name="function">onActionFormDialog</param>
+        		<param name="itemKind">pdf-action</param>
+        		<param name="itemId">pdf-signature</param>
+        		<param name="mode">create</param>
+        		<param name="destination">{node.nodeRef}</param>
+        		<param name="successMessage">message.pdf-signature.success</param>
+        		<param name="failureMessage">message.pdf-signature.failure</param>
+        		
+        		<evaluator>evaluator.pdftoolkit.doclib.action.pdfToolkitMimetype</evaluator>
+			</action>
+			
+			<action id="pdf-watermark"
+				type="javascript"
+				label="actions.pdftoolkit.watermarkPDF">
+				
+        		<param name="function">onActionFormDialog</param>
+        		<param name="itemKind">pdf-action</param>
+        		<param name="itemId">pdf-watermark</param>
+        		<param name="mode">create</param>
+        		<param name="destination">{node.nodeRef}</param>
+        		<param name="successMessage">message.pdf-watermark.success</param>
+        		<param name="failureMessage">message.pdf-watermark.failure</param>
+        		
+        		<evaluator>evaluator.pdftoolkit.doclib.action.pdfToolkitMimetype</evaluator>
+			</action>
+
+			<action id="pdf-delete-page"
+				type="javascript"
+				label="actions.pdftoolkit.deletePDFpages">
+				
+        		<param name="function">onActionFormDialog</param>
+        		<param name="itemKind">pdf-action</param>
+        		<param name="itemId">pdf-delete-page</param>
+        		<param name="mode">create</param>
+        		<param name="destination">{node.nodeRef}</param>
+        		<param name="successMessage">message.pdf-delete-page.success</param>
+        		<param name="failureMessage">message.pdf-delete-page.failure</param>
+        		
+        		<evaluator>evaluator.pdftoolkit.doclib.action.pdfToolkitMimetype</evaluator>
+			</action>
+			
+		</actions>
+		
+		<actionGroups>
+			<actionGroup id="document-browse">
+				<action index="500" id="pdf-append"/>
+				<action index="501" id="pdf-delete-page"/>
+				<action index="502" id="pdf-insert-at-page"/>
+				<action index="503" id="pdf-split"/>
+				<action index="504" id="pdf-split-at-page"/>
+				<action index="505" id="pdf-signature"/>
+				<action index="506" id="pdf-watermark"/>
+				<action index="507" id="pdf-encryption"/>
+			</actionGroup>
+			<actionGroup id="document-details">
+				<action index="500" id="pdf-append"/>
+				<action index="501" id="pdf-delete-page"/>
+				<action index="502" id="pdf-insert-at-page"/>
+				<action index="503" id="pdf-split"/>
+				<action index="504" id="pdf-split-at-page"/>
+				<action index="505" id="pdf-signature"/>
+				<action index="506" id="pdf-watermark"/>
+				<action index="507" id="pdf-encryption"/>
+			</actionGroup>
+		</actionGroups>
+	</config>
+	-->
+	
+	<!-- document library indicators for signed and encrypted documents -->
+	<config evaluator="string-compare" condition="DocumentLibrary">
+        <indicators>
+            <indicator id="evaluator.pdftoolkit.doclib.indicator.isDocumentEncrypted"
+                       icon="pdf-encryption-16.png"
+                       index="504"
+                       label="indicator.pdftoolkit.encrypted">
+                <evaluator>evaluator.pdftoolkit.doclib.indicator.isDocumentEncrypted</evaluator>
+            </indicator>
+            
+            <indicator id="evaluator.pdftoolkit.doclib.indicator.isDocumentSigned"
+                       icon="pdf-signature-16.png"
+                       index="505"
+                       label="indicator.pdftoolkit.signed">
+                <evaluator>evaluator.pdftoolkit.doclib.indicator.isDocumentSigned</evaluator>
+            </indicator>
+        </indicators>
+    </config>
+    
+	<!-- forms for each of the actions, these may not be needed as the default form is pretty good -->
+	<config evaluator="string-compare" condition="pdf-append">
+    	<forms>
+        	<form>
+            	<field-visibility>
+                </field-visibility>
+                <appearance>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+     
+    <!-- 
+    	possible bug in Alfresco?  If a MapConstraint is defined on a field and the field does not
+    	have a config element, the following NPE is thrown:
+    	
+    	Caused by: java.lang.NullPointerException
+			at org.alfresco.web.scripts.forms.FormUIGet.processFieldConstraintControl(FormUIGet.java:1956)
+			at org.alfresco.web.scripts.forms.FormUIGet.generateConstraintModel(FormUIGet.java:1816)
+			at org.alfresco.web.scripts.forms.FormUIGet.processFieldConstraints(FormUIGet.java:1701)
+			
+		Simply having an empty field in the appearance section seems to fix the issue (Community 4.2c)
+     -->
+	<config evaluator="string-compare" condition="pdf-encryption">
+    	<forms>
+        	<form>
+        		<field-visibility>
+        			<show id="destination-folder"/>
+        			<show id="inplace"/>
+        			<show id="user-password"/>
+        			<show id="owner-password"/>
+        			<show id="allow-print"/>
+        			<show id="allow-copy"/>
+        			<show id="allow-content-modification"/>
+        			<show id="allow-annotation-modification"/>
+        			<show id="allow-form-fill"/>
+        			<show id="allow-screen-reader"/>
+        			<show id="allow-degraded-print"/>
+        			<show id="allow-assembly"/>
+        			<show id="encryption-level"/>
+        			<show id="exclude-metadata"/>
+        			<show id="level-options"/>
+        		</field-visibility>
+                <appearance>
+                	<field id="inplace">
+                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
+                        	<control-param name="hideProperties">assoc_destination-folder</control-param>    
+                        </control>
+                	</field>
+                    <field id="encryption-level"></field>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+    
+	<config evaluator="string-compare" condition="pdf-signature">
+    	<forms>
+        	<form>
+        		<field-visibility>
+        			<show id="destination-folder"/>
+        			<show id="inplace"/>
+        		</field-visibility>
+                <appearance>
+                	<field id="inplace">
+                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
+                        	<control-param name="hideProperties">assoc_destination-folder</control-param>    
+                        </control>
+                	</field>
+                    <field id="page">
+                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
+                        	<control-param name="showPageScheme">false</control-param>
+                        </control>
+                    </field>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+    
+	<config evaluator="string-compare" condition="pdf-watermark">
+    	<forms>
+        	<form>
+        		<field-visibility>
+        			<show id="destination-folder"/>
+        			<show id="inplace"/>
+        		</field-visibility>
+                <appearance>
+                	<field id="inplace">
+                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
+                        	<control-param name="hideProperties">assoc_destination-folder</control-param>    
+                        </control>
+                	</field>
+                    <field id="position"></field>
+                    <field id="page">
+                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
+                        	<control-param name="showPageScheme">true</control-param>
+                        </control>
+                    </field>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+   
+	<config evaluator="string-compare" condition="pdf-insert-at-page">
+    	<forms>
+        	<form>
+        		<field-visibility>
+        			<show id="destination-folder"/>
+        			<show id="inplace"/>
+        		</field-visibility>
+                <appearance>
+                	<field id="page">
+                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
+                        	<control-param name="showPageScheme">true</control-param>
+                        </control>
+                    </field>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+    
+	<config evaluator="string-compare" condition="pdf-split">
+    	<forms>
+        	<form>
+            	<field-visibility>
+            		<show id="destination-folder"/>
+                </field-visibility>
+                <appearance>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+    
+	<config evaluator="string-compare" condition="pdf-split-at-page">
+    	<forms>
+        	<form>
+            	<field-visibility>
+            		<show id="destination-folder"/>
+                </field-visibility>
+                <appearance>
+                	<field id="page">
+                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
+                        	<control-param name="showPageScheme">true</control-param>
+                        </control>
+                    </field>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+
+	<config evaluator="string-compare" condition="DocLibCustom">
+		<dependencies>
+			<js src="pdftoolkit/components/doclib/pdftoolkit-doclib-actions.js" />
+		</dependencies>
+	</config>
+</alfresco-config>
