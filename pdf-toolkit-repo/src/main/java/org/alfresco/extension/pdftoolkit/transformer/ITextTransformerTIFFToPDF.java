@@ -15,6 +15,8 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.RandomAccessFileOrArray;
+import com.itextpdf.text.pdf.codec.TiffImage;
 
 public class ITextTransformerTIFFToPDF extends AbstractContentTransformer2 {
 
@@ -57,14 +59,24 @@ public class ITextTransformerTIFFToPDF extends AbstractContentTransformer2 {
 		//set up a pdf document and writer
 		Document doc = new Document(PageSize.A4);
 		PdfWriter pdfWriter = PdfWriter.getInstance(doc, out);
+		pdfWriter.setStrictImageSequence(true);
+
 		
 		//iText Image needs the byte array for the tiff, could be big
 		contentReader.getContent(baos);
 		
 		//open the doc and add the image
 		doc.open();
-		Image tiff = Image.getInstance(baos.toByteArray());
-		doc.add(tiff);
+		Image tiff = null;
+		RandomAccessFileOrArray randomAccessFile = new RandomAccessFileOrArray(baos.toByteArray());
+		int pages = TiffImage.getNumberOfPages(randomAccessFile);
+		for (int i = 1; i <= pages; i++) {
+			tiff = TiffImage.getTiffImage(randomAccessFile, i);
+			tiff.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
+			tiff.setAbsolutePosition(0, 0);
+            doc.add(tiff);
+            doc.newPage();
+        }
 		doc.close();
 		out.flush();
 	}
