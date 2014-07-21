@@ -68,10 +68,10 @@ public class ITextTransformerTIFFToPDF extends AbstractContentTransformer2 {
 		//open the doc and add the image
 		doc.open();
 		Image tiff = null;
-		RandomAccessFileOrArray ra = new RandomAccessFileOrArray(baos.toByteArray());
-		int pages = TiffImage.getNumberOfPages(ra);
+		RandomAccessFileOrArray randomAccessFile = new RandomAccessFileOrArray(baos.toByteArray());
+		int pages = TiffImage.getNumberOfPages(randomAccessFile);
 		for (int i = 1; i <= pages; i++) {
-			tiff = TiffImage.getTiffImage(ra, i);
+			tiff = TiffImage.getTiffImage(randomAccessFile, i);
 			tiff.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
 			tiff.setAbsolutePosition(0, 0);
             doc.add(tiff);
