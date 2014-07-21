@@ -1,3 +1,11 @@
 
 */.settings/*
 .classpath
+
+.project
+
+*.prefs
+alfresco/target/*
+share/target/*
+pdf-toolkit-repo/target/*
+pdf-toolkit-share/target/*
