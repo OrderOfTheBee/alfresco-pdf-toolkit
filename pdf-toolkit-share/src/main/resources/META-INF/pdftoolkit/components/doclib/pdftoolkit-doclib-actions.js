@@ -1,5 +1,5 @@
 /**
- * PDF digital signature position component.
+ * PDF Toolkit page selection component.
  *
  * @namespace PDFToolkit
  * @class PDFToolkit.SelectPage
