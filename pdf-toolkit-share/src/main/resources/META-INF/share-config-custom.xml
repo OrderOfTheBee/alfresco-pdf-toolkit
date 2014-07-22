@@ -451,6 +451,21 @@
         </forms>
     </config>
     
+    <config evaluator="string-compare" condition="pdf-delete-page">
+    	<forms>
+        	<form>
+        		<field-visibility>
+        		    <show id="inplace"/>
+        			<show id="destination-folder"/>
+        			<show id="destination-name"/>
+        			<show id="delete-pages"/>
+        		</field-visibility>
+                <appearance>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+    
 	<config evaluator="string-compare" condition="pdf-split">
     	<forms>
         	<form>
