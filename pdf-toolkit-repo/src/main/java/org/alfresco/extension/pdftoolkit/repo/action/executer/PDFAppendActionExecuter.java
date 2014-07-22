@@ -22,6 +22,7 @@ package org.alfresco.extension.pdftoolkit.repo.action.executer;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ import org.alfresco.service.cmr.model.FileExistsException;
 import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.NodeRef;
+import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.util.TempFileProvider;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -78,7 +80,7 @@ public class PDFAppendActionExecuter
     {
         paramList.add(new ParameterDefinitionImpl(PARAM_TARGET_NODE, DataTypeDefinition.NODE_REF, true, getParamDisplayLabel(PARAM_TARGET_NODE)));
         paramList.add(new ParameterDefinitionImpl(PARAM_DESTINATION_FOLDER, DataTypeDefinition.NODE_REF, false, getParamDisplayLabel(PARAM_DESTINATION_FOLDER)));
-        paramList.add(new ParameterDefinitionImpl(PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PARAM_DESTINATION_NAME)));
+        paramList.add(new ParameterDefinitionImpl(PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PARAM_DESTINATION_NAME)));
         
         super.addParameterDefinitions(paramList);
     }
@@ -164,7 +166,8 @@ public class PDFAppendActionExecuter
         InputStream tis = null;
         File tempDir = null;
         ContentWriter writer = null;
-
+        NodeService ns = serviceRegistry.getNodeService();
+        
         try
         {
             is = reader.getContentInputStream();
@@ -184,8 +187,18 @@ public class PDFAppendActionExecuter
             tempDir = new File(alfTempDir.getPath() + File.separatorChar + actionedUponNodeRef.getId());
             tempDir.mkdir();
 
-            String fileName = options.get(PARAM_DESTINATION_NAME).toString();
-            pdfTarget.save(tempDir + "" + File.separatorChar + fileName + FILE_EXTENSION);
+            Serializable providedName = ruleAction.getParameterValue(PARAM_DESTINATION_NAME);
+            String fileName = null;
+            if(providedName != null)
+            {
+            	fileName = String.valueOf(providedName) + FILE_EXTENSION;
+            }
+            else
+            {
+            	fileName = String.valueOf(ns.getProperty(actionedUponNodeRef, ContentModel.PROP_NAME));
+            }
+            
+            pdfTarget.save(tempDir + "" + File.separatorChar + fileName);
 
             for (File file : tempDir.listFiles())
             {
@@ -195,7 +208,7 @@ public class PDFAppendActionExecuter
                     {
                         // Get a writer and prep it for putting it back into the
                         // repo
-                        NodeRef destinationNode = createDestinationNode(file.getName(), 
+                        NodeRef destinationNode = createDestinationNode(fileName, 
                         		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef);
                         writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
                         

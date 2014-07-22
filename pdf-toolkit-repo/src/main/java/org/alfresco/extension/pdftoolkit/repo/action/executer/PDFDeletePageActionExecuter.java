@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
 import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.NodeRef;
+import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.util.TempFileProvider;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,7 +50,7 @@ public class PDFDeletePageActionExecuter extends BasePDFActionExecuter {
     {
         paramList.add(new ParameterDefinitionImpl(PARAM_DESTINATION_FOLDER, DataTypeDefinition.NODE_REF, false, getParamDisplayLabel(PARAM_DESTINATION_FOLDER)));
         paramList.add(new ParameterDefinitionImpl(PARAM_DELETE_PAGES, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PARAM_DELETE_PAGES)));
-        paramList.add(new ParameterDefinitionImpl(PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PARAM_DESTINATION_NAME)));
+        paramList.add(new ParameterDefinitionImpl(PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PARAM_DESTINATION_NAME)));
         
         super.addParameterDefinitions(paramList);
     }
@@ -92,7 +94,8 @@ public class PDFDeletePageActionExecuter extends BasePDFActionExecuter {
         File tempDir = null;
         ContentWriter writer = null;
         PdfReader pdfReader = null;
-
+        NodeService ns = serviceRegistry.getNodeService();
+        
         try
         {
             is = reader.getContentInputStream();
@@ -101,7 +104,17 @@ public class PDFDeletePageActionExecuter extends BasePDFActionExecuter {
             tempDir = new File(alfTempDir.getPath() + File.separatorChar + actionedUponNodeRef.getId());
             tempDir.mkdir();
             
-            String fileName = action.getParameterValue(PARAM_DESTINATION_NAME).toString();
+            Serializable providedName = action.getParameterValue(PARAM_DESTINATION_NAME);
+            String fileName = null;
+            if(providedName != null)
+            {
+            	fileName = String.valueOf(providedName);
+            }
+            else
+            {
+            	fileName = String.valueOf(ns.getProperty(actionedUponNodeRef, ContentModel.PROP_NAME)) + "-pagesDeleted";
+            }
+            
             File file = new File(tempDir, serviceRegistry.getFileFolderService().getFileInfo(actionedUponNodeRef).getName());
 
             pdfReader = new PdfReader(is);
