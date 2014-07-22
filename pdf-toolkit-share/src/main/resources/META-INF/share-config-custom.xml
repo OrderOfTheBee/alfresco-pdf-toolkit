@@ -354,7 +354,6 @@
                         	<control-param name="hideProperties">assoc_destination-folder</control-param>    
                         </control>
                 	</field>
-                    <field id="encryption-level"></field>
                 </appearance>
             </form>
         </forms>
@@ -366,6 +365,20 @@
         		<field-visibility>
         			<show id="destination-folder"/>
         			<show id="inplace"/>
+        			<show id="private-key"/>
+        			<show id="alias"/>
+        			<show id="key-type"/>
+        			<show id="key-password"/>
+        			<show id="store-password"/>
+        			<show id="visibility"/>
+        			<show id="location"/>
+        			<show id="reason"/>
+        			<show id="page"/>
+        			<show id="position"/>
+        			<show id="location-x"/>
+        			<show id="location-y"/>
+        			<show id="width"/>
+        			<show id="height"/>
         		</field-visibility>
                 <appearance>
                 	<field id="inplace">
@@ -389,6 +402,15 @@
         		<field-visibility>
         			<show id="destination-folder"/>
         			<show id="inplace"/>
+        			<show id="watermark-depth"/>
+        			<show id="watermark-type"/>
+        			<show id="watermark-image"/>
+        			<show id="watermark-text"/>
+        			<show id="watermark-font"/>
+        			<show id="watermark-size"/>
+        			<show id="page"/>
+        			<show id="location-x"/>
+        			<show id="location-y"/>
         		</field-visibility>
                 <appearance>
                 	<field id="inplace">
@@ -396,7 +418,6 @@
                         	<control-param name="hideProperties">assoc_destination-folder</control-param>    
                         </control>
                 	</field>
-                    <field id="position"></field>
                     <field id="page">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
                         	<control-param name="showPageScheme">true</control-param>
@@ -413,6 +434,9 @@
         		<field-visibility>
         			<show id="destination-folder"/>
         			<show id="inplace"/>
+        			<show id="destination-name"/>
+        			<show id="insert-content"/>
+        			<show id="page"/>
         		</field-visibility>
                 <appearance>
                 	<field id="page">
@@ -430,6 +454,7 @@
         	<form>
             	<field-visibility>
             		<show id="destination-folder"/>
+            		<show id="split-frequency"/>
                 </field-visibility>
                 <appearance>
                 </appearance>
@@ -442,6 +467,7 @@
         	<form>
             	<field-visibility>
             		<show id="destination-folder"/>
+            		<show id="page"/>
                 </field-visibility>
                 <appearance>
                 	<field id="page">
