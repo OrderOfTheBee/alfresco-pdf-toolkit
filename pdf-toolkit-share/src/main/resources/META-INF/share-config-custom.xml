@@ -394,7 +394,9 @@
                         </control>
                     </field>
                     <field id="position">
-                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/pagePosition.ftl">
+                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/dependentSelect.ftl">
+                    		<control-param name="showSelectValue">manual</control-param>
+                    		<control-param name="showWhenSelected">location-x,location-y</control-param>
                     	</control>
                     </field>
                 </appearance>
