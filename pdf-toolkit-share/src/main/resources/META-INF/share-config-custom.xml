@@ -393,6 +393,10 @@
                         	<control-param name="showPageScheme">false</control-param>
                         </control>
                     </field>
+                    <field id="position">
+                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/pagePosition.ftl">
+                    	</control>
+                    </field>
                 </appearance>
             </form>
         </forms>
@@ -425,6 +429,10 @@
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
                         	<control-param name="showPageScheme">true</control-param>
                         </control>
+                    </field>
+                    <field id="position">
+                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/pagePosition.ftl">
+                    	</control>
                     </field>
                 </appearance>
             </form>
