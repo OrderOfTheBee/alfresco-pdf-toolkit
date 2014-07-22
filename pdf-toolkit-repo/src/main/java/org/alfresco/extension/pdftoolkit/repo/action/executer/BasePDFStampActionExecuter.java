@@ -52,7 +52,8 @@ public abstract class BasePDFStampActionExecuter
     public static final String                  POSITION_TOPRIGHT    = "topright";
     public static final String                  POSITION_BOTTOMLEFT  = "bottomleft";
     public static final String                  POSITION_BOTTOMRIGHT = "bottomright";
-
+    public static final String					POSITION_MANUAL 	 = "manual";
+    
     public static final String                  PARAM_POSITION       = "position";
     public static final String                  PARAM_LOCATION_X     = "location-x";
     public static final String                  PARAM_LOCATION_Y     = "location-y";

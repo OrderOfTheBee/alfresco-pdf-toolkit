@@ -281,6 +281,10 @@ public class PDFWatermarkActionExecuter
             String position = (String)options.get(PARAM_POSITION);
             String depth = (String)options.get(PARAM_WATERMARK_DEPTH);
 
+            // get the manual positioning options (if provided)
+            int locationX = getInteger(ruleAction.getParameterValue(PARAM_LOCATION_X));
+            int locationY = getInteger(ruleAction.getParameterValue(PARAM_LOCATION_Y));
+            
             // image requires absolute positioning or an exception will be
             // thrown
             // set image position according to parameter. Use
@@ -313,6 +317,10 @@ public class PDFWatermarkActionExecuter
                 else if (position.equals(POSITION_CENTER))
                 {
                     img.setAbsolutePosition(getCenterX(r, img), getCenterY(r, img));
+                }
+                else if (position.equals(POSITION_MANUAL))
+                {
+                	img.setAbsolutePosition(locationX, locationY);
                 }
 
                 // if this is an under-text stamp, use getUnderContent.
@@ -424,7 +432,9 @@ public class PDFWatermarkActionExecuter
             String pages = (String)options.get(PARAM_PAGE);
             String position = (String)options.get(PARAM_POSITION);
             String depth = (String)options.get(PARAM_WATERMARK_DEPTH);
-
+            int locationX = getInteger(ruleAction.getParameterValue(PARAM_LOCATION_X));
+            int locationY = getInteger(ruleAction.getParameterValue(PARAM_LOCATION_Y));
+            
             // create the base font for the text stamp
             BaseFont bf = BaseFont.createFont((String)options.get(PARAM_WATERMARK_FONT), BaseFont.CP1250, BaseFont.EMBEDDED);
 
@@ -468,7 +478,7 @@ public class PDFWatermarkActionExecuter
                 // only apply stamp to requested pages
                 if (checkPage(pages, i, numpages))
                 {
-                    writeAlignedText(pcb, r, tokens, size, position);
+                    writeAlignedText(pcb, r, tokens, size, position, locationX, locationY);
                 }
             }
 
@@ -534,7 +544,8 @@ public class PDFWatermarkActionExecuter
      * @param size
      * @param position
      */
-    private void writeAlignedText(PdfContentByte pcb, Rectangle r, Vector<String> tokens, float size, String position)
+    private void writeAlignedText(PdfContentByte pcb, Rectangle r, Vector<String> tokens, float size, 
+    		String position, int locationX, int locationY)
     {
         // get the dimensions of our 'rectangle' for text
         float height = size * tokens.size();
@@ -575,6 +586,11 @@ public class PDFWatermarkActionExecuter
         {
             centerX = r.getWidth() / 2;
             startY = (r.getHeight() / 2) + (height / 2);
+        }
+        else if (position.equals(POSITION_MANUAL))
+        {
+        	centerX = r.getWidth() / 2 - locationX;
+        	startY = locationY;
         }
 
         // apply text to PDF

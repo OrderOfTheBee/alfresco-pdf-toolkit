@@ -112,6 +112,7 @@
 				<entry key="center" value="Center"/>
 				<entry key="bottomleft" value="Bottom left"/>
 				<entry key="bottomright" value="Bottom right"/>
+				<entry key="manual" value="Manually Defined"/>
 			</map>
 		</property>
 	</bean>
