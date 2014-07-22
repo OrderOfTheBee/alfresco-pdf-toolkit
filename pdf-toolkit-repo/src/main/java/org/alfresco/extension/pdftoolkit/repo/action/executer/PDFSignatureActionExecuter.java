@@ -266,7 +266,8 @@ public class PDFSignatureActionExecuter
             {
             	//create the signature rectangle using either the provided position or
             	//the exact coordinates, if provided
-            	if(position != null && !position.trim().equalsIgnoreCase(""))
+            	if(position != null && !position.trim().equalsIgnoreCase("") 
+            			&& !position.trim().equalsIgnoreCase(BasePDFStampActionExecuter.POSITION_MANUAL))
             	{
             		Rectangle pageRect = reader.getPageSizeWithRotation(pageNumber);
             		sap.setVisibleSignature(positionSignature(position, pageRect, width, height), pageNumber, null);
