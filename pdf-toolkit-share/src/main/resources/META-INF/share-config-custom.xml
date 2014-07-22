@@ -411,6 +411,7 @@
         			<show id="watermark-font"/>
         			<show id="watermark-size"/>
         			<show id="page"/>
+        			<show id="position"/>
         			<show id="location-x"/>
         			<show id="location-y"/>
         		</field-visibility>
@@ -462,6 +463,7 @@
         		<field-visibility>
         		    <show id="inplace"/>
         			<show id="destination-folder"/>
+        			<show id="destination-name"/>
         			<show id="delete-pages"/>
         		</field-visibility>
                 <appearance>
