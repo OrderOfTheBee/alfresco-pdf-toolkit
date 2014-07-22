@@ -11,8 +11,14 @@ control parameters in the form config by hiding the div {field.name}-control
       <input id="${fieldHtmlId}-hidden" type="hidden" name="${field.name}" value="true" />
       <input id="${fieldHtmlId}-tohide" type="hidden" name="-" value="${hideProperties}" />
       <input class="formsCheckBox" id="${fieldHtmlId}" type="checkbox" tabindex="0" name="-" 
-             value="true" checked="false" 
+             value="true" checked="true" 
              onchange="PDFToolkit.Util.HideDependentControls(this, '${args.htmlid}')" />
       <label for="${fieldHtmlId}" class="checkbox">${field.label?html}</label>
 	</#if>
 </div>
+<script>
+	(function(){
+		var element = YAHOO.util.Dom.get('${fieldHtmlId}')
+		PDFToolkit.Util.HideDependentControls(element, '$args.htmlid}');
+	})();
+</script>

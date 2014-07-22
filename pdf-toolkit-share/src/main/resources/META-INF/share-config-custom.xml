@@ -438,10 +438,15 @@
         			<show id="destination-folder"/>
         			<show id="destination-name"/>
         			<show id="insert-content"/>
-        			<show id="page"/>
+        			<show id="insert-at-page"/>
         		</field-visibility>
                 <appearance>
-                	<field id="page">
+                	<field id="inplace">
+                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
+                        	<control-param name="hideProperties">assoc_destination-folder</control-param>    
+                        </control>
+                	</field>
+                	<field id="insert-at-page">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
                         	<control-param name="showPageScheme">false</control-param>
                         </control>
@@ -489,7 +494,7 @@
                 <appearance>
                 	<field id="page">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
-                        	<control-param name="showPageScheme">true</control-param>
+                        	<control-param name="showPageScheme">false</control-param>
                         </control>
                     </field>
                 </appearance>
