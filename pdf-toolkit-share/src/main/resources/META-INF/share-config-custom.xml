@@ -310,6 +310,9 @@
     	<forms>
         	<form>
             	<field-visibility>
+            		<show id="destination-folder"/>
+            		<show id="target-node"/>
+            		<show id="destination-name"/>
                 </field-visibility>
                 <appearance>
                 </appearance>
@@ -332,8 +335,8 @@
     	<forms>
         	<form>
         		<field-visibility>
-        			<show id="destination-folder"/>
         			<show id="inplace"/>
+        			<show id="destination-folder"/>
         			<show id="user-password"/>
         			<show id="owner-password"/>
         			<show id="allow-print"/>
@@ -344,9 +347,8 @@
         			<show id="allow-screen-reader"/>
         			<show id="allow-degraded-print"/>
         			<show id="allow-assembly"/>
-        			<show id="encryption-level"/>
         			<show id="exclude-metadata"/>
-        			<show id="level-options"/>
+        			<show id="encryption-level"/>
         		</field-visibility>
                 <appearance>
                 	<field id="inplace">
@@ -363,8 +365,8 @@
     	<forms>
         	<form>
         		<field-visibility>
-        			<show id="destination-folder"/>
         			<show id="inplace"/>
+        			<show id="destination-folder"/>
         			<show id="private-key"/>
         			<show id="alias"/>
         			<show id="key-type"/>
@@ -400,8 +402,8 @@
     	<forms>
         	<form>
         		<field-visibility>
-        			<show id="destination-folder"/>
         			<show id="inplace"/>
+        			<show id="destination-folder"/>
         			<show id="watermark-depth"/>
         			<show id="watermark-type"/>
         			<show id="watermark-image"/>
@@ -432,8 +434,8 @@
     	<forms>
         	<form>
         		<field-visibility>
+        		    <show id="inplace"/>
         			<show id="destination-folder"/>
-        			<show id="inplace"/>
         			<show id="destination-name"/>
         			<show id="insert-content"/>
         			<show id="page"/>
@@ -441,7 +443,7 @@
                 <appearance>
                 	<field id="page">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
-                        	<control-param name="showPageScheme">true</control-param>
+                        	<control-param name="showPageScheme">false</control-param>
                         </control>
                     </field>
                 </appearance>
