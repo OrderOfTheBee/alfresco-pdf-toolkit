@@ -44,7 +44,7 @@ PDFToolkit.Util = {};
 		options:
 		{
 			/**
-			 * Reference to the signed document
+			 * Reference to the pdf document
 			 *
 			 * @property nodeRef
 			 * @type string
@@ -144,6 +144,81 @@ PDFToolkit.Util = {};
 		},
 		
 		toggleSchemes: function SelectPage_toggleSchemes(event, that)
+		{
+			if(event.target.checked)
+			{
+				that.schemesModule.show();
+				that.pagesModule.hide();
+			}
+			else
+			{
+				that.schemesModule.hide();
+				that.pagesModule.show();
+			}
+		}
+	});
+})();
+
+(function()
+{
+	/**
+	 * YUI Library aliases
+	 */
+	var Dom = YAHOO.util.Dom,
+	Event = YAHOO.util.Event,
+	Selector = YAHOO.util.Selector;
+	
+	/**
+	 * SelectPage constructor.
+	 *
+	 * @param {String} htmlId The HTML id of the parent element
+	 * @return {PDFToolkit.SelectPage} The new component instance
+	 * @constructor
+	 */
+	PDFToolkit.DependentSelect = function DependentSelect_constructor(htmlId)
+	{
+		PDFToolkit.DependentSelect.superclass.constructor.call(this, "PDFToolkit.DependentSelect", htmlId, []);
+		return this;
+	};
+
+	YAHOO.extend(PDFToolkit.DependentSelect, Alfresco.component.Base,
+	{
+		/**
+		 * Object container for initialization options
+		 *
+		 * @property options
+		 * @type {object} object literal
+		 */
+		options:
+		{
+			/**
+			 * Reference to the pdf document
+			 *
+			 * @property nodeRef
+			 * @type string
+			 */
+			nodeRef: null
+		},
+
+		schemesModule: null,
+		pagesModule: null,
+		pageCount: -1,
+		
+		onReady:  function DependentSelect_onReady()
+		{
+			this.getPageCount(this.options.nodeRef);
+			this.getPageSchemes(this.options.nodeRef);
+			
+			this.schemesModule = new YAHOO.widget.Module(this.id + "-schemeModule");
+			this.pagesModule = new YAHOO.widget.Module(this.id + "-pageModule");
+			
+			// default state is schemes enabled, page select hidden
+			this.pagesModule.hide();
+			
+			YAHOO.util.Event.addListener([this.id + "-useScheme"], "click", this.toggleSchemes, this);
+		},
+		
+		toggleDependentFields: function DependentSelect_toggleSchemes(event, that)
 		{
 			if(event.target.checked)
 			{

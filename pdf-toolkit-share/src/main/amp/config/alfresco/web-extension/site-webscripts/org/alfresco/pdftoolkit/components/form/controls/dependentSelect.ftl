@@ -1,5 +1,9 @@
 <#include "/org/alfresco/components/form/controls/common/utils.inc.ftl" />
 
+<#if field.control.params.showSelectValues??>
+	<#assign selectValues = field.control.params.showSelectValues?split(",")>
+</#if>
+
 <#if field.control.params.optionSeparator??>
    <#assign optionSeparator=field.control.params.optionSeparator>
 <#else>

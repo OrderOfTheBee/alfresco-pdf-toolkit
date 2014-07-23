@@ -395,8 +395,8 @@
                     </field>
                     <field id="position">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/dependentSelect.ftl">
-                    		<control-param name="showSelectValue">manual</control-param>
-                    		<control-param name="showWhenSelected">location-x,location-y</control-param>
+                    		<control-param name="showSelectValues">manual</control-param>
+                    		<control-param name="showWhenSelected-manual">location-x,location-y</control-param>
                     	</control>
                     </field>
                 </appearance>
@@ -433,7 +433,16 @@
                         </control>
                     </field>
                     <field id="position">
-                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/pagePosition.ftl">
+                        <control template="/org/alfresco/pdftoolkit/components/form/controls/dependentSelect.ftl">
+                    		<control-param name="showSelectValues">manual</control-param>
+                    		<control-param name="showWhenSelected-manual">location-x,location-y</control-param>
+                    	</control>
+                    </field>
+                    <field id="watermark-type">
+                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/dependentSelect.ftl">
+                    		<control-param name="showSelectValues">text,image</control-param>
+                    		<control-param name="showWhenSelected-text">watermark-text,watermark-font,watermark-size</control-param>
+                    		<control-param name="showWhenSelected-image">watermark-image</control-param>
                     	</control>
                     </field>
                 </appearance>
