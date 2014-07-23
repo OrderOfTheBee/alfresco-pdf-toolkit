@@ -31,7 +31,7 @@
    <#else>
       <label for="${fieldHtmlId}">${field.label?html}:<#if field.mandatory><span class="mandatory-indicator">${msg("form.required.fields.marker")}</span></#if></label>
       <#if field.control.params.options?? && field.control.params.options != "">
-         <select id="${fieldHtmlId}" name="${field.name}" tabindex="0"
+         <select id="${fieldHtmlId}" name="${field.name}" onchange="DependentSelect.toggleDependentFields()" tabindex="0"
                <#if field.description??>title="${field.description}"</#if>
                <#if field.control.params.size??>size="${field.control.params.size}"</#if> 
                <#if field.control.params.styleClass??>class="${field.control.params.styleClass}"</#if>
@@ -52,3 +52,15 @@
       </#if>
    </#if>
 </div>
+<script type="text/javascript">//<![CDATA[
+
+// first, set up the list of select values that trigger a change
+
+// next, set up the object that contains the fields to show / hide based on 
+// the value of the selects
+var DependentSelect = new PDFToolkit.DependentSelect("${fieldHtmlId}").setOptions(
+	      {
+	         showSelectValues: showSelectValues,
+	         showWhenSelected: showWhenSelected
+	      };
+//]]></script>
