@@ -1,7 +1,7 @@
 <#include "/org/alfresco/components/form/controls/common/utils.inc.ftl" />
 
 <#if field.control.params.showSelectValues??>
-	<#assign selectValues = field.control.params.showSelectValues?split(",")>
+	<#assign selectValues = field.control.params.showSelectValues?split(";")>
 </#if>
 
 <#if field.control.params.optionSeparator??>
@@ -56,11 +56,20 @@
 
 // first, set up the list of select values that trigger a change
 
+var showSelectValues = {
+	<#list selectValues as value>
+	
+	<#assign showWhenSelectedName = value?split(":")[0]>
+	${value}
+	${value?split(":")?size}
+	${showWhenSelectedName}:[
+	          ],
+	</#list>	
+}
 // next, set up the object that contains the fields to show / hide based on 
 // the value of the selects
 var DependentSelect = new PDFToolkit.DependentSelect("${fieldHtmlId}").setOptions(
 	      {
 	         showSelectValues: showSelectValues,
-	         showWhenSelected: showWhenSelected
-	      };
+	      });
 //]]></script>

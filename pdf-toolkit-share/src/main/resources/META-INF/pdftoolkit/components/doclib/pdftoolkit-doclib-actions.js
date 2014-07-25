@@ -199,37 +199,15 @@ PDFToolkit.Util = {};
 			 */
 			nodeRef: null
 		},
-
-		schemesModule: null,
-		pagesModule: null,
-		pageCount: -1,
 		
 		onReady:  function DependentSelect_onReady()
-		{
-			this.getPageCount(this.options.nodeRef);
-			this.getPageSchemes(this.options.nodeRef);
+		{	
 			
-			this.schemesModule = new YAHOO.widget.Module(this.id + "-schemeModule");
-			this.pagesModule = new YAHOO.widget.Module(this.id + "-pageModule");
-			
-			// default state is schemes enabled, page select hidden
-			this.pagesModule.hide();
-			
-			YAHOO.util.Event.addListener([this.id + "-useScheme"], "click", this.toggleSchemes, this);
 		},
 		
 		toggleDependentFields: function DependentSelect_toggleSchemes(event, that)
 		{
-			if(event.target.checked)
-			{
-				that.schemesModule.show();
-				that.pagesModule.hide();
-			}
-			else
-			{
-				that.schemesModule.hide();
-				that.pagesModule.show();
-			}
+			
 		}
 	});
 })();
@@ -249,7 +227,7 @@ PDFToolkit.Util = {};
 		for(index in controls)
 		{
 			var control = new YAHOO.util.Dom.get((htmlIdPrefix + "_" + controls[index] + "-cntrl"));
-			var container = control.parentElement
+			var container = control.parentElement;
 			if(value)
 			{
 				container.style.display = 'none';
@@ -260,5 +238,4 @@ PDFToolkit.Util = {};
 			}
 		}
 	}
-}
-)();
+})();
