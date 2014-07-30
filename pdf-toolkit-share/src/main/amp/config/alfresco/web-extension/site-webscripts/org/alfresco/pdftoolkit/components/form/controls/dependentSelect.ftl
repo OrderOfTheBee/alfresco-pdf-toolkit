@@ -31,7 +31,7 @@
    <#else>
       <label for="${fieldHtmlId}">${field.label?html}:<#if field.mandatory><span class="mandatory-indicator">${msg("form.required.fields.marker")}</span></#if></label>
       <#if field.control.params.options?? && field.control.params.options != "">
-         <select id="${fieldHtmlId}" name="${field.name}" onchange="DependentSelect.toggleDependentFields()" tabindex="0"
+         <select id="${fieldHtmlId}" name="${field.name}" tabindex="0"
                <#if field.description??>title="${field.description}"</#if>
                <#if field.control.params.size??>size="${field.control.params.size}"</#if> 
                <#if field.control.params.styleClass??>class="${field.control.params.styleClass}"</#if>
@@ -56,20 +56,26 @@
 
 // first, set up the list of select values that trigger a change
 
-var showSelectValues = {
+var showSelectValues = [
 	<#list selectValues as value>
 	
 	<#assign showWhenSelectedName = value?split(":")[0]>
-	${value}
-	${value?split(":")?size}
-	${showWhenSelectedName}:[
-	          ],
+	<#assign showWhenSelectedValues = value?split(":")[1]?split(",")>
+	{'name':'${showWhenSelectedName}',
+	'fields':[
+	<#list showWhenSelectedValues as show>
+		'${show}'<#if show_has_next>,</#if>
+	</#list>
+	          ]}<#if value_has_next>,</#if>
 	</#list>	
-}
+]
 // next, set up the object that contains the fields to show / hide based on 
 // the value of the selects
 var DependentSelect = new PDFToolkit.DependentSelect("${fieldHtmlId}").setOptions(
 	      {
 	         showSelectValues: showSelectValues,
-	      });
+	         htmlId: "${args.htmlid}"
+	      }).setMessages(
+	         {}
+	      );
 //]]></script>

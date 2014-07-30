@@ -372,9 +372,9 @@
         			<show id="key-type"/>
         			<show id="key-password"/>
         			<show id="store-password"/>
-        			<show id="visibility"/>
         			<show id="location"/>
         			<show id="reason"/>
+        			<show id="visibility"/>
         			<show id="page"/>
         			<show id="position"/>
         			<show id="location-x"/>
@@ -395,8 +395,7 @@
                     </field>
                     <field id="position">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/dependentSelect.ftl">
-                    		<control-param name="showSelectValues">manual</control-param>
-                    		<control-param name="showWhenSelected-manual">location-x,location-y</control-param>
+                    		<control-param name="showSelectValues">manual:prop_location-x,prop_location-y</control-param>
                     	</control>
                     </field>
                 </appearance>
@@ -434,13 +433,12 @@
                     </field>
                     <field id="position">
                         <control template="/org/alfresco/pdftoolkit/components/form/controls/dependentSelect.ftl">
-                    		<control-param name="showSelectValues">manual</control-param>
-                    		<control-param name="showWhenSelected-manual">location-x,location-y</control-param>
+                    		<control-param name="showSelectValues">manual:prop_location-x,prop_location-y</control-param>
                     	</control>
                     </field>
                     <field id="watermark-type">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/dependentSelect.ftl">
-                    		<control-param name="showSelectValues">text:watermark-text,watermark-font,watermark-size;image:watermark-image</control-param>
+                    		<control-param name="showSelectValues">text:prop_watermark-text,prop_watermark-font,prop_watermark-size;image:assoc_watermark-image</control-param>
                     	</control>
                     </field>
                 </appearance>

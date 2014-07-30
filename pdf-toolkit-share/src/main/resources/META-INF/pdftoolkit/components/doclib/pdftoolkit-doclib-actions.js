@@ -49,7 +49,15 @@ PDFToolkit.Util = {};
 			 * @property nodeRef
 			 * @type string
 			 */
-			nodeRef: null
+			nodeRef: null,
+			
+			/**
+			 * Do we show the page scheme options?
+			 * 
+			 * @property showPageSchemes
+			 * @type boolean
+			 */
+			showPageScheme: false,
 		},
 
 		schemesModule: null,
@@ -59,13 +67,15 @@ PDFToolkit.Util = {};
 		onReady:  function SelectPage_onReady()
 		{
 			this.getPageCount(this.options.nodeRef);
-			this.getPageSchemes(this.options.nodeRef);
-			
-			this.schemesModule = new YAHOO.widget.Module(this.id + "-schemeModule");
 			this.pagesModule = new YAHOO.widget.Module(this.id + "-pageModule");
 			
-			// default state is schemes enabled, page select hidden
-			this.pagesModule.hide();
+			if(this.options.showPageScheme === "true")
+			{
+				this.schemesModule = new YAHOO.widget.Module(this.id + "-schemeModule");
+				this.getPageSchemes(this.options.nodeRef);
+				// default state is page select hidden if page schemes enabled, 
+				this.pagesModule.hide();
+			}
 			
 			YAHOO.util.Event.addListener([this.id + "-useScheme"], "click", this.toggleSchemes, this);
 		},
@@ -169,10 +179,10 @@ PDFToolkit.Util = {};
 	Selector = YAHOO.util.Selector;
 	
 	/**
-	 * SelectPage constructor.
+	 * DependentSelect constructor.
 	 *
 	 * @param {String} htmlId The HTML id of the parent element
-	 * @return {PDFToolkit.SelectPage} The new component instance
+	 * @return {PDFToolkit.DependentSelect} The new component instance
 	 * @constructor
 	 */
 	PDFToolkit.DependentSelect = function DependentSelect_constructor(htmlId)
@@ -183,31 +193,51 @@ PDFToolkit.Util = {};
 
 	YAHOO.extend(PDFToolkit.DependentSelect, Alfresco.component.Base,
 	{
-		/**
-		 * Object container for initialization options
-		 *
-		 * @property options
-		 * @type {object} object literal
-		 */
 		options:
 		{
 			/**
-			 * Reference to the pdf document
+			 * The show / hide configuration(s) for the form controls
 			 *
 			 * @property nodeRef
 			 * @type string
 			 */
-			nodeRef: null
+			showSelectValues: []
 		},
 		
 		onReady:  function DependentSelect_onReady()
 		{	
-			
+			YAHOO.util.Event.addListener([this.id], "change", this.toggleDependentFields, this);
 		},
 		
-		toggleDependentFields: function DependentSelect_toggleSchemes(event, that)
+		toggleDependentFields: function DependentSelect_toggleDependentFields(event, that)
 		{
-			
+			var config = that.options.showSelectValues;
+			// anything assigned to another show value will be hidden
+			for(index in config)
+			{
+				
+				var name = config[index].name;
+				var fields = config[index].fields;
+				
+				// if the event source is the right option, show the fields
+				// if it is not, hide these fields
+				if(name === event.srcElement.value)
+				{
+					for(fieldIndex in fields)
+					{
+						var fieldId = YAHOO.util.Dom.get(that.options.htmlId) + "_" + fields[fieldIndex] + "-cntrl";
+						fieldId.style.display = 'block';
+					}
+				}
+				else
+				{
+					for(fieldIndex in fields)
+					{
+						var fieldId = YAHOO.util.Dom.get(that.options.htmlId) + "_" + fields[fieldIndex] + "-cntrl";
+						fieldId.style.display = 'none';
+					}
+				}
+			}
 		}
 	});
 })();
