@@ -35,14 +35,7 @@
 	<bean id="pdftoolkit-messages" class="org.alfresco.i18n.ResourceBundleBootstrapComponent">
 		<property name="resourceBundles">
 			<list>
-				<value>org.alfresco.extension.pdftoolkit.web.bean.actions.handlers.pdfsplitatpage-messages</value>
-				<value>org.alfresco.extension.pdftoolkit.web.bean.actions.handlers.pdfappend-messages</value>
-				<value>org.alfresco.extension.pdftoolkit.web.bean.actions.handlers.pdfinsert-messages</value>
-				<value>org.alfresco.extension.pdftoolkit.web.bean.actions.handlers.pdfsplit-messages</value>
-				<value>org.alfresco.extension.pdftoolkit.web.bean.actions.handlers.pdfwatermark-messages</value>
-				<value>org.alfresco.extension.pdftoolkit.web.bean.actions.handlers.pdfencryption-messages</value>
-				<value>org.alfresco.extension.pdftoolkit.web.bean.actions.handlers.pdfsignature-messages</value>
-				<value>org.alfresco.extension.pdftoolkit.web.bean.actions.handlers.pdfdelete-messages</value>
+				<value>alfresco.messages.pdf-toolkit</value>
 			</list>
 		</property>
 	</bean>
