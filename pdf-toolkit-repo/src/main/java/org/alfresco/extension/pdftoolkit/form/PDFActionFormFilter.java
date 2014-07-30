@@ -11,7 +11,11 @@ import org.alfresco.repo.forms.FormData;
 import org.alfresco.repo.forms.FormData.FieldData;
 import org.alfresco.repo.forms.processor.AbstractFilter;
 import org.alfresco.repo.forms.processor.action.ActionFormResult;
+import org.alfresco.repo.model.Repository;
 import org.alfresco.service.ServiceRegistry;
+import org.alfresco.service.cmr.repository.NodeRef;
+import org.alfresco.service.cmr.repository.NodeService;
+import org.alfresco.service.cmr.repository.StoreRef;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -23,6 +27,7 @@ public class PDFActionFormFilter extends AbstractFilter<Object, ActionFormResult
 	private String			INPLACE_PARAM				= "prop_" + BasePDFActionExecuter.PARAM_INPLACE;
 	
 	private ServiceRegistry serviceRegistry;		
+	private Repository repositoryHelper;
 	
 	@Override
 	public void afterGenerate(Object obj, List<String> fields,
@@ -48,6 +53,8 @@ public class PDFActionFormFilter extends AbstractFilter<Object, ActionFormResult
 	public void beforePersist(Object obj, FormData formData) {
 		logger.debug("beforePersist");
 		
+		NodeService ns = serviceRegistry.getNodeService();
+		
 		//check the action, is it one we need to handle?
 		if(obj != null)
 		{
@@ -59,7 +66,7 @@ public class PDFActionFormFilter extends AbstractFilter<Object, ActionFormResult
 			FieldData inplace = formData.getFieldData(INPLACE_PARAM);
 			if(Boolean.valueOf(String.valueOf(inplace.getValue())))
 			{
-				formData.addFieldData(DESTINATION_FOLDER_FIELD, "null://null/null", true);
+				formData.addFieldData(DESTINATION_FOLDER_FIELD, repositoryHelper.getCompanyHome(), true);
 			}
 			
 			ActionDefinitionImpl act = (ActionDefinitionImpl)obj;
@@ -91,5 +98,9 @@ public class PDFActionFormFilter extends AbstractFilter<Object, ActionFormResult
 	{
 		this.serviceRegistry = serviceRegistry;
 	}
-
+	
+	public void setRepositoryHelper(Repository repositoryHelper)
+	{
+		this.repositoryHelper = repositoryHelper;
+	}
 }

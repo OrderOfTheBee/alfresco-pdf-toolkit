@@ -283,7 +283,7 @@ public class PDFSplitAtPageActionExecuter
                         // Get a writer and prep it for putting it back into the
                         // repo
                         NodeRef destinationNode = createDestinationNode(file.getName(), 
-                        		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef);
+                        		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, false);
                         writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
 
                         writer.setEncoding(reader.getEncoding()); // original

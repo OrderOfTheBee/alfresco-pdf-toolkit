@@ -213,6 +213,8 @@ public class PDFSignatureActionExecuter
         int locationX = getInteger(ruleAction.getParameterValue(PARAM_LOCATION_X));
         int locationY = getInteger(ruleAction.getParameterValue(PARAM_LOCATION_Y));
         
+        Boolean inplace = Boolean.valueOf(String.valueOf(ruleAction.getParameterValue(PARAM_INPLACE)));
+        
         File tempDir = null;
         ContentWriter writer = null;
         KeyStore ks = null;
@@ -282,7 +284,7 @@ public class PDFSignatureActionExecuter
 
             //can't use BasePDFActionExecuter.getWriter here need the nodeRef of the destination
             NodeRef destinationNode = createDestinationNode(file.getName(), 
-            		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef);
+            		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, inplace);
             writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
             
             writer.setEncoding(actionedUponContentReader.getEncoding());

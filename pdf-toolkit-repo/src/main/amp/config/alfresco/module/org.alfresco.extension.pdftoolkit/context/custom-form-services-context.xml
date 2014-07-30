@@ -25,5 +25,6 @@
    	<bean id="pdftoolkit.actionFormFilter" class="org.alfresco.extension.pdftoolkit.form.PDFActionFormFilter" parent="baseFormFilter">
    		<property name="filterRegistry" ref="pdfActionFilterRegistry" />
    		<property name="serviceRegistry" ref="ServiceRegistry"/>
+   		<property name="repositoryHelper" ref="repositoryHelper" />
    	</bean>
 </beans>

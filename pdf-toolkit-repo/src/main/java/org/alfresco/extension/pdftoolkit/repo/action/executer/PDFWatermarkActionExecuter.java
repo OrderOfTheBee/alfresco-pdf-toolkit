@@ -280,6 +280,7 @@ public class PDFWatermarkActionExecuter
             String pages = (String)options.get(PARAM_PAGE);
             String position = (String)options.get(PARAM_POSITION);
             String depth = (String)options.get(PARAM_WATERMARK_DEPTH);
+            Boolean inplace = Boolean.valueOf(String.valueOf(options.get(PARAM_INPLACE)));
 
             // get the manual positioning options (if provided)
             int locationX = getInteger(ruleAction.getParameterValue(PARAM_LOCATION_X));
@@ -346,7 +347,7 @@ public class PDFWatermarkActionExecuter
             // Get a writer and prep it for putting it back into the repo
             //can't use BasePDFActionExecuter.getWriter here need the nodeRef of the destination
             NodeRef destinationNode = createDestinationNode(file.getName(), 
-            		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef);
+            		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, inplace);
             writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
             
             writer.setEncoding(actionedUponContentReader.getEncoding());
@@ -434,7 +435,8 @@ public class PDFWatermarkActionExecuter
             String depth = (String)options.get(PARAM_WATERMARK_DEPTH);
             int locationX = getInteger(ruleAction.getParameterValue(PARAM_LOCATION_X));
             int locationY = getInteger(ruleAction.getParameterValue(PARAM_LOCATION_Y));
-            
+            Boolean inplace = Boolean.valueOf(String.valueOf(options.get(PARAM_INPLACE)));
+
             // create the base font for the text stamp
             BaseFont bf = BaseFont.createFont((String)options.get(PARAM_WATERMARK_FONT), BaseFont.CP1250, BaseFont.EMBEDDED);
 
@@ -487,7 +489,7 @@ public class PDFWatermarkActionExecuter
             // Get a writer and prep it for putting it back into the repo
             //can't use BasePDFActionExecuter.getWriter here need the nodeRef of the destination
             NodeRef destinationNode = createDestinationNode(file.getName(), 
-            		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef);
+            		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, inplace);
             writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
             writer.setEncoding(actionedUponContentReader.getEncoding());
             writer.setMimetype(FILE_MIMETYPE);

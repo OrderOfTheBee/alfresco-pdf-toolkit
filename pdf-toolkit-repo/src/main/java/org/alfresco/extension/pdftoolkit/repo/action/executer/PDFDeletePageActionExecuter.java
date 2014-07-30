@@ -105,6 +105,8 @@ public class PDFDeletePageActionExecuter extends BasePDFActionExecuter {
             tempDir.mkdir();
             
             Serializable providedName = action.getParameterValue(PARAM_DESTINATION_NAME);
+            Boolean inplace = Boolean.valueOf(String.valueOf(action.getParameterValue(PARAM_INPLACE)));
+            
             String fileName = null;
             if(providedName != null)
             {
@@ -133,7 +135,7 @@ public class PDFDeletePageActionExecuter extends BasePDFActionExecuter {
             doc.close();
 
             NodeRef destinationNode = createDestinationNode(fileName, 
-            		(NodeRef)action.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef);
+            		(NodeRef)action.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, inplace);
             writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
 
             writer.setEncoding(reader.getEncoding());

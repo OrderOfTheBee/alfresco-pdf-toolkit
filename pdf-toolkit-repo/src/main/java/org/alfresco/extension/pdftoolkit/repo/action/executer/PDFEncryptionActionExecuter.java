@@ -220,6 +220,7 @@ public class PDFEncryptionActionExecuter
             // get the parameters
             String userPassword = (String)options.get(PARAM_USER_PASSWORD);
             String ownerPassword = (String)options.get(PARAM_OWNER_PASSWORD);
+            Boolean inplace = Boolean.valueOf(String.valueOf(options.get(PARAM_INPLACE)));
             int permissions = buildPermissionMask(options);
             int encryptionType = Integer.parseInt((String)options.get(PARAM_ENCRYPTION_LEVEL));
 
@@ -245,7 +246,7 @@ public class PDFEncryptionActionExecuter
 
             // write out to destination
             NodeRef destinationNode = createDestinationNode(file.getName(), 
-            		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef);
+            		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, inplace);
             writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
 
             writer.setEncoding(actionedUponContentReader.getEncoding());

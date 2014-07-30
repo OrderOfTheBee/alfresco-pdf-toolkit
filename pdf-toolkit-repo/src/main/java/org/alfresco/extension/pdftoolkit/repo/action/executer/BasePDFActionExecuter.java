@@ -104,10 +104,17 @@ public abstract class BasePDFActionExecuter
      * @param filename
      * @return
      */
-    protected NodeRef createDestinationNode(String filename, NodeRef destinationParent, NodeRef target)
+    protected NodeRef createDestinationNode(String filename, NodeRef destinationParent, NodeRef target, boolean inplace)
     {
 
     	NodeRef destinationNode;
+    	
+    	// if inplace mode is turned on, the destination for the modified content
+    	// is the original node
+    	if(inplace)
+    	{
+    		return target;
+    	}
     	
     	if(createNew)
     	{

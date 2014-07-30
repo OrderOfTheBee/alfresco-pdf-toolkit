@@ -515,10 +515,10 @@
         	<form>
             	<field-visibility>
             		<show id="destination-folder"/>
-            		<show id="page"/>
+            		<show id="split-at-page"/>
                 </field-visibility>
                 <appearance>
-                	<field id="page">
+                	<field id="split-at-page">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
                         	<control-param name="showPageScheme">false</control-param>
                         </control>

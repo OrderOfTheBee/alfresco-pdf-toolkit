@@ -197,7 +197,8 @@ public class PDFInsertAtPageActionExecuter
             tempDir.mkdir();
 
             String fileName = options.get(PARAM_DESTINATION_NAME).toString();
-
+            Boolean inplace = Boolean.valueOf(String.valueOf(options.get(PARAM_INPLACE)));
+            
             PDDocument completePDF = (PDDocument)pdfs.get(0);
 
             completePDF.save(tempDir + "" + File.separatorChar + fileName + FILE_EXTENSION);
@@ -222,7 +223,7 @@ public class PDFInsertAtPageActionExecuter
                         // Get a writer and prep it for putting it back into the
                         // repo
                         NodeRef destinationNode = createDestinationNode(file.getName(), 
-                        		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef);
+                        		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, inplace);
                         writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
                         
                         writer.setEncoding(reader.getEncoding()); // original
