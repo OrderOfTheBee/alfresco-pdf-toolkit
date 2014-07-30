@@ -3,6 +3,7 @@ package org.alfresco.extension.pdftoolkit.form;
 import java.util.List;
 import java.util.Map;
 
+import org.alfresco.extension.pdftoolkit.repo.action.executer.BasePDFActionExecuter;
 import org.alfresco.extension.pdftoolkit.repo.action.executer.PDFWatermarkActionExecuter;
 import org.alfresco.repo.action.ActionDefinitionImpl;
 import org.alfresco.repo.forms.Form;
@@ -19,6 +20,8 @@ public class PDFActionFormFilter extends AbstractFilter<Object, ActionFormResult
 	private static Log 		logger 						= LogFactory.getLog(PDFActionFormFilter.class);
 	private String 			WATERMARK_IMAGE_FIELD 		= "assoc_watermark-image_added";
 	private String			DESTINATION_FOLDER_FIELD 	= "assoc_destination-folder_added";
+	private String			INPLACE_PARAM				= "prop_" + BasePDFActionExecuter.PARAM_INPLACE;
+	
 	private ServiceRegistry serviceRegistry;		
 	
 	@Override
@@ -48,6 +51,17 @@ public class PDFActionFormFilter extends AbstractFilter<Object, ActionFormResult
 		//check the action, is it one we need to handle?
 		if(obj != null)
 		{
+			/*
+			 * For all pdf-toolkit actions, check for the "in place" parameter.  If it is
+			 * set to true, rewrite the destination folder field value so Alfresco will
+			 * let the form action pass.  
+			 */
+			FieldData inplace = formData.getFieldData(INPLACE_PARAM);
+			if(Boolean.valueOf(String.valueOf(inplace.getValue())))
+			{
+				formData.addFieldData(DESTINATION_FOLDER_FIELD, "null://null/null", true);
+			}
+			
 			ActionDefinitionImpl act = (ActionDefinitionImpl)obj;
 			if(act.getName().equals(PDFWatermarkActionExecuter.NAME))
 			{
