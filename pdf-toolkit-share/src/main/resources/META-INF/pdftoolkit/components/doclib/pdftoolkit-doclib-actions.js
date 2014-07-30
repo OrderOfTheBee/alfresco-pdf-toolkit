@@ -225,16 +225,18 @@ PDFToolkit.Util = {};
 				{
 					for(fieldIndex in fields)
 					{
-						var fieldId = YAHOO.util.Dom.get(that.options.htmlId) + "_" + fields[fieldIndex] + "-cntrl";
-						fieldId.style.display = 'block';
+						var field = YAHOO.util.Dom.get(that.options.htmlId + "_" + fields[fieldIndex]);
+						var container = field.parentElement;
+						container.style.display = 'block';
 					}
 				}
 				else
 				{
 					for(fieldIndex in fields)
 					{
-						var fieldId = YAHOO.util.Dom.get(that.options.htmlId) + "_" + fields[fieldIndex] + "-cntrl";
-						fieldId.style.display = 'none';
+						var field = YAHOO.util.Dom.get(that.options.htmlId + "_" + fields[fieldIndex]);
+						var container = field.parentElement;
+						container.style.display = 'none';
 					}
 				}
 			}

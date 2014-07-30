@@ -388,6 +388,11 @@
                         	<control-param name="hideProperties">assoc_destination-folder</control-param>    
                         </control>
                 	</field>
+                	<field id="visibility">
+                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/dependentSelect.ftl">
+                    		<control-param name="showSelectValues">visible:prop_page,prop_position,prop_location-x,prop_location-y,prop_width,prop_height</control-param>
+                    	</control> 
+                    </field>
                     <field id="page">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
                         	<control-param name="showPageScheme">false</control-param>
