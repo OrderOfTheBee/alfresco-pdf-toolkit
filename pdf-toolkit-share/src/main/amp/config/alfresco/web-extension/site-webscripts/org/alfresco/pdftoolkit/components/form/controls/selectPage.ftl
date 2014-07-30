@@ -8,9 +8,9 @@ scheme provided by the server
 <div class="form-field">
 		<label for="${fieldHtmlId}">${field.label?html}:<#if field.mandatory><span class="mandatory-indicator">${msg("form.required.fields.marker")}</span></#if></label>
 		<#if showPageScheme == "true">
-		<label for="${fieldHtmlId}-useScheme">Use Page Scheme</label>
+		Use Page Scheme: 
 		<input class="formsCheckBox" id="${fieldHtmlId}-useScheme" type="checkbox" tabindex="0" name="-" 
-             value="true" checked="checked" onchange="SelectPage.hideSchemes()"/>
+             value="true" checked="checked"/>
         <div id="${fieldHtmlId}-schemeModule">
 			<select id="${fieldHtmlId}-schemes" name="${field.name}-schemes">
 			</select>
@@ -26,7 +26,8 @@ scheme provided by the server
 <script type="text/javascript">//<![CDATA[
 var SelectPage = new PDFToolkit.SelectPage("${fieldHtmlId}").setOptions(
 	      {
-	         nodeRef: "${form.destination?js_string}"
+	         nodeRef: "${form.destination?js_string}",
+	         showPageScheme: "${showPageScheme}"
 	      }).setMessages(
 	         {}
 	      );
