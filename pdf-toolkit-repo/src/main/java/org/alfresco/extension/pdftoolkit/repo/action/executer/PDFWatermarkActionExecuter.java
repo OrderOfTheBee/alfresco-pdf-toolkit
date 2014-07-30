@@ -205,7 +205,8 @@ public class PDFWatermarkActionExecuter
         options.put(PARAM_PAGE, ruleAction.getParameterValue(PARAM_PAGE));
         options.put(PARAM_POSITION, ruleAction.getParameterValue(PARAM_POSITION));
         options.put(PARAM_WATERMARK_DEPTH, ruleAction.getParameterValue(PARAM_WATERMARK_DEPTH));
-
+        options.put(PARAM_INPLACE, ruleAction.getParameterValue(PARAM_INPLACE));
+        
         try
         {
             if (ruleAction.getParameterValue(PARAM_WATERMARK_TYPE) != null

@@ -133,6 +133,7 @@ public class PDFInsertAtPageActionExecuter
         options.put(PARAM_DESTINATION_FOLDER, ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER));
         options.put(PARAM_INSERT_AT_PAGE, ruleAction.getParameterValue(PARAM_INSERT_AT_PAGE));
         options.put(PARAM_DESTINATION_NAME, ruleAction.getParameterValue(PARAM_DESTINATION_NAME));
+        options.put(PARAM_INPLACE, ruleAction.getParameterValue(PARAM_INPLACE));
         
         try
         {

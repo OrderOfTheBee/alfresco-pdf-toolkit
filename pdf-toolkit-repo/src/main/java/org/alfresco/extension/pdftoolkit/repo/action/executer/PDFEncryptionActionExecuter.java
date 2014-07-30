@@ -189,7 +189,8 @@ public class PDFEncryptionActionExecuter
         options.put(PARAM_ENCRYPTION_LEVEL, ruleAction.getParameterValue(PARAM_ENCRYPTION_LEVEL));
         options.put(PARAM_EXCLUDE_METADATA, ruleAction.getParameterValue(PARAM_EXCLUDE_METADATA));
         options.put(PARAM_OPTIONS_LEVEL, ruleAction.getParameterValue(PARAM_OPTIONS_LEVEL));
-
+        options.put(PARAM_INPLACE, ruleAction.getParameterValue(PARAM_INPLACE));
+        
         try
         {
             this.action(ruleAction, actionedUponNodeRef, actionedUponContentReader, options);
