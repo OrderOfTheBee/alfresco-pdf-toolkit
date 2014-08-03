@@ -238,12 +238,22 @@ PDFToolkit.Util = {};
 		
 		onReady:  function DependentSelect_onReady()
 		{	
-			YAHOO.util.Event.addListener([this.id], "change", this.toggleDependentFields, this);
+			YAHOO.util.Event.addListener([this.id], "change", this.onChange, this);
+			var select = YAHOO.util.Dom.get(this.id);
+			this.toggleDependentFields(this.options.showSelectValues, select, this.options.htmlId);
 		},
 		
-		toggleDependentFields: function DependentSelect_toggleDependentFields(event, that)
+		onChange: function DependentSelect_onChange(event, that)
 		{
 			var config = that.options.showSelectValues;
+			var htmlId = that.options.htmlId
+			var select = event.srcElement;
+			
+			that.toggleDependentFields(config, select, htmlId);
+		},
+		
+		toggleDependentFields: function DependentSelect_toggleDependentFields(config, select, htmlId)
+		{
 			// anything assigned to another show value will be hidden
 			for(index in config)
 			{
@@ -253,11 +263,11 @@ PDFToolkit.Util = {};
 				
 				// if the event source is the right option, show the fields
 				// if it is not, hide these fields
-				if(name === event.srcElement.value)
+				if(name === select.value)
 				{
 					for(fieldIndex in fields)
 					{
-						var field = YAHOO.util.Dom.get(that.options.htmlId + "_" + fields[fieldIndex]);
+						var field = YAHOO.util.Dom.get(htmlId + "_" + fields[fieldIndex]);
 						var container = field.parentElement;
 						container.style.display = 'block';
 					}
@@ -266,7 +276,7 @@ PDFToolkit.Util = {};
 				{
 					for(fieldIndex in fields)
 					{
-						var field = YAHOO.util.Dom.get(that.options.htmlId + "_" + fields[fieldIndex]);
+						var field = YAHOO.util.Dom.get(htmlId + "_" + fields[fieldIndex]);
 						var container = field.parentElement;
 						container.style.display = 'none';
 					}
