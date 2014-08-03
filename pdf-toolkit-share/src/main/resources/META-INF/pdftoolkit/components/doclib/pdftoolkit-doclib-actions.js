@@ -77,6 +77,8 @@ PDFToolkit.Util = {};
 				this.pagesModule.hide();
 			}
 			
+			this.setValue(null, this);
+			
 			YAHOO.util.Event.addListener([this.id + "-useScheme"], "click", this.toggleSchemes, this);
 		},
 		
@@ -90,6 +92,7 @@ PDFToolkit.Util = {};
 						fn: function(response)
 						{
 							var pageSelect = YAHOO.util.Dom.get(this.id + "-pages");
+							YAHOO.util.Event.addListener(pageSelect, "change", this.setValue, this);
 							var pages = parseInt(response.json.pageCount);
 							if(pages > 0)
 							{
@@ -101,6 +104,7 @@ PDFToolkit.Util = {};
 									pageSelect.add(opt, null);
 								}
 							}
+							this.setValue(null, this);
 						},
 						scope: this
 					},
@@ -128,6 +132,8 @@ PDFToolkit.Util = {};
 						fn: function(response)
 						{
 							var schemeSelect = YAHOO.util.Dom.get(this.id + "-schemes");
+							YAHOO.util.Event.addListener(schemeSelect, "change", this.setValue, this);
+							
 							var schemes = response.json.schemes;
 							for(index in schemes)
 							{
@@ -136,6 +142,7 @@ PDFToolkit.Util = {};
 								opt.value = schemes[index].value;
 								schemeSelect.add(opt, null);
 							}
+							this.setValue(null, this);
 						},
 						scope: this
 					},
@@ -159,11 +166,36 @@ PDFToolkit.Util = {};
 			{
 				that.schemesModule.show();
 				that.pagesModule.hide();
+				that.setValue(event, that);
 			}
 			else
 			{
 				that.schemesModule.hide();
 				that.pagesModule.show();
+				that.setValue(event, that)
+			}
+		},
+		
+		setValue: function SelectPage_setValues(event, that)
+		{
+			var useScheme = YAHOO.util.Dom.get(that.id + "-useScheme").checked;
+			var schemeSelect = YAHOO.util.Dom.get(that.id + "-schemes");
+			var pageSelect = YAHOO.util.Dom.get(that.id + "-pages");
+			var hiddenValue = YAHOO.util.Dom.get(that.id);
+			
+			if(useScheme)
+			{
+				if(schemeSelect.selectedIndex != -1)
+				{
+					hiddenValue.value = schemeSelect.options[schemeSelect.selectedIndex].value;
+				}
+			}
+			else
+			{
+				if(pageSelect.selectedIndex != -1)
+				{
+					hiddenValue.value = pageSelect.options[pageSelect.selectedIndex].value;
+				}
 			}
 		}
 	});

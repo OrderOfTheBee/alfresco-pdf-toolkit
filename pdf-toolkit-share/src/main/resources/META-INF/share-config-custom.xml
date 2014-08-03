@@ -443,7 +443,7 @@
                     </field>
                     <field id="watermark-type">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/dependentSelect.ftl">
-                    		<control-param name="showSelectValues">text:prop_watermark-text,prop_watermark-font,prop_watermark-size;image:assoc_watermark-image</control-param>
+                    		<control-param name="showSelectValues">text:prop_watermark-text,prop_watermark-font,prop_watermark-size;image:assoc_watermark-image-cntrl</control-param>
                     	</control>
                     </field>
                 </appearance>

@@ -13,9 +13,7 @@ import org.alfresco.repo.forms.processor.AbstractFilter;
 import org.alfresco.repo.forms.processor.action.ActionFormResult;
 import org.alfresco.repo.model.Repository;
 import org.alfresco.service.ServiceRegistry;
-import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
-import org.alfresco.service.cmr.repository.StoreRef;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

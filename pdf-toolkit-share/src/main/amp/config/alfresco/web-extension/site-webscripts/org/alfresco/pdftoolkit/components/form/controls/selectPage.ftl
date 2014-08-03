@@ -21,7 +21,7 @@ scheme provided by the server
 			</select>
 		</div>
 		
-		<input type="hidden" id="${fieldHtmlId}"/>
+		<input type="hidden" name="${field.name}" id="${fieldHtmlId}"/>
 </div>
 <script type="text/javascript">//<![CDATA[
 var SelectPage = new PDFToolkit.SelectPage("${fieldHtmlId}").setOptions(
