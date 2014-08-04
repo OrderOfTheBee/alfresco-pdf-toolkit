@@ -157,6 +157,17 @@
 		</property>
 	</bean>
 
+	<!-- PDF/A level constants -->
+	<bean id="pdfc-archivelevel" class="org.alfresco.extension.pdftoolkit.constraints.MapConstraint" parent="action-constraint">
+		<property name="constraintMap">
+			<map>
+				<entry key="PDFX1A2001" value="1"/>
+				<entry key="PDFA1A" value="3"/>
+				<entry key="PDFA1B" value="4"/>
+			</map>
+		</property>
+	</bean>
+	
    	<!--  PDF Toolkit service, allows PDF actions to be used in Javascript API -->
     <bean id="pdftoolkit" parent="baseJavaScriptExtension" 
         class="org.alfresco.extension.pdftoolkit.service.PDFToolkitService">

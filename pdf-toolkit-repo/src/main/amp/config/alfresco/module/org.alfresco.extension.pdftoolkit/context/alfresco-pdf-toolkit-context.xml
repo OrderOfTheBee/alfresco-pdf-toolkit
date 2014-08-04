@@ -164,6 +164,24 @@
         <property name="createNew" value="true"/>
 	</bean>
 	
+	<!-- pdf-convert-to-archivable -->
+	<bean id="pdf-convert-to-archivable"
+		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFConvertToArchivableActionExecuter"
+		parent="action-executer" depends-on="pdftoolkit-messages">
+		<property name="serviceRegistry">
+			<ref bean="ServiceRegistry"/>
+		</property>
+		<property name="applicableTypes">
+            <list>
+                <value>{http://www.alfresco.org/model/content/1.0}content</value>
+            </list>
+        </property>
+        <property name="createNew" value="true"/>
+        <property name="archiveLevelConstraint">
+			<ref bean="pdfc-archivelevel"/>
+		</property>
+	</bean>
+	
 	<!-- Page count web script -->
     <bean id="webscript.org.alfresco.extension.pdftoolkit.pagecount.get" class="org.alfresco.extension.pdftoolkit.webscripts.GetPageCount" parent="webscript">
 		<property name="ServiceRegistry" ref="ServiceRegistry"/>
