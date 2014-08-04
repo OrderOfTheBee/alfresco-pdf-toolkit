@@ -5,7 +5,7 @@
 		<module>
 			<id>PDF Toolkit Actions UI - Signature</id>
 			<description>Expose the signature action doclib action UI</description>
-			<version>1.1.2</version>
+			<version>1.2</version>
 			<auto-deploy>true</auto-deploy>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
@@ -37,7 +37,7 @@
 		<module>
 			<id>PDF Toolkit Actions UI - Watermark</id>
 			<description>Expose the watermark action doclib action UI</description>
-			<version>1.1.2</version>
+			<version>1.2</version>
 			<auto-deploy>true</auto-deploy>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
@@ -69,7 +69,7 @@
 		<module>
 			<id>PDF Toolkit Actions UI - Append</id>
 			<description>Expose the append action doclib action UI</description>
-			<version>1.1.2</version>
+			<version>1.2</version>
 			<auto-deploy>true</auto-deploy>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
@@ -101,7 +101,7 @@
 		<module>
 			<id>PDF Toolkit Actions UI - Encryption</id>
 			<description>Expose the encryption action doclib action UI</description>
-			<version>1.1.2</version>
+			<version>1.2</version>
 			<auto-deploy>true</auto-deploy>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
@@ -133,7 +133,7 @@
 		<module>
 			<id>PDF Toolkit Actions UI - Insert at Page</id>
 			<description>Expose the insert at page action doclib action UI</description>
-			<version>1.1.2</version>
+			<version>1.2</version>
 			<auto-deploy>true</auto-deploy>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
@@ -165,7 +165,7 @@
 		<module>
 			<id>PDF Toolkit Actions UI - Split</id>
 			<description>Expose the split action doclib action UI</description>
-			<version>1.1.2</version>
+			<version>1.2</version>
 			<auto-deploy>true</auto-deploy>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
@@ -197,7 +197,7 @@
 		<module>
 			<id>PDF Toolkit Actions UI - Split at Page</id>
 			<description>Expose the split at page action doclib action UI</description>
-			<version>1.1.2</version>
+			<version>1.2</version>
 			<auto-deploy>true</auto-deploy>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
@@ -229,7 +229,7 @@
 		<module>
 			<id>PDF Toolkit Actions UI - Delete Page</id>
 			<description>Expose the delete page action doclib action UI</description>
-			<version>1.1.2</version>
+			<version>1.2</version>
 			<auto-deploy>true</auto-deploy>
 			<configurations>
 				<!-- Share config elements for the doclib actions -->
@@ -262,7 +262,7 @@
 		<module>
 			<id>PDF Toolkit Actions UI - Transform to PDF/A</id>
 			<description>Expose the PDF/A transformation action doclib action UI</description>
-			<version>1.1.2</version>
+			<version>1.2</version>
 			<auto-deploy>true</auto-deploy>
 			<configurations>
 				<!-- Share config elements for the doclib actions -->
