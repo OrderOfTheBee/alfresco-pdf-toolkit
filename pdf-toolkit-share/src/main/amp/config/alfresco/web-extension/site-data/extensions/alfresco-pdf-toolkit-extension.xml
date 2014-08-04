@@ -263,7 +263,7 @@
 			<id>PDF Toolkit Actions UI - Transform to PDF/A</id>
 			<description>Expose the PDF/A transformation action doclib action UI</description>
 			<version>1.1.2</version>
-			<auto-deploy>false</auto-deploy>
+			<auto-deploy>true</auto-deploy>
 			<configurations>
 				<!-- Share config elements for the doclib actions -->
 				<config evaluator="string-compare" condition="DocLibActions">

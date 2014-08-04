@@ -528,7 +528,7 @@
         </forms>
     </config>
 
-	<config evaluator="string-compare" condition="pdf-encryption">
+	<config evaluator="string-compare" condition="pdf-convert-to-archivable">
     	<forms>
         	<form>
         		<field-visibility>

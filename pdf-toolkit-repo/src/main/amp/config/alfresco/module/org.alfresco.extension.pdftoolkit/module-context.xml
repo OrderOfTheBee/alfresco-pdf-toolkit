@@ -161,9 +161,9 @@
 	<bean id="pdfc-archivelevel" class="org.alfresco.extension.pdftoolkit.constraints.MapConstraint" parent="action-constraint">
 		<property name="constraintMap">
 			<map>
-				<entry key="PDFX1A2001" value="1"/>
-				<entry key="PDFA1A" value="3"/>
-				<entry key="PDFA1B" value="4"/>
+				<entry key="1" value="PDFX1A2001"/>
+				<entry key="3" value="PDFA1A"/>
+				<entry key="4" value="PDFA1B"/>
 			</map>
 		</property>
 	</bean>
