@@ -270,7 +270,7 @@
 					<actions>
 						<action id="pdf-convert-to-archivable"
 							type="javascript"
-							label="actions.pdftoolkit.deletePDFpages">
+							label="actions.pdftoolkit.convertToArchivable">
 			        		<param name="function">onActionFormDialog</param>
 			        		<param name="itemKind">pdf-action</param>
 			        		<param name="itemId">pdf-convert-to-archivable</param>
