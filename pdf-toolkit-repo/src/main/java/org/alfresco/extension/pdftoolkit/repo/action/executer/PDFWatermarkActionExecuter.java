@@ -262,12 +262,7 @@ public class PDFWatermarkActionExecuter
 
         try
         {
-            // get a temp file to stash the watermarked PDF in before moving to
-            // repo
-            File alfTempDir = TempFileProvider.getTempDir();
-            tempDir = new File(alfTempDir.getPath() + File.separatorChar + actionedUponNodeRef.getId());
-            tempDir.mkdir();
-            File file = new File(tempDir, serviceRegistry.getFileFolderService().getFileInfo(actionedUponNodeRef).getName());
+            File file = getTempFile(actionedUponNodeRef);
 
             // get the PDF input stream and create a reader for iText
             PdfReader reader = new PdfReader(actionedUponContentReader.getContentInputStream());
@@ -418,12 +413,7 @@ public class PDFWatermarkActionExecuter
 
         try
         {
-            // get a temp file to stash the watermarked PDF in before moving to
-            // repo
-            File alfTempDir = TempFileProvider.getTempDir();
-            tempDir = new File(alfTempDir.getPath() + File.separatorChar + actionedUponNodeRef.getId());
-            tempDir.mkdir();
-            File file = new File(tempDir, serviceRegistry.getFileFolderService().getFileInfo(actionedUponNodeRef).getName());
+            File file = getTempFile(actionedUponNodeRef);
 
             // get the PDF input stream and create a reader for iText
             PdfReader reader = new PdfReader(actionedUponContentReader.getContentInputStream());

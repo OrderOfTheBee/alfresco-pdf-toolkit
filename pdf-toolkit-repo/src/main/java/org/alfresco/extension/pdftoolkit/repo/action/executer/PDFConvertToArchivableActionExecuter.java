@@ -1,20 +1,32 @@
 package org.alfresco.extension.pdftoolkit.repo.action.executer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.jooreports.converter.DocumentFamily;
-import net.sf.jooreports.converter.DocumentFormat;
-
+import org.alfresco.enterprise.repo.content.JodConverter;
+import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.extension.pdftoolkit.constraints.MapConstraint;
+import org.alfresco.model.ContentModel;
 import org.alfresco.repo.action.ParameterDefinitionImpl;
 import org.alfresco.service.cmr.action.Action;
 import org.alfresco.service.cmr.action.ParameterDefinition;
 import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
+import org.alfresco.service.cmr.repository.ContentService;
+import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.NodeRef;
+import org.alfresco.service.cmr.repository.NodeService;
+import org.alfresco.util.SocketOpenOfficeConnection;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.artofsolving.jodconverter.OfficeDocumentConverter;
+import org.artofsolving.jodconverter.document.DefaultDocumentFormatRegistry;
+import org.artofsolving.jodconverter.document.DocumentFamily;
+import org.artofsolving.jodconverter.document.DocumentFormat;
+import org.artofsolving.jodconverter.document.DocumentFormatRegistry;
 
 public class PDFConvertToArchivableActionExecuter extends BasePDFActionExecuter 
 {
@@ -36,6 +48,10 @@ public class PDFConvertToArchivableActionExecuter extends BasePDFActionExecuter
      */
     public static HashMap<String, String> archiveLevelConstraint          = new HashMap<String, String>();
     
+    private final String PDFA											  = "PDF/A";
+    
+    private JodConverter jodConverter;
+    
     /**
      * Add parameter definitions
      */
@@ -52,26 +68,60 @@ public class PDFConvertToArchivableActionExecuter extends BasePDFActionExecuter
 	protected void executeImpl(Action action, NodeRef actionedUponNodeRef) 
 	{
 		
-		// get a connection to OpenOffice via the usual Alfresco means
+		NodeService ns = serviceRegistry.getNodeService();
+		ContentService cs = serviceRegistry.getContentService();
 		
-		// create the right configuration for OpenOffice
+		if(!ns.exists(actionedUponNodeRef))
+		{
+			throw new AlfrescoRuntimeException("PDF/A convert action called on non-existent node: " + actionedUponNodeRef);
+		}
 		
+        Boolean inplace = Boolean.valueOf(String.valueOf(action.getParameterValue(PARAM_INPLACE)));
+        Integer archiveLevel = Integer.valueOf(String.valueOf(action.getParameterValue(PARAM_ARCHIVE_LEVEL)));
+        
+		// get an output file for the new PDF (temp file)
+        File out = getTempFile(actionedUponNodeRef);
+                   
+        // copy the source node content to a temp file
+        File in = nodeRefToTempFile(actionedUponNodeRef);
+        
 		// transform to PDF/A
+        DocumentFormatRegistry formatRegistry = new DefaultDocumentFormatRegistry();
+        formatRegistry.getFormatByExtension(PDF).setInputFamily(DocumentFamily.DRAWING);
+        OfficeDocumentConverter converter = new OfficeDocumentConverter(jodConverter.getOfficeManager(), formatRegistry);
+        
+		converter.convert(in, out, getDocumentFormat(archiveLevel));
+		
+		NodeRef destinationNode = createDestinationNode(String.valueOf(ns.getProperty(actionedUponNodeRef, ContentModel.PROP_NAME)), 
+        		(NodeRef)action.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, inplace);
+        ContentWriter writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
+        writer.setEncoding(cs.getReader(actionedUponNodeRef, ContentModel.PROP_CONTENT).getEncoding());
+        writer.setMimetype(FILE_MIMETYPE);
+        writer.putContent(out);
+
+        // delete the temp files
+        in.delete();
+        out.delete();
 
 	}
 
 	/**
-	* Returns DocumentFormat of PDF/A
+	* Returns a DocumentFormat that will output to PDF/A
 	*/
-	/*private DocumentFormat toDocumentFormatPDFA(int level) {
+	private DocumentFormat getDocumentFormat(int level) {
 
-	    DocumentFormat customPdfFormat = new DocumentFormat(PORTABEL_FORMAT, PDF_APP, "pdf");
-	    customPdfFormat.setExportFilter(DocumentFamily.TEXT, "writer_pdf_Export");
-	    final Map<String, Integer> pdfOptions = new HashMap<String, Integer>();
-	    pdfOptions.put("SelectPdfVersion", level);
-	    customPdfFormat.setExportOption(DocumentFamily.TEXT, "FilterData", pdfOptions);
-	    return customPdfFormat;
-	}*/
+		DocumentFormat format = new DocumentFormat(PDFA, PDF, FILE_MIMETYPE);
+	    Map<String, Object> properties = new HashMap<String, Object>();
+	    properties.put("FilterName", "draw_pdf_Export");
+
+	    Map<String, Object> filterData = new HashMap<String, Object>();
+	    filterData.put("SelectPdfVersion", level);
+	    properties.put("FilterData", filterData);
+
+	    format.setStoreProperties(DocumentFamily.DRAWING, properties);
+
+	    return format;
+	}
 	
     /**
      * Setter for constraint bean
@@ -81,5 +131,10 @@ public class PDFConvertToArchivableActionExecuter extends BasePDFActionExecuter
     public void setArchiveLevelConstraint(MapConstraint mc)
     {
         archiveLevelConstraint.putAll(mc.getAllowableValues());
+    }
+
+    public void setJodConverter(JodConverter jodConverter)
+    {
+    	this.jodConverter = jodConverter;
     }
 }

@@ -19,6 +19,7 @@
 package org.alfresco.extension.pdftoolkit.repo.action.executer;
 
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -32,9 +33,10 @@ import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
 import org.alfresco.service.cmr.model.FileInfo;
 import org.alfresco.service.cmr.model.FileNotFoundException;
 import org.alfresco.service.cmr.repository.ContentReader;
+import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.NodeRef;
-import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.namespace.QName;
+import org.alfresco.util.TempFileProvider;
 
 
 public abstract class BasePDFActionExecuter
@@ -44,6 +46,8 @@ public abstract class BasePDFActionExecuter
 	
     protected static final String 				FILE_EXTENSION 		= ".pdf";
     protected static final String 				FILE_MIMETYPE  		= "application/pdf";
+    protected static final String				PDF 				= "pdf";
+    
     protected ServiceRegistry     				serviceRegistry;
     //Default number of map entries at creation 
     protected static final int 					INITIAL_OPTIONS 	= 5;
@@ -152,5 +156,25 @@ public abstract class BasePDFActionExecuter
     	{
     		return 0;
     	}
+    }
+    
+    protected File getTempFile(NodeRef nodeRef)
+    {
+    	File alfTempDir = TempFileProvider.getTempDir();
+        File toolkitTempDir = new File(alfTempDir.getPath() + File.separatorChar + nodeRef.getId());
+        toolkitTempDir.mkdir();
+        File file = new File(toolkitTempDir, serviceRegistry.getFileFolderService().getFileInfo(nodeRef).getName());
+        
+        return file;
+    }
+    
+    protected File nodeRefToTempFile(NodeRef nodeRef)
+    {
+    	ContentService cs = serviceRegistry.getContentService();
+        File tempFromFile = TempFileProvider.createTempFile("PDFAConverter-", nodeRef.getId()
+                + FILE_EXTENSION);
+        ContentReader reader = cs.getReader(nodeRef, ContentModel.PROP_CONTENT);
+        reader.getContent(tempFromFile);
+        return tempFromFile;
     }
 }
