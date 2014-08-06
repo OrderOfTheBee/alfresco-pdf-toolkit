@@ -20,7 +20,7 @@ Current Functionality:
 * TIFF to PDF transformation (currently rather rudimentary, but functional)
 * Extended metadata to capture information about encryption or signature events
 * Search for encrypted or signed documents by encryption or signature metadata
-* Transform to PDF/A (Enterprise only due to dependency on Alfresco's JODConverter supporting classes).
+* Convert to PDF/A (Enterprise only due to dependency on Alfresco's JODConverter supporting classes).
 
 All of the actions are available as actions that can be used in content rules, and as document library actions in the document browse and detail views.
 
