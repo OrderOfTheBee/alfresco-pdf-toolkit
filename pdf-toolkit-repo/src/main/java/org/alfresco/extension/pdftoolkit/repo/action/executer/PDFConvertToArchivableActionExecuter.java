@@ -1,8 +1,7 @@
 package org.alfresco.extension.pdftoolkit.repo.action.executer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.ConnectException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +9,7 @@ import java.util.Map;
 import org.alfresco.enterprise.repo.content.JodConverter;
 import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.extension.pdftoolkit.constraints.MapConstraint;
+import org.alfresco.extension.pdftoolkit.model.PDFToolkitModel;
 import org.alfresco.model.ContentModel;
 import org.alfresco.repo.action.ParameterDefinitionImpl;
 import org.alfresco.service.cmr.action.Action;
@@ -19,7 +19,7 @@ import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
-import org.alfresco.util.SocketOpenOfficeConnection;
+import org.alfresco.service.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.artofsolving.jodconverter.OfficeDocumentConverter;
@@ -99,6 +99,8 @@ public class PDFConvertToArchivableActionExecuter extends BasePDFActionExecuter
         writer.setMimetype(FILE_MIMETYPE);
         writer.putContent(out);
 
+        // apply the marker aspect
+        ns.addAspect(destinationNode, PDFToolkitModel.ASPECT_ARCHIVAL, new HashMap<QName, Serializable>());
         // delete the temp files
         in.delete();
         out.delete();

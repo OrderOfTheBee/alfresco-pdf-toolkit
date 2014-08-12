@@ -18,4 +18,7 @@ public interface PDFToolkitModel
 	static final QName ASPECT_ENCRYPTED = QName.createQName(PDFTOOLKIT_MODEL_1_0_URI, "encrypted");
 	static final QName PROP_ENCRYPTIONDATE = QName.createQName(PDFTOOLKIT_MODEL_1_0_URI, "encryptiondate");
 	static final QName PROP_ENCRYPTEDBY = QName.createQName(PDFTOOLKIT_MODEL_1_0_URI, "encryptedby");
+	
+	//marker aspect for archival PDFs
+	static final QName ASPECT_ARCHIVAL = QName.createQName(PDFTOOLKIT_MODEL_1_0_URI, "archival");
 }
