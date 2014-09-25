@@ -33,12 +33,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.alfresco</groupId>
-			<artifactId>alfresco-enterprise-repository</artifactId>
-			<version>${alfresco.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.alfresco</groupId>
 			<artifactId>alfresco-web-client</artifactId>
 			<exclusions>
                <exclusion>
