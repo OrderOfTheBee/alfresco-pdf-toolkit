@@ -24,7 +24,7 @@
             | NOTE: Please Refer to Alfresco Support for access to Enterprise artifacts -->
         <alfresco.groupId>org.alfresco</alfresco.groupId>
         <!-- Defines the Alfresco version to work against. Allowed values are: org.alfresco | org.alfresco.enterprise -->
-        <alfresco.version>4.2.1</alfresco.version>
+        <alfresco.version>4.2.f</alfresco.version>
         <!-- This control the root logging level for all apps -->
         <app.log.root.level>WARN</app.log.root.level>
         <!-- This controls the default data location for dir.root -->
@@ -44,7 +44,7 @@
           <dependency>
               <groupId>${alfresco.groupId}</groupId>
               <artifactId>alfresco-platform-distribution</artifactId>
-              <version>${alfresco.version}</version>
+			  <version>${alfresco.version}</version>
               <type>pom</type>
               <scope>import</scope>
           </dependency>
