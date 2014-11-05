@@ -139,6 +139,7 @@ public class PDFAppendActionExecuter
         options.put(PARAM_TARGET_NODE, ruleAction.getParameterValue(PARAM_TARGET_NODE));
         options.put(PARAM_DESTINATION_FOLDER, ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER));
         options.put(PARAM_DESTINATION_NAME, ruleAction.getParameterValue(PARAM_DESTINATION_NAME));
+        options.put(PARAM_INPLACE, ruleAction.getParameterValue(PARAM_INPLACE));
 
         try
         {
@@ -191,42 +192,45 @@ public class PDFAppendActionExecuter
             String fileName = null;
             if(providedName != null)
             {
-            	fileName = String.valueOf(providedName) + FILE_EXTENSION;
+                fileName = String.valueOf(providedName) + FILE_EXTENSION;
             }
             else
             {
-            	fileName = String.valueOf(ns.getProperty(actionedUponNodeRef, ContentModel.PROP_NAME));
+                fileName = String.valueOf(ns.getProperty(actionedUponNodeRef, ContentModel.PROP_NAME));
             }
-            
+
             pdfTarget.save(tempDir + "" + File.separatorChar + fileName);
 
-            for (File file : tempDir.listFiles())
+            try
             {
-                try
+                File file = tempDir.listFiles()[0];
+                if (file.isFile())
                 {
-                    if (file.isFile())
-                    {
-                        // Get a writer and prep it for putting it back into the
-                        // repo
-                        NodeRef destinationNode = createDestinationNode(fileName, 
-                        		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, false);
-                        writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
-                        
-                        writer.setEncoding(reader.getEncoding()); // original
-                                                                  // encoding
-                        writer.setMimetype(FILE_MIMETYPE);
+                    // Get a writer and prep it for putting it back into the
+                    // repo
+                    boolean inplace = (boolean) options.get(PARAM_INPLACE);
+                    NodeRef destinationNode = createDestinationNode(fileName, 
+                            (NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, inplace);
+                    writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
 
-                        // Put it in the repo
-                        writer.putContent(file);
+                    writer.setEncoding(reader.getEncoding()); // original
+                    // encoding
+                    writer.setMimetype(FILE_MIMETYPE);
 
-                        // Clean up
-                        file.delete();
-                    }
+                    // Put it in the repo
+                    writer.putContent(file);
+
+                    // Clean up
+                    file.delete();
                 }
-                catch (FileExistsException e)
-                {
-                    throw new AlfrescoRuntimeException("Failed to process file.", e);
-                }
+            }
+            catch (ArrayIndexOutOfBoundsException e)
+            {
+                throw new AlfrescoRuntimeException("Failed to process file.", e);
+            }
+            catch (FileExistsException e)
+            {
+                throw new AlfrescoRuntimeException("Failed to process file.", e);
             }
         }
         catch (COSVisitorException e)
