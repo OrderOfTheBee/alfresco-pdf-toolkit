@@ -159,11 +159,17 @@
     	<forms>
         	<form>
             	<field-visibility>
+					<show id="inplace"/>
             		<show id="destination-folder"/>
             		<show id="target-node"/>
             		<show id="destination-name"/>
                 </field-visibility>
                 <appearance>
+                	<field id="inplace">
+                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
+                        	<control-param name="hideProperties">assoc_destination-folder</control-param>    
+                        </control>
+                	</field>
                 </appearance>
             </form>
         </forms>
