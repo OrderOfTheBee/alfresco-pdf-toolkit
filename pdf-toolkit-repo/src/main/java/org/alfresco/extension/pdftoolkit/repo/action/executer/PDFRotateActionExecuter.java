@@ -110,6 +110,11 @@ public class PDFRotateActionExecuter extends BasePDFActionExecuter {
             Boolean inplace = Boolean.valueOf(String.valueOf(action.getParameterValue(PARAM_INPLACE)));
             Integer degrees = Integer.valueOf(String.valueOf(action.getParameterValue(PARAM_DEGREES)));
             
+            if(degrees % 90 != 0)
+            {
+            	throw new AlfrescoRuntimeException("Rotation degres must be a multiple of 90 (90, 180, 270, etc)");
+            }
+            
             String fileName = null;
             if(providedName != null)
             {
