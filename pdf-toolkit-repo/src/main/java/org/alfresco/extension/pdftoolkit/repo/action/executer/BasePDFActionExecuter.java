@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.alfresco.error.AlfrescoRuntimeException;
+import org.alfresco.extension.pdftoolkit.service.PDFToolkitService;
 import org.alfresco.model.ContentModel;
 import org.alfresco.repo.action.ParameterDefinitionImpl;
 import org.alfresco.repo.action.executer.ActionExecuterAbstractBase;
@@ -49,6 +50,8 @@ public abstract class BasePDFActionExecuter
     protected static final String				PDF 				= "pdf";
     
     protected ServiceRegistry     				serviceRegistry;
+    protected PDFToolkitService					pdfToolkitService;
+    
     //Default number of map entries at creation 
     protected static final int 					INITIAL_OPTIONS 	= 5;
     public static final String                  PARAM_INPLACE    	= "inplace";
@@ -176,5 +179,10 @@ public abstract class BasePDFActionExecuter
         ContentReader reader = cs.getReader(nodeRef, ContentModel.PROP_CONTENT);
         reader.getContent(tempFromFile);
         return tempFromFile;
+    }
+    
+    public void setPDFToolkitService(PDFToolkitService pdfToolkitService)
+    {
+    	this.pdfToolkitService = pdfToolkitService;
     }
 }

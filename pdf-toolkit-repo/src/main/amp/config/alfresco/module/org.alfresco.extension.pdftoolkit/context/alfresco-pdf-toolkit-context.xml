@@ -3,6 +3,18 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<bean id="org.alfresco.extension.pdf-toolkit-action" abstract="true" parent="action-executer" depends-on="pdftoolkit-messages">
+		<property name="serviceRegistry">
+			<ref bean="ServiceRegistry" />
+		</property>
+		<property name="applicableTypes">
+            <list>
+                <value>{http://www.alfresco.org/model/content/1.0}content</value>
+            </list>
+        </property>
+        <property name="createNew" value="true"/>
+	</bean>
+	
 	<!-- pdfsplit -->
 	<bean id="pdf-split"
 		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFSplitActionExecuter"
