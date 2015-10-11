@@ -186,6 +186,7 @@
         		<field-visibility>
         			<show id="inplace"/>
         			<show id="destination-folder"/>
+        			<show id="destination-name"/>
         			<show id="user-password"/>
         			<show id="owner-password"/>
         			<show id="allow-print"/>
@@ -216,6 +217,7 @@
         		<field-visibility>
         			<show id="inplace"/>
         			<show id="destination-folder"/>
+        			<show id="destination-name"/>
         			<show id="private-key"/>
         			<show id="alias"/>
         			<show id="key-type"/>
@@ -263,6 +265,7 @@
         		<field-visibility>
         			<show id="inplace"/>
         			<show id="destination-folder"/>
+        			<show id="destination-name"/>
         			<show id="watermark-depth"/>
         			<show id="watermark-type"/>
         			<show id="watermark-image"/>

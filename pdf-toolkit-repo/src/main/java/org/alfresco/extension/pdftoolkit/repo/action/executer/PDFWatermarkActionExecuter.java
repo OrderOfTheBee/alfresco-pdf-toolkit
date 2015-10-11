@@ -22,6 +22,7 @@ package org.alfresco.extension.pdftoolkit.repo.action.executer;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,7 +45,7 @@ import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
 import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.NodeRef;
-import org.alfresco.util.TempFileProvider;
+import org.alfresco.service.cmr.repository.NodeService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -77,6 +78,7 @@ public class PDFWatermarkActionExecuter
     public static final String            NAME                     = "pdf-watermark";
     public static final String            PARAM_WATERMARK_IMAGE    = "watermark-image";
     public static final String            PARAM_DESTINATION_FOLDER = "destination-folder";
+    public static final String            PARAM_DESTINATION_NAME   = "destination-name";
     public static final String            PARAM_WATERMARK_DEPTH    = "watermark-depth";
     public static final String            PARAM_WATERMARK_TYPE     = "watermark-type";
     public static final String            PARAM_WATERMARK_TEXT     = "watermark-text";
@@ -153,6 +155,7 @@ public class PDFWatermarkActionExecuter
         paramList.add(new ParameterDefinitionImpl(PARAM_WATERMARK_FONT, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PARAM_WATERMARK_FONT), false, "pdfc-font"));
         paramList.add(new ParameterDefinitionImpl(PARAM_WATERMARK_SIZE, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PARAM_WATERMARK_SIZE), false, "pdfc-fontsize"));
         paramList.add(new ParameterDefinitionImpl(PARAM_WATERMARK_TYPE, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PARAM_WATERMARK_TYPE), false, "pdfc-watermarktype"));
+        paramList.add(new ParameterDefinitionImpl(PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PARAM_DESTINATION_NAME)));
 
         super.addParameterDefinitions(paramList);
     }
@@ -206,6 +209,7 @@ public class PDFWatermarkActionExecuter
         options.put(PARAM_POSITION, ruleAction.getParameterValue(PARAM_POSITION));
         options.put(PARAM_WATERMARK_DEPTH, ruleAction.getParameterValue(PARAM_WATERMARK_DEPTH));
         options.put(PARAM_INPLACE, ruleAction.getParameterValue(PARAM_INPLACE));
+        options.put(PARAM_DESTINATION_FOLDER, ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER));
         
         try
         {
@@ -259,7 +263,8 @@ public class PDFWatermarkActionExecuter
         PdfStamper stamp = null;
         File tempDir = null;
         ContentWriter writer = null;
-
+        NodeService ns = serviceRegistry.getNodeService();
+        
         try
         {
             File file = getTempFile(actionedUponNodeRef);
@@ -340,9 +345,20 @@ public class PDFWatermarkActionExecuter
 
             stamp.close();
             
+            Serializable providedName = ruleAction.getParameterValue(PARAM_DESTINATION_NAME);
+            String fileName = null;
+            if(providedName != null)
+            {
+            	fileName = String.valueOf(providedName) + FILE_EXTENSION;
+            }
+            else
+            {
+            	fileName = String.valueOf(ns.getProperty(actionedUponNodeRef, ContentModel.PROP_NAME));
+            }
+            
             // Get a writer and prep it for putting it back into the repo
             //can't use BasePDFActionExecuter.getWriter here need the nodeRef of the destination
-            NodeRef destinationNode = createDestinationNode(file.getName(), 
+            NodeRef destinationNode = createDestinationNode(fileName, 
             		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, inplace);
             writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
             

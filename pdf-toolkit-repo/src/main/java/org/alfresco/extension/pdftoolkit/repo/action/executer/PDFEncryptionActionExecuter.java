@@ -40,6 +40,7 @@ import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
 import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.NodeRef;
+import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.namespace.QName;
 import org.alfresco.util.TempFileProvider;
 import org.apache.commons.logging.Log;
@@ -75,6 +76,7 @@ public class PDFEncryptionActionExecuter
      */
     public static final String            NAME                                = "pdf-encryption";
     public static final String            PARAM_DESTINATION_FOLDER            = "destination-folder";
+    public static final String			  PARAM_DESTINATION_NAME			  = "destination-name";
 
     /**
      * Encryption constants
@@ -129,7 +131,8 @@ public class PDFEncryptionActionExecuter
         paramList.add(new ParameterDefinitionImpl(PARAM_ALLOW_ASSEMBLY, DataTypeDefinition.BOOLEAN, true, getParamDisplayLabel(PARAM_ALLOW_ASSEMBLY)));
         paramList.add(new ParameterDefinitionImpl(PARAM_ENCRYPTION_LEVEL, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PARAM_ENCRYPTION_LEVEL), false, "pdfc-encryptionlevel"));
         paramList.add(new ParameterDefinitionImpl(PARAM_EXCLUDE_METADATA, DataTypeDefinition.BOOLEAN, true, getParamDisplayLabel(PARAM_EXCLUDE_METADATA)));
-        
+        paramList.add(new ParameterDefinitionImpl(PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PARAM_DESTINATION_NAME)));
+
         super.addParameterDefinitions(paramList);
     }
 
@@ -190,7 +193,8 @@ public class PDFEncryptionActionExecuter
         options.put(PARAM_EXCLUDE_METADATA, ruleAction.getParameterValue(PARAM_EXCLUDE_METADATA));
         options.put(PARAM_OPTIONS_LEVEL, ruleAction.getParameterValue(PARAM_OPTIONS_LEVEL));
         options.put(PARAM_INPLACE, ruleAction.getParameterValue(PARAM_INPLACE));
-        
+        options.put(PARAM_DESTINATION_FOLDER, ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER));
+
         try
         {
             this.action(ruleAction, actionedUponNodeRef, actionedUponContentReader, options);
@@ -215,7 +219,8 @@ public class PDFEncryptionActionExecuter
         PdfStamper stamp = null;
         File tempDir = null;
         ContentWriter writer = null;
-
+        NodeService ns = serviceRegistry.getNodeService();
+        
         try
         {
             // get the parameters
@@ -245,8 +250,19 @@ public class PDFEncryptionActionExecuter
             stamp.setEncryption(userPassword.getBytes(Charset.forName("UTF-8")), ownerPassword.getBytes(Charset.forName("UTF-8")), permissions, encryptionType);
             stamp.close();
 
+            Serializable providedName = ruleAction.getParameterValue(PARAM_DESTINATION_NAME);
+            String fileName = null;
+            if(providedName != null)
+            {
+            	fileName = String.valueOf(providedName) + FILE_EXTENSION;
+            }
+            else
+            {
+            	fileName = String.valueOf(ns.getProperty(actionedUponNodeRef, ContentModel.PROP_NAME));
+            }
+            
             // write out to destination
-            NodeRef destinationNode = createDestinationNode(file.getName(), 
+            NodeRef destinationNode = createDestinationNode(fileName, 
             		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, inplace);
             writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
 

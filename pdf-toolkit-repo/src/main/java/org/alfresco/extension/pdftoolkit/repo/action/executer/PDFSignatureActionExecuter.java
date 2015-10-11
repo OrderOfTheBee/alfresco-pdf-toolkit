@@ -46,6 +46,7 @@ import org.alfresco.service.cmr.repository.ContentIOException;
 import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.NodeRef;
+import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.namespace.QName;
 import org.alfresco.util.TempFileProvider;
 import org.apache.commons.logging.Log;
@@ -85,6 +86,7 @@ public class PDFSignatureActionExecuter
     public static final String            NAME                     = "pdf-signature";
     public static final String            PARAM_PRIVATE_KEY        = "private-key";
     public static final String            PARAM_DESTINATION_FOLDER = "destination-folder";
+    public static final String			  PARAM_DESTINATION_NAME   = "destination-name";
     public static final String            PARAM_VISIBILITY         = "visibility";
     /*
      * don't confuse the location field below with the position field inherited
@@ -149,6 +151,7 @@ public class PDFSignatureActionExecuter
         paramList.add(new ParameterDefinitionImpl(PARAM_KEY_TYPE, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PARAM_KEY_TYPE), false, "pdfc-keytype"));
         paramList.add(new ParameterDefinitionImpl(PARAM_ALIAS, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PARAM_ALIAS)));
         paramList.add(new ParameterDefinitionImpl(PARAM_STORE_PASSWORD, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PARAM_STORE_PASSWORD)));
+        paramList.add(new ParameterDefinitionImpl(PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PARAM_DESTINATION_NAME)));
 
         super.addParameterDefinitions(paramList);
 
@@ -219,6 +222,8 @@ public class PDFSignatureActionExecuter
         ContentWriter writer = null;
         KeyStore ks = null;
 
+        NodeService ns = serviceRegistry.getNodeService();
+        
         try
         {
             // get a keystore instance by
@@ -282,8 +287,19 @@ public class PDFSignatureActionExecuter
 
             stamp.close();
 
+            Serializable providedName = ruleAction.getParameterValue(PARAM_DESTINATION_NAME);
+            String fileName = null;
+            if(providedName != null)
+            {
+            	fileName = String.valueOf(providedName) + FILE_EXTENSION;
+            }
+            else
+            {
+            	fileName = String.valueOf(ns.getProperty(actionedUponNodeRef, ContentModel.PROP_NAME));
+            }
+            
             //can't use BasePDFActionExecuter.getWriter here need the nodeRef of the destination
-            NodeRef destinationNode = createDestinationNode(file.getName(), 
+            NodeRef destinationNode = createDestinationNode(fileName, 
             		(NodeRef)ruleAction.getParameterValue(PARAM_DESTINATION_FOLDER), actionedUponNodeRef, inplace);
             writer = serviceRegistry.getContentService().getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
             
