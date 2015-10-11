@@ -178,7 +178,11 @@ PDFToolkit.Util = {};
 		
 		setValue: function SelectPage_setValues(event, that)
 		{
-			var useScheme = YAHOO.util.Dom.get(that.id + "-useScheme").checked;
+			var useScheme = false;
+			if(YAHOO.util.Dom.get(that.id + "-useScheme"))
+			{
+				useScheme = YAHOO.util.Dom.get(that.id + "-useScheme").checked;
+			}
 			var schemeSelect = YAHOO.util.Dom.get(that.id + "-schemes");
 			var pageSelect = YAHOO.util.Dom.get(that.id + "-pages");
 			var hiddenValue = YAHOO.util.Dom.get(that.id);
