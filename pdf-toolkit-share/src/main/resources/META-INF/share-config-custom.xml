@@ -202,7 +202,7 @@
                 <appearance>
                 	<field id="inplace">
                 		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
-                        	<control-param name="hideProperties">assoc_destination-folder</control-param>    
+                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
                         </control>
                 	</field>
                 </appearance>
@@ -234,7 +234,7 @@
                 <appearance>
                 	<field id="inplace">
                 		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
-                        	<control-param name="hideProperties">assoc_destination-folder</control-param>    
+                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
                         </control>
                 	</field>
                 	<field id="visibility">
@@ -277,7 +277,7 @@
                 <appearance>
                 	<field id="inplace">
                 		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
-                        	<control-param name="hideProperties">assoc_destination-folder</control-param>    
+                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
                         </control>
                 	</field>
                     <field id="page">
@@ -313,7 +313,7 @@
                 <appearance>
                 	<field id="inplace">
                 		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
-                        	<control-param name="hideProperties">assoc_destination-folder</control-param>    
+                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
                         </control>
                 	</field>
                 	<field id="insert-at-page">
@@ -338,7 +338,7 @@
                 <appearance>
                 	<field id="inplace">
                 		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
-                        	<control-param name="hideProperties">assoc_destination-folder</control-param>    
+                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
                         </control>
                 	</field>
                 </appearance>
@@ -389,7 +389,7 @@
                 <appearance>
                 	<field id="inplace">
                 		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
-                        	<control-param name="hideProperties">assoc_destination-folder</control-param>    
+                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
                         </control>
                 	</field>
                 </appearance>
