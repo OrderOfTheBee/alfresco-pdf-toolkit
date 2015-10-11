@@ -14,9 +14,9 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>repo</artifactId>
-    <name>Alfresco Repository and Explorer Client</name>
+    <name>Alfresco Repository WAR Aggregator</name>
     <packaging>war</packaging>
-    <description>Alfresco Repository and Explorer Client</description>
+    <description>Alfresco Repository aggregator, installs your repository AMPs in the Alfresco WAR for aggregation and easy deployment purposes</description>
 
     <parent>
         <groupId>org.alfresco.extension</groupId>
@@ -27,16 +27,35 @@
     <dependencies>
         <dependency>
             <groupId>${alfresco.groupId}</groupId>
-            <artifactId>alfresco</artifactId>
+            <artifactId>${alfresco.repo.artifactId}</artifactId>
+            <version>${alfresco.version}</version>
             <type>war</type>
         </dependency>
-        <!-- PDF Toolkit repo AMP -->
+        <!-- Demonstrating the dependency / installation of the repo AMP developed in the 'repo-amp' module -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>pdf-toolkit-repo</artifactId>
             <version>${project.version}</version>
             <type>amp</type>
         </dependency>
+        <!-- Uncomment if you are using SPP (SharePoint Protocol Support) for Online Edit etc -->
+        <!--
+        <dependency>
+            <groupId>${alfresco.groupId}</groupId>
+            <artifactId>alfresco-spp</artifactId>
+            <version>${alfresco.version}</version>
+            <type>amp</type>
+        </dependency>
+        -->
+        <!-- Uncomment if you are using the RM (Records Management) module. -->
+        <!--
+        <dependency>
+            <groupId>${alfresco.groupId}</groupId>
+            <artifactId>alfresco-rm</artifactId>
+            <version>${alfresco.rm.version}</version>
+            <type>amp</type>
+        </dependency>
+        -->
     </dependencies>
 
     <build>
@@ -51,29 +70,46 @@
                         | NOTE: First-win resource strategy is used by the WAR plugin
                          -->
                     <overlays>
-                        <!-- Current project customizations -->
+                        <!-- Current project customizations. This is normally empty, since customizations come from the AMPs -->
                         <overlay/>
                         <!-- The Alfresco WAR -->
                         <overlay>
                             <groupId>${alfresco.groupId}</groupId>
-                            <artifactId>alfresco</artifactId>
+                            <artifactId>${alfresco.repo.artifactId}</artifactId>
                             <type>war</type>
                             <!-- To allow inclusion of META-INF -->
                             <excludes/>
                         </overlay>
-                        <!-- Add / order your AMPs here -->
+                        <!-- Add / sort your AMPs here -->
                         <overlay>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>pdf-toolkit-repo</artifactId>
                             <type>amp</type>
                         </overlay>
+                        <!-- Uncomment if you are using SPP -->
+                        <!--
+                        <overlay>
+                            <groupId>${alfresco.groupId}</groupId>
+                            <artifactId>alfresco-spp</artifactId>
+                            <type>amp</type>
+                        </overlay>
+                        -->
+                        <!-- Uncomment if you are using RM -->
+                        <!--
+                        <overlay>
+                            <groupId>${alfresco.groupId}</groupId>
+                            <artifactId>alfresco-rm</artifactId>
+                            <type>amp</type>
+                        </overlay>
+                        -->
                     </overlays>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
     <profiles>
-        <!-- Overrides the run profile to disable securecomms -->
+        <!-- Overrides the run profile to disable securecomms and add rapid development configuration -->
         <profile>
             <id>run</id>
             <build>
@@ -128,6 +164,13 @@
                     </plugin>
                 </plugins>
             </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.alfresco.maven</groupId>
+                    <artifactId>alfresco-rad</artifactId>
+                    <version>${maven.alfresco.version}</version>
+                </dependency>
+            </dependencies>
         </profile>
     </profiles>
 </project>

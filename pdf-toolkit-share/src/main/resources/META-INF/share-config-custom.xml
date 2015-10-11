@@ -377,13 +377,14 @@
         </forms>
     </config>
 
-	<config evaluator="string-compare" condition="pdf-convert-to-archivable">
+	<config evaluator="string-compare" condition="pdf-rotate">
     	<forms>
         	<form>
         		<field-visibility>
         			<show id="inplace"/>
         			<show id="destination-folder"/>
-        			<show id="archive-level"/>
+        			<show id="destination-name"/>
+        			<show id="degrees"/>
         		</field-visibility>
                 <appearance>
                 	<field id="inplace">

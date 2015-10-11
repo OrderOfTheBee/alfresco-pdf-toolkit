@@ -57,8 +57,5 @@
             </properties>
         </aspect>
         
-        <!-- Marker aspect for PDF/A documents -->
-        <aspect name="pdft:archival"></aspect>
-        
     </aspects>
 </model>

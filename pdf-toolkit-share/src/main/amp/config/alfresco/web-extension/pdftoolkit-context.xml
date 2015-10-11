@@ -4,7 +4,7 @@
 <beans>
 
 	<!-- Add messages for pdf toolkit extension -->
-	<bean id="mycompany.resources"
+	<bean id="pdftoolkit.share.resources"
 		class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
 		<property name="resourceBundles">
 			<list>
