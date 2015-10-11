@@ -18,8 +18,15 @@
 
 package org.alfresco.extension.pdftoolkit.service;
 
+import java.io.File;
+import java.io.Serializable;
+
+import org.alfresco.service.cmr.repository.ContentReader;
+import org.alfresco.service.cmr.repository.NodeRef;
+
 public interface PDFToolkitService
 {
+	// the actual action code
     public void encryptPDF();
     public void signPDF();
     public void watermarkPDF();
@@ -28,4 +35,11 @@ public interface PDFToolkitService
     public void insertPDF();
     public void deletePagesFromPDF();
     public void rotatePDF();
+    
+    // common support methods
+    public ContentReader getReader(NodeRef nodeRef);
+    public NodeRef createDestinationNode(String filename, NodeRef destinationParent, NodeRef target, boolean inplace, boolean createNew);
+    public int getInteger(Serializable val);
+    public File getTempFile(NodeRef nodeRef);
+    public File nodeRefToTempFile(NodeRef nodeRef);
 }

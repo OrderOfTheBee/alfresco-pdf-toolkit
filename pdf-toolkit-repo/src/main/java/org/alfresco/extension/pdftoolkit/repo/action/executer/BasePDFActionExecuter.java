@@ -19,35 +19,20 @@
 package org.alfresco.extension.pdftoolkit.repo.action.executer;
 
 
-import java.io.File;
-import java.io.Serializable;
 import java.util.List;
 
-import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.extension.pdftoolkit.service.PDFToolkitService;
-import org.alfresco.model.ContentModel;
 import org.alfresco.repo.action.ParameterDefinitionImpl;
 import org.alfresco.repo.action.executer.ActionExecuterAbstractBase;
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.action.ParameterDefinition;
 import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
-import org.alfresco.service.cmr.model.FileInfo;
-import org.alfresco.service.cmr.model.FileNotFoundException;
-import org.alfresco.service.cmr.repository.ContentReader;
-import org.alfresco.service.cmr.repository.ContentService;
-import org.alfresco.service.cmr.repository.NodeRef;
-import org.alfresco.service.namespace.QName;
-import org.alfresco.util.TempFileProvider;
 
 
 public abstract class BasePDFActionExecuter
     extends ActionExecuterAbstractBase
 {
 	private boolean createNew = true;
-	
-    protected static final String 				FILE_EXTENSION 		= ".pdf";
-    protected static final String 				FILE_MIMETYPE  		= "application/pdf";
-    protected static final String				PDF 				= "pdf";
     
     protected ServiceRegistry     				serviceRegistry;
     protected PDFToolkitService					pdfToolkitService;
@@ -90,96 +75,6 @@ public abstract class BasePDFActionExecuter
      * @param actionedUponNodeRef
      * @return
      */
-    protected ContentReader getReader(NodeRef nodeRef)
-    {
-        // First check that the node is a sub-type of content
-        QName typeQName = serviceRegistry.getNodeService().getType(nodeRef);
-        if (serviceRegistry.getDictionaryService().isSubClass(typeQName, ContentModel.TYPE_CONTENT) == false)
-        {
-            // it is not content, so can't transform
-            return null;
-        }
-
-        // Get the content reader
-        ContentReader contentReader = serviceRegistry.getContentService().getReader(nodeRef, ContentModel.PROP_CONTENT);
-
-        return contentReader;
-    }
-
-    /**
-     * @param ruleAction
-     * @param filename
-     * @return
-     */
-    protected NodeRef createDestinationNode(String filename, NodeRef destinationParent, NodeRef target, boolean inplace)
-    {
-
-    	NodeRef destinationNode;
-    	
-    	// if inplace mode is turned on, the destination for the modified content
-    	// is the original node
-    	if(inplace)
-    	{
-    		return target;
-    	}
-    	
-    	if(createNew)
-    	{
-	    	//create a file in the right location
-	        FileInfo fileInfo = serviceRegistry.getFileFolderService().create(destinationParent, filename, ContentModel.TYPE_CONTENT);
-	        destinationNode = fileInfo.getNodeRef();
-    	}
-    	else
-    	{
-    		try 
-    		{
-	    		FileInfo fileInfo = serviceRegistry.getFileFolderService().copy(target, destinationParent, filename);
-	    		destinationNode = fileInfo.getNodeRef();
-    		}
-    		catch(FileNotFoundException fnf)
-    		{
-    			throw new AlfrescoRuntimeException(fnf.getMessage(), fnf);
-    		}
-    	}
-
-        return destinationNode;
-    }
-    
-    protected int getInteger(Serializable val)
-    {
-    	if(val == null)
-    	{ 
-    		return 0;
-    	}
-    	try
-    	{
-    		return Integer.parseInt(val.toString());
-    	}
-    	catch(NumberFormatException nfe)
-    	{
-    		return 0;
-    	}
-    }
-    
-    protected File getTempFile(NodeRef nodeRef)
-    {
-    	File alfTempDir = TempFileProvider.getTempDir();
-        File toolkitTempDir = new File(alfTempDir.getPath() + File.separatorChar + nodeRef.getId());
-        toolkitTempDir.mkdir();
-        File file = new File(toolkitTempDir, serviceRegistry.getFileFolderService().getFileInfo(nodeRef).getName());
-        
-        return file;
-    }
-    
-    protected File nodeRefToTempFile(NodeRef nodeRef)
-    {
-    	ContentService cs = serviceRegistry.getContentService();
-        File tempFromFile = TempFileProvider.createTempFile("PDFAConverter-", nodeRef.getId()
-                + FILE_EXTENSION);
-        ContentReader reader = cs.getReader(nodeRef, ContentModel.PROP_CONTENT);
-        reader.getContent(tempFromFile);
-        return tempFromFile;
-    }
     
     public void setPDFToolkitService(PDFToolkitService pdfToolkitService)
     {

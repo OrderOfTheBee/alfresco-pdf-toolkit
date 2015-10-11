@@ -112,16 +112,7 @@
    <!-- pdfdelete -->
 	<bean id="pdf-rotate"
 		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFRotateActionExecuter"
-		parent="action-executer" depends-on="pdftoolkit-messages">
-		<property name="serviceRegistry">
-			<ref bean="ServiceRegistry" />
-		</property>
-		<property name="applicableTypes">
-            <list>
-                <value>{http://www.alfresco.org/model/content/1.0}content</value>
-            </list>
-        </property>
-        <property name="createNew" value="true"/>
+		parent="org.alfresco.extension.pdf-toolkit-action">
 	</bean>
 	
 	<!-- Page count web script -->
