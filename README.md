@@ -20,12 +20,13 @@ Current Functionality:
 * TIFF to PDF transformation (currently rather rudimentary, but functional)
 * Extended metadata to capture information about encryption or signature events
 * Search for encrypted or signed documents by encryption or signature metadata
-* Convert to PDF/A (Enterprise only due to dependency on Alfresco's JODConverter supporting classes).
+* Rotate PDF Documents
 
 All of the actions are available as actions that can be used in content rules, and as document library actions in the document browse and detail views.
 
 Note that as of Version 1.2, the legacy Explorer UI components will no longer be maintained and will be fully removed in version 1.3.
 
+NOTE:  The latest 5.x version removes the PDF/A conversion action.  I'm committed to keeping this project 100% compatible with Alfresco community.  The PDF/A action will be released as a separate module for Alfresco Enterprise.
 A teaser screencast is available here:
 
 http://www.youtube.com/watch?v=cJYpFgx037E
