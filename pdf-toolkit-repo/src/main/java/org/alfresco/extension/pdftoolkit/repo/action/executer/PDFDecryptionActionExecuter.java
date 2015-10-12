@@ -34,8 +34,7 @@ public class PDFDecryptionActionExecuter extends BasePDFActionExecuter
 	@Override
 	protected void executeImpl(Action action, NodeRef actionedUponNodeRef) 
 	{
-		// TODO Auto-generated method stub
-
+		pdfToolkitService.decryptPDF(actionedUponNodeRef, action.getParameterValues());
 	}
 
 }
