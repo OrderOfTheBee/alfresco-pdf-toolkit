@@ -311,7 +311,81 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 	@Override 
 	public void decryptPDF(NodeRef targetNodeRef, Map<String, Serializable> params)
 	{
-		
+		PdfStamper stamp = null;
+        File tempDir = null;
+        ContentWriter writer = null;
+        ContentReader targetReader = null;
+     
+        try
+        {
+            // get the parameters
+            String ownerPassword = (String)params.get(PARAM_OWNER_PASSWORD);
+            Boolean inplace = Boolean.valueOf(String.valueOf(params.get(PARAM_INPLACE)));
+
+            // get temp file
+            File alfTempDir = TempFileProvider.getTempDir();
+            tempDir = new File(alfTempDir.getPath() + File.separatorChar + targetNodeRef.getId());
+            tempDir.mkdir();
+            File file = new File(tempDir, ffs.getFileInfo(targetNodeRef).getName());
+
+            // get the PDF input stream and create a reader for iText
+            targetReader = getReader(targetNodeRef);
+            PdfReader reader = new PdfReader(targetReader.getContentInputStream(), ownerPassword.getBytes());
+            stamp = new PdfStamper(reader, new FileOutputStream(file));
+            stamp.close();
+
+            String fileName = getFilename(params, targetNodeRef);
+            
+            // write out to destination
+            NodeRef destinationNode = createDestinationNode(fileName, 
+            		(NodeRef)params.get(PARAM_DESTINATION_FOLDER), targetNodeRef, inplace);
+            writer = cs.getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
+
+            writer.setEncoding(targetReader.getEncoding());
+            writer.setMimetype(FILE_MIMETYPE);
+            writer.putContent(file);
+            file.delete();
+            
+            //if useAspect is true, store some additional info about the signature in the props
+            if(useEncryptionAspect)
+            {
+            	ns.removeAspect(destinationNode, PDFToolkitModel.ASPECT_ENCRYPTED);
+            }
+        }
+        catch (IOException e)
+        {
+            throw new AlfrescoRuntimeException(e.getMessage(), e);
+        }
+        catch (DocumentException e)
+        {
+            throw new AlfrescoRuntimeException(e.getMessage(), e);
+        }
+        finally
+        {
+            if (tempDir != null)
+            {
+                try
+                {
+                    tempDir.delete();
+                }
+                catch (Exception ex)
+                {
+                    throw new AlfrescoRuntimeException(ex.getMessage(), ex);
+                }
+            }
+
+            if (stamp != null)
+            {
+                try
+                {
+                    stamp.close();
+                }
+                catch (Exception ex)
+                {
+                    throw new AlfrescoRuntimeException(ex.getMessage(), ex);
+                }
+            }
+        }
 		
 	}
 	
