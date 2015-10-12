@@ -9,18 +9,19 @@ The toolkit compatibility matrix and some additional information is available on
 
 Current Functionality:
 
-* Merge - Append PDF to another PDF, generating a new PDF
+* Append - Append PDF to another PDF, generating a new PDF
 * Split - Splits a PDF at a specified interval, (ex. 2 pages, 3 pages, etc.), generating new PDFs for each section.
 * Split At - Split PDF into two PDFs at a specific page, generating two new PDFs.
 * Insert PDF - Insert PDF at a specific Page
 * Delete page(s) from a PDF document
 * PDF Watermarking
-* PDF Encryption
+* PDF Encryption / decryption
 * Digital Signatures
+* Rotate PDF Documents
 * TIFF to PDF transformation (currently rather rudimentary, but functional)
 * Extended metadata to capture information about encryption or signature events
 * Search for encrypted or signed documents by encryption or signature metadata
-* Rotate PDF Documents
+
 
 All of the actions are available as actions that can be used in content rules, and as document library actions in the document browse and detail views.
 
