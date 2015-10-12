@@ -21,6 +21,7 @@ package org.alfresco.extension.pdftoolkit.repo.action.executer;
 
 import java.util.List;
 
+import org.alfresco.extension.pdftoolkit.constants.PDFToolkitConstants;
 import org.alfresco.extension.pdftoolkit.service.PDFToolkitService;
 import org.alfresco.repo.action.ParameterDefinitionImpl;
 import org.alfresco.repo.action.executer.ActionExecuterAbstractBase;
@@ -39,7 +40,7 @@ public abstract class BasePDFActionExecuter
     
     //Default number of map entries at creation 
     protected static final int 					INITIAL_OPTIONS 	= 5;
-    public static final String                  PARAM_INPLACE    	= "inplace";
+    
 
     /**
      * Set a service registry to use, this will do away with all of the
@@ -69,7 +70,7 @@ public abstract class BasePDFActionExecuter
     @Override
     protected void addParameterDefinitions(List<ParameterDefinition> paramList)
     {
-        paramList.add(new ParameterDefinitionImpl(PARAM_INPLACE, DataTypeDefinition.BOOLEAN, false, getParamDisplayLabel(PARAM_INPLACE), false));
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_INPLACE, DataTypeDefinition.BOOLEAN, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_INPLACE), false));
     }
     /**
      * @param actionedUponNodeRef

@@ -18,28 +18,21 @@
 
 package org.alfresco.extension.pdftoolkit.service;
 
-import java.io.File;
 import java.io.Serializable;
+import java.util.Map;
 
-import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.NodeRef;
 
 public interface PDFToolkitService
 {
 	// the actual action code
-    public void encryptPDF();
-    public void signPDF();
-    public void watermarkPDF();
-    public void splitPDF();
-    public void splitPDFAtPage();
-    public void insertPDF();
-    public void deletePagesFromPDF();
-    public void rotatePDF();
-    
-    // common support methods
-    public ContentReader getReader(NodeRef nodeRef);
-    public NodeRef createDestinationNode(String filename, NodeRef destinationParent, NodeRef target, boolean inplace, boolean createNew);
-    public int getInteger(Serializable val);
-    public File getTempFile(NodeRef nodeRef);
-    public File nodeRefToTempFile(NodeRef nodeRef);
+	public void appendPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    public void encryptPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    public void signPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    public void watermarkPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    public void splitPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    public void splitPDFAtPage(NodeRef targetNodeRef, Map<String, Serializable> params);
+    public void insertPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    public void deletePagesFromPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    public void rotatePDF(NodeRef targetNodeRef, Map<String, Serializable> params);
 }
