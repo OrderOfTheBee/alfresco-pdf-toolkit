@@ -33,7 +33,6 @@ import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
 public abstract class BasePDFActionExecuter
     extends ActionExecuterAbstractBase
 {
-	private boolean createNew = true;
     
     protected ServiceRegistry     				serviceRegistry;
     protected PDFToolkitService					pdfToolkitService;
@@ -51,17 +50,6 @@ public abstract class BasePDFActionExecuter
     public void setServiceRegistry(ServiceRegistry serviceRegistry)
     {
         this.serviceRegistry = serviceRegistry;
-    }
-
-    /**
-     * Sets whether a PDF action creates a new empty node or copies the source node, preserving
-     * the content type, applied aspects and properties
-     * 
-     * @param createNew
-     */
-    public void setCreateNew(boolean createNew)
-    {
-    	this.createNew = createNew;
     }
     
     /**

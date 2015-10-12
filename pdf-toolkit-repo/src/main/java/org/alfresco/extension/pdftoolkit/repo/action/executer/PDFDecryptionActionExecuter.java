@@ -8,37 +8,34 @@ import org.alfresco.service.cmr.action.Action;
 import org.alfresco.service.cmr.action.ParameterDefinition;
 import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
 import org.alfresco.service.cmr.repository.NodeRef;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
-public class PDFRotateActionExecuter extends BasePDFActionExecuter {
-
-	/**
-     * The logger
-     */
-    private static Log         logger                   = LogFactory.getLog(PDFRotateActionExecuter.class);
+public class PDFDecryptionActionExecuter extends BasePDFActionExecuter 
+{
 
     /**
      * Action constants
      */
-    public static final String NAME                     = "pdf-rotate";
+    public static final String            NAME                                = "pdf-decryption";
     
-	@Override
-	protected void executeImpl(Action action, NodeRef actionedUponNodeRef) 
-	{
-		pdfToolkitService.rotatePDF(actionedUponNodeRef, action.getParameterValues());
-	}
-
 	/**
      * Add parameter definitions
      */
     @Override
     protected void addParameterDefinitions(List<ParameterDefinition> paramList)
     {
+
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_FOLDER, DataTypeDefinition.NODE_REF, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_FOLDER)));
-        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DEGREES, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_DEGREES)));
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_OWNER_PASSWORD, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_OWNER_PASSWORD)));
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_NAME)));
-        
+
         super.addParameterDefinitions(paramList);
     }
+    
+	@Override
+	protected void executeImpl(Action action, NodeRef actionedUponNodeRef) 
+	{
+		// TODO Auto-generated method stub
+
+	}
+
 }

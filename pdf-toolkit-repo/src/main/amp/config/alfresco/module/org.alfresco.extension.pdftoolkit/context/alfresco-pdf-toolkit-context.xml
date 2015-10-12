@@ -5,7 +5,7 @@
 
 	
    	<!--  PDF Toolkit service -->
-    <bean id="pdftoolkit" 
+    <bean id="org.alfresco.extension.pdf-toolkit-service" 
         class="org.alfresco.extension.pdftoolkit.service.PDFToolkitServiceImpl">
         <property name="serviceRegistry" ref="ServiceRegistry"/>
     </bean> 
@@ -14,12 +14,14 @@
 		<property name="serviceRegistry">
 			<ref bean="ServiceRegistry" />
 		</property>
+		<property name="PDFToolkitService">
+			<ref bean="org.alfresco.extension.pdf-toolkit-service"/>
+		</property>
 		<property name="applicableTypes">
             <list>
                 <value>{http://www.alfresco.org/model/content/1.0}content</value>
             </list>
         </property>
-        <property name="createNew" value="true"/>
 	</bean>
 	
 	<!-- pdfsplit -->
@@ -77,9 +79,12 @@
 		<property name="encryptionLevelConstraint">
 			<ref bean="pdfc-encryptionlevel" />
 		</property>
-        <property name="useAspect">
-        	<value>true</value>
-        </property>
+	</bean>
+	
+	<!-- pdfdecryption -->
+	<bean id="pdf-decryption"
+		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFDecryptionActionExecuter"
+		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
 	</bean>
 	
 	<!-- pdfsignature -->
@@ -98,9 +103,6 @@
 		<property name="pageConstraint">
 			<ref bean="pdfc-page"/>
 		</property>
-        <property name="useAspect">
-        	<value>true</value>
-        </property>
 	</bean>
 	
 	<!-- pdfdelete -->

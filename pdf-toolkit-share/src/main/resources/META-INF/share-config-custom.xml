@@ -211,6 +211,26 @@
         </forms>
     </config>
     
+    <config evaluator="string-compare" condition="pdf-decryption">
+    	<forms>
+        	<form>
+        		<field-visibility>
+        			<show id="inplace"/>
+        			<show id="destination-folder"/>
+        			<show id="destination-name"/>
+        			<show id="owner-password"/>
+        		</field-visibility>
+                <appearance>
+                	<field id="inplace">
+                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
+                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
+                        </control>
+                	</field>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+    
 	<config evaluator="string-compare" condition="pdf-signature">
     	<forms>
         	<form>

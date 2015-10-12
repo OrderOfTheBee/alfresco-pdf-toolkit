@@ -28,6 +28,7 @@ public interface PDFToolkitService
 	// the actual action code
 	public void appendPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
     public void encryptPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    public void decryptPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
     public void signPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
     public void watermarkPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
     public void splitPDF(NodeRef targetNodeRef, Map<String, Serializable> params);

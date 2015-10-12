@@ -33,19 +33,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class PDFEncryptionActionExecuter
-    extends BasePDFActionExecuter
+public class PDFEncryptionActionExecuter extends BasePDFActionExecuter
 {
 
     /**
      * The logger
      */
     private static Log                    logger                              = LogFactory.getLog(PDFEncryptionActionExecuter.class);
-
-    /**
-     * Flag for use of "pdft:encrypted" aspect, enable search by encryption metadata
-     */
-    private boolean useAspect									   			  = true;
     
     /**
      * Constraints
@@ -65,11 +59,6 @@ public class PDFEncryptionActionExecuter
     public void setEncryptionLevelConstraint(MapConstraint mc)
     {
         encryptionLevelConstraint.putAll(mc.getAllowableValues());
-    }
-
-    public void setUseAspect(boolean useAspect)
-    {
-    	this.useAspect = useAspect;
     }
 
     /**
@@ -96,7 +85,6 @@ public class PDFEncryptionActionExecuter
 
         super.addParameterDefinitions(paramList);
     }
-
 
     /**
      * @see org.alfresco.repo.action.executer.ActionExecuterAbstractBase#executeImpl(org.alfresco.service.cmr.repository.NodeRef,
