@@ -121,10 +121,10 @@
 					</actions>
 					<actionGroups>
 						<actionGroup id="document-browse">
-							<action index="507" id="pdf-encryption"/>
+							<action index="508" id="pdf-encryption"/>
 						</actionGroup>
 						<actionGroup id="document-details">
-							<action index="507" id="pdf-encryption"/>
+							<action index="508" id="pdf-encryption"/>
 						</actionGroup>
 					</actionGroups>
 				</config>
@@ -315,10 +315,10 @@
 					</actions>
 					<actionGroups>
 						<actionGroup id="document-browse">
-							<action index="508" id="pdf-rotate"/>
+							<action index="507" id="pdf-rotate"/>
 						</actionGroup>
 						<actionGroup id="document-details">
-							<action index="508" id="pdf-rotate"/>
+							<action index="507" id="pdf-rotate"/>
 						</actionGroup>
 					</actionGroups>
 				</config>
