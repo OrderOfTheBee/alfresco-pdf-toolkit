@@ -974,16 +974,24 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 
             // split the PDF and put the pages in a list
             Splitter splitter = new Splitter();
-            // Need to adjust the input value to get the split at the right page
-            splitter.setSplitAtPage(insertAt - 1);
 
             // Split the pages
             List<PDDocument> pdfs = splitter.split(pdf);
 
             // Build the output PDF
             PDFMergerUtility merger = new PDFMergerUtility();
-            merger.appendDocument((PDDocument)pdfs.get(0), insertContentPDF);
-            merger.appendDocument((PDDocument)pdfs.get(0), (PDDocument)pdfs.get(1));
+            
+            PDDocument newDocument = new PDDocument();
+            
+            for (int i = 0; i < pdfs.size(); i++) {
+            	
+            	if (i == insertAt -1) {
+            		merger.appendDocument(newDocument, insertContentPDF);
+            	}
+            	
+            	merger.appendDocument(newDocument, (PDDocument)pdfs.get(i));
+            }
+            
             merger.setDestinationFileName(params.get(PARAM_DESTINATION_NAME).toString());
             merger.mergeDocuments();
 
@@ -993,22 +1001,22 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
             tempDir = new File(alfTempDir.getPath() + File.separatorChar + targetNodeRef.getId());
             tempDir.mkdir();
 
-            String fileName = getFilename(params, targetNodeRef);
+            String fileName = params.get(PARAM_DESTINATION_NAME).toString();
             Boolean inplace = Boolean.valueOf(String.valueOf(params.get(PARAM_INPLACE)));
             
-            PDDocument completePDF = (PDDocument)pdfs.get(0);
+            PDDocument completePDF = newDocument;
 
             completePDF.save(tempDir + "" + File.separatorChar + fileName + FILE_EXTENSION);
 
             try
             {
                 completePDF.close();
+                newDocument.close();
             }
             catch (IOException e)
             {
                 throw new AlfrescoRuntimeException(e.getMessage(), e);
             }
-
 
             for (File file : tempDir.listFiles())
             {
