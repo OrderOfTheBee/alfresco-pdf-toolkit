@@ -62,7 +62,7 @@ public class PDFActionFormFilter extends AbstractFilter<Object, ActionFormResult
 			 * let the form action pass.  
 			 */
 			FieldData inplace = formData.getFieldData(INPLACE_PARAM);
-			if(Boolean.valueOf(String.valueOf(inplace.getValue())))
+			if(inplace != null && Boolean.valueOf(String.valueOf(inplace.getValue())))
 			{
 				formData.addFieldData(DESTINATION_FOLDER_FIELD, repositoryHelper.getCompanyHome(), true);
 			}
