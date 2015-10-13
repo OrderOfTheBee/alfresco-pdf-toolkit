@@ -8,6 +8,9 @@
     <bean id="org.alfresco.extension.pdf-toolkit-service" 
         class="org.alfresco.extension.pdftoolkit.service.PDFToolkitServiceImpl">
         <property name="serviceRegistry" ref="ServiceRegistry"/>
+        <property name="createNew" value="${pdftoolkit.createNew}"/>
+        <property name="useEncryptionAspect" value="${pdftoolkit.useEncryptionAspect}"/>
+        <property name="useSignatureAspect" value="${pdftoolkit.useSignatureAspect}"/>
     </bean> 
     
 	<bean id="org.alfresco.extension.pdf-toolkit-action" abstract="true" parent="action-executer">

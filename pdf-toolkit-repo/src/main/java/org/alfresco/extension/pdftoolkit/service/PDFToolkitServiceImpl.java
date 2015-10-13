@@ -2019,4 +2019,14 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
     {
     	this.createNew = createNew;
     }
+    
+    public void setUseSignatureAspect(boolean useSignatureAspect)
+    {
+    	this.useSignatureAspect = useSignatureAspect;
+    }
+    
+    public void setUseEncryptionAspect(boolean useEncryptionAspect)
+    {
+    	this.useEncryptionAspect = useEncryptionAspect;
+    }
 }

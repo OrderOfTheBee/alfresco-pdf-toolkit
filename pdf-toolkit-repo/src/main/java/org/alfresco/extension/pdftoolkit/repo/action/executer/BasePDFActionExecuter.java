@@ -59,6 +59,7 @@ public abstract class BasePDFActionExecuter
     protected void addParameterDefinitions(List<ParameterDefinition> paramList)
     {
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_INPLACE, DataTypeDefinition.BOOLEAN, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_INPLACE), false));
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_CREATE_NEW, DataTypeDefinition.BOOLEAN, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_CREATE_NEW), false));
     }
     /**
      * @param actionedUponNodeRef
