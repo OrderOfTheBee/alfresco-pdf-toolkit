@@ -1382,7 +1382,11 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
         String fileName = null;
         if(providedName != null)
         {
-        	fileName = String.valueOf(providedName) + FILE_EXTENSION;
+        	fileName = String.valueOf(providedName);
+        	if(!fileName.endsWith(FILE_EXTENSION))
+        	{
+        		fileName = fileName + FILE_EXTENSION;
+        	}
         }
         else
         {
@@ -1932,7 +1936,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 
         boolean markPage = false;
 
-        if (pages.equals(PAGE_EVEN) || pages.equals(PAGE_ODD))
+        if (pages.equals(PAGE_EVEN))
         {
             if (current % 2 == 0)
             {
