@@ -297,7 +297,6 @@ PDFToolkit.Util = {};
 		// set the value of the hidden field
 		var value = YAHOO.util.Dom.get(fieldHtmlId +"-entry").checked;
 		YAHOO.util.Dom.get(fieldHtmlId).value = value;
-		YAHOO.util.Dom.get(fieldHtmlId + "-hidden").value = value;
 		// find and hide the dependent controls
 		var controls = YAHOO.util.Dom.get(fieldHtmlId + "-tohide").value.split(",");
 

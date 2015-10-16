@@ -9,7 +9,6 @@ control parameters in the form config by hiding the div {field.name}-control
 		<!#-- this control should not be used in view mode -->
 	<#else>
 	  <input id="${fieldHtmlId}" type="hidden" name="${field.name}" value="false" />
-      <input id="${fieldHtmlId}-hidden" type="hidden" name="${field.name}" value="true" />
       <input id="${fieldHtmlId}-tohide" type="hidden" name="-" value="${hideProperties}" />
       <input class="formsCheckBox" id="${fieldHtmlId}-entry" type="checkbox" tabindex="0" name="-" 
              value="true"
