@@ -107,6 +107,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
         try
         {
         	NodeRef toAppend = (NodeRef)params.get(PARAM_TARGET_NODE);
+        	Boolean inplace = Boolean.valueOf(String.valueOf(params.get(PARAM_INPLACE)));
         	ContentReader append = getReader(toAppend);
             is = append.getContentInputStream();
             
@@ -141,7 +142,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
                     {
                         // Get a writer and prep it for putting it back into the repo
                         NodeRef destinationNode = createDestinationNode(fileName, 
-                        		(NodeRef)params.get(PARAM_DESTINATION_FOLDER), targetNodeRef, false);
+                        		(NodeRef)params.get(PARAM_DESTINATION_FOLDER), targetNodeRef, inplace);
                         writer = cs.getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
                         
                         writer.setEncoding(targetReader.getEncoding()); // original
@@ -962,7 +963,8 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
         	ContentReader targetReader = getReader(targetNodeRef);
         	ContentReader insertReader = getReader((NodeRef)params.get(PARAM_TARGET_NODE));
             int insertAt = Integer.valueOf((String)params.get(PARAM_INSERT_AT_PAGE)).intValue();
-
+            Boolean inplace = Boolean.valueOf(String.valueOf(params.get(PARAM_INPLACE)));
+            
             // Get contentReader inputStream
             is = targetReader.getContentInputStream();
             // Get insertContentReader inputStream
@@ -1002,7 +1004,6 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
             tempDir.mkdir();
 
             String fileName = params.get(PARAM_DESTINATION_NAME).toString();
-            Boolean inplace = Boolean.valueOf(String.valueOf(params.get(PARAM_INPLACE)));
             
             PDDocument completePDF = newDocument;
 

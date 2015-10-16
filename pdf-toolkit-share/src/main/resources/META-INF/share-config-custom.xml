@@ -159,11 +159,17 @@
     	<forms>
         	<form>
             	<field-visibility>
+            		<show id="inplace"/>
+            		<show id="destination-name"/>
             		<show id="destination-folder"/>
             		<show id="target-node"/>
-            		<show id="destination-name"/>
                 </field-visibility>
                 <appearance>
+                	<field id="inplace">
+                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
+                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
+                        </control>
+                	</field>
                 </appearance>
             </form>
         </forms>
@@ -185,8 +191,8 @@
         	<form>
         		<field-visibility>
         			<show id="inplace"/>
-        			<show id="destination-folder"/>
         			<show id="destination-name"/>
+        			<show id="destination-folder"/>
         			<show id="user-password"/>
         			<show id="owner-password"/>
         			<show id="allow-print"/>
@@ -216,8 +222,8 @@
         	<form>
         		<field-visibility>
         			<show id="inplace"/>
-        			<show id="destination-folder"/>
         			<show id="destination-name"/>
+        			<show id="destination-folder"/>
         			<show id="owner-password"/>
         		</field-visibility>
                 <appearance>
@@ -236,8 +242,8 @@
         	<form>
         		<field-visibility>
         			<show id="inplace"/>
-        			<show id="destination-folder"/>
         			<show id="destination-name"/>
+        			<show id="destination-folder"/>
         			<show id="private-key"/>
         			<show id="alias"/>
         			<show id="key-type"/>
@@ -284,8 +290,8 @@
         	<form>
         		<field-visibility>
         			<show id="inplace"/>
-        			<show id="destination-folder"/>
         			<show id="destination-name"/>
+        			<show id="destination-folder"/>
         			<show id="watermark-depth"/>
         			<show id="watermark-type"/>
         			<show id="watermark-image"/>
@@ -328,8 +334,8 @@
         	<form>
         		<field-visibility>
         		    <show id="inplace"/>
-        			<show id="destination-folder"/>
         			<show id="destination-name"/>
+        			<show id="destination-folder"/>
         			<show id="insert-content"/>
         			<show id="insert-at-page"/>
         		</field-visibility>
@@ -354,8 +360,8 @@
         	<form>
         		<field-visibility>
         		    <show id="inplace"/>
-        			<show id="destination-folder"/>
         			<show id="destination-name"/>
+        			<show id="destination-folder"/>
         			<show id="delete-pages"/>
         		</field-visibility>
                 <appearance>
@@ -405,8 +411,8 @@
         	<form>
         		<field-visibility>
         			<show id="inplace"/>
-        			<show id="destination-folder"/>
         			<show id="destination-name"/>
+        			<show id="destination-folder"/>
         			<show id="degrees"/>
         		</field-visibility>
                 <appearance>
