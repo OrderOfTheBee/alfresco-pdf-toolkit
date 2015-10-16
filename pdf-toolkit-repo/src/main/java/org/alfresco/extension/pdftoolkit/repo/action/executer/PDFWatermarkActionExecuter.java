@@ -100,6 +100,7 @@ public class PDFWatermarkActionExecuter extends BasePDFStampActionExecuter
     @Override
     protected void executeImpl(Action action, NodeRef actionedUponNodeRef)
     {
-    	pdfToolkitService.watermarkPDF(actionedUponNodeRef, action.getParameterValues());
+    	NodeRef result = pdfToolkitService.watermarkPDF(actionedUponNodeRef, action.getParameterValues());
+    	action.setParameterValue(PARAM_RESULT, result);
     }
 }

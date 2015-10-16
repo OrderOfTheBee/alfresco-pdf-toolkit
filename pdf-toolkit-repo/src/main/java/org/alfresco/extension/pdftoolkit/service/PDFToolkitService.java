@@ -26,14 +26,83 @@ import org.alfresco.service.cmr.repository.NodeRef;
 public interface PDFToolkitService
 {
 	// the actual action code
-	public void appendPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
-    public void encryptPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
-    public void decryptPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
-    public void signPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
-    public void watermarkPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
-    public void splitPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
-    public void splitPDFAtPage(NodeRef targetNodeRef, Map<String, Serializable> params);
-    public void insertPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
-    public void deletePagesFromPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
-    public void rotatePDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+	/**
+	 * Appends one PDF document to another 
+	 * @param targetNodeRef
+	 * @param params
+	 * @return a NodeRef containing the appended PDF
+	 */
+	public NodeRef appendPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+	
+	/**
+	 * Encrypts a PDF document, returns 
+	 * @param targetNodeRef
+	 * @param params
+	 * @return a NodeRef pointing to the encrypted PDF
+	 */
+    public NodeRef encryptPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    
+    /**
+     * Decrypts a PDF document, given the owner password
+     * @param targetNodeRef
+     * @param params
+     * @return a NodeRef pointing to the decrypted PDF
+     */
+    public NodeRef decryptPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    
+    /**
+     * Applies a digital signature to a PDF document
+     * @param targetNodeRef
+     * @param params
+     * @return a NodeRef pointing to the signed PDF
+     */
+    public NodeRef signPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    
+    /**
+     * Applies a text or image watermark to a PDF document
+     * @param targetNodeRef
+     * @param params
+     * @return a NodeRef pointing to the watermarked PDF
+     */
+    public NodeRef watermarkPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    
+    /**
+     * Splits a PDF document into single pages
+     * @param targetNodeRef
+     * @param params
+     * @return a NodeRef pointing to the folder containing the split PDF
+     */
+    public NodeRef splitPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    
+    /**
+     * Splits a PDF document at a specific page
+     * @param targetNodeRef
+     * @param params
+     * @return a NodeRef pointing to the folder containing the split PDF
+     */
+    public NodeRef splitPDFAtPage(NodeRef targetNodeRef, Map<String, Serializable> params);
+    
+    /**
+     * Inserts one PDF document into another at a specific location
+     * @param targetNodeRef
+     * @param params
+     * @return a NodeRef pointing to the combined PDF
+     */
+    public NodeRef insertPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    
+    /**
+     * Deletes selected pages from a PDF document
+     * @param targetNodeRef
+     * @param params
+     * @return a NodeRef pointing to the resulting PDF
+     */
+    public NodeRef deletePagesFromPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    
+    /**
+     * Rotates a PDF document
+     * @param targetNodeRef
+     * @param params
+     * @return a NodeRef pointing to the rotated PDF
+     */
+    public NodeRef rotatePDF(NodeRef targetNodeRef, Map<String, Serializable> params);
 }

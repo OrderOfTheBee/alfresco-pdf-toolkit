@@ -72,6 +72,7 @@ public class PDFInsertAtPageActionExecuter extends BasePDFActionExecuter
     @Override
     protected void executeImpl(Action action, NodeRef actionedUponNodeRef)
     {
-    	pdfToolkitService.insertPDF(actionedUponNodeRef, action.getParameterValues());
+    	NodeRef result = pdfToolkitService.insertPDF(actionedUponNodeRef, action.getParameterValues());
+    	action.setParameterValue(PARAM_RESULT, result);
     }
 }

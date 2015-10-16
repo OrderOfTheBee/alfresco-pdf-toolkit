@@ -76,6 +76,7 @@ public class PDFAppendActionExecuter extends BasePDFActionExecuter
     protected void executeImpl(Action action, NodeRef actionedUponNodeRef)
     {
         // Do the work....split the PDF
-        pdfToolkitService.appendPDF(actionedUponNodeRef, action.getParameterValues());
+    	NodeRef result = pdfToolkitService.appendPDF(actionedUponNodeRef, action.getParameterValues());
+    	action.setParameterValue(PARAM_RESULT, result);
     }
 }

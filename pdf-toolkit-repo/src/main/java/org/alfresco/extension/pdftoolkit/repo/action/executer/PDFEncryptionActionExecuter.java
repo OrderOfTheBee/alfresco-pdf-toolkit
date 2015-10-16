@@ -93,6 +93,7 @@ public class PDFEncryptionActionExecuter extends BasePDFActionExecuter
     @Override
     protected void executeImpl(Action action, NodeRef actionedUponNodeRef)
     {
-    	pdfToolkitService.encryptPDF(actionedUponNodeRef, action.getParameterValues());
+    	NodeRef result = pdfToolkitService.encryptPDF(actionedUponNodeRef, action.getParameterValues());
+    	action.setParameterValue(PARAM_RESULT, result);
     }
 }

@@ -99,6 +99,7 @@ public class PDFSignatureActionExecuter extends BasePDFStampActionExecuter
     @Override
     protected void executeImpl(Action action, NodeRef actionedUponNodeRef)
     {
-    	pdfToolkitService.signPDF(actionedUponNodeRef, action.getParameterValues());
+    	NodeRef result = pdfToolkitService.signPDF(actionedUponNodeRef, action.getParameterValues());
+    	action.setParameterValue(PARAM_RESULT, result);
     }
 }

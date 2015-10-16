@@ -87,6 +87,7 @@ public class PDFSplitAtPageActionExecuter extends BasePDFActionExecuter
     @Override
     protected void executeImpl(Action action, NodeRef actionedUponNodeRef)
     {
-    	pdfToolkitService.splitPDFAtPage(actionedUponNodeRef, action.getParameterValues());
+    	NodeRef result = pdfToolkitService.splitPDFAtPage(actionedUponNodeRef, action.getParameterValues());
+    	action.setParameterValue(PARAM_RESULT, result);
     }
 }

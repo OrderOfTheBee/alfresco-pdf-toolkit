@@ -37,8 +37,9 @@ public class PDFDeletePageActionExecuter extends BasePDFActionExecuter {
     }
     
 	@Override
-	protected void executeImpl(Action action, NodeRef actionedUponNodeRef) {
-       
-		pdfToolkitService.deletePagesFromPDF(actionedUponNodeRef, action.getParameterValues());
+	protected void executeImpl(Action action, NodeRef actionedUponNodeRef) 
+	{
+		NodeRef result = pdfToolkitService.deletePagesFromPDF(actionedUponNodeRef, action.getParameterValues());
+		action.setParameterValue(PARAM_RESULT, result);
 	}
 }
