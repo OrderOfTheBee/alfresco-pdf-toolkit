@@ -17,6 +17,8 @@ public abstract class PDFToolkitConstants
     
     public static final String PARAM_DELETE_PAGES 	    			= "delete-pages";
     
+    public static final String PARAM_EXTRACT_PAGES 	    			= "extract-pages";
+    
     public static final String PARAM_USER_PASSWORD                 	= "user-password";
     public static final String PARAM_OWNER_PASSWORD                	= "owner-password";
     public static final String PARAM_ALLOW_PRINT                   	= "allow-print";

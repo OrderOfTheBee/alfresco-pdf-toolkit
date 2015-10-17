@@ -99,6 +99,14 @@ public interface PDFToolkitService
     public NodeRef deletePagesFromPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
     
     /**
+     * Extracts selected pages from a PDF document
+     * @param targetNodeRef
+     * @param params
+     * @return a NodeRef pointing to the PDF containing the extracted pages
+     */
+    public NodeRef extractPagesFromPDF(NodeRef targetNodeRef, Map<String, Serializable> params);
+    
+    /**
      * Rotates a PDF document
      * @param targetNodeRef
      * @param params

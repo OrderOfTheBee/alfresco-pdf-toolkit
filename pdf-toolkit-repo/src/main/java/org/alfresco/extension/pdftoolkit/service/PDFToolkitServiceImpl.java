@@ -1203,6 +1203,13 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 	}
 
 	@Override
+	public NodeRef extractPagesFromPDF(NodeRef targetNodeRef, Map<String, Serializable> params) 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public NodeRef rotatePDF(NodeRef targetNodeRef, Map<String, Serializable> params) 
 	{
 		InputStream is = null;

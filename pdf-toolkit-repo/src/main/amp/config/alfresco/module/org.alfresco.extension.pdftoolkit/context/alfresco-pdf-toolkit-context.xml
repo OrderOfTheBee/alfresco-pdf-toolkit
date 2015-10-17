@@ -114,6 +114,12 @@
 		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
 	</bean>
    
+   <!-- pdfextract -->
+	<bean id="pdf-extract-page"
+		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFExtractPageActionExecuter"
+		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
+	</bean>
+	
    <!-- pdfdelete -->
 	<bean id="pdf-rotate"
 		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFRotateActionExecuter"
