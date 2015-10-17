@@ -381,7 +381,7 @@
         		<field-visibility>
         			<show id="destination-name"/>
         			<show id="destination-folder"/>
-        			<show id="delete-pages"/>
+        			<show id="extract-pages"/>
         		</field-visibility>
                 <appearance>
                 </appearance>

@@ -1125,96 +1125,6 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 		return subsetPDFDocument(targetNodeRef, params, pages, false);
 	}
 
-	private NodeRef subsetPDFDocument(NodeRef targetNodeRef, Map<String, Serializable> params, String pages, boolean delete) 
-	{
-		InputStream is = null;
-        File tempDir = null;
-        ContentWriter writer = null;
-        PdfReader pdfReader = null;
-        NodeRef destinationNode = null;
-        
-        try
-        {
-        	ContentReader targetReader = getReader(targetNodeRef);
-            is = targetReader.getContentInputStream();
-
-            File alfTempDir = TempFileProvider.getTempDir();
-            tempDir = new File(alfTempDir.getPath() + File.separatorChar + targetNodeRef.getId());
-            tempDir.mkdir();
-            
-            Boolean inplace = Boolean.valueOf(String.valueOf(params.get(PARAM_INPLACE)));
-            
-            String fileName = getFilename(params, targetNodeRef);
-            
-            File file = new File(tempDir, ffs.getFileInfo(targetNodeRef).getName());
-
-            pdfReader = new PdfReader(is);
-            Document doc = new Document(pdfReader.getPageSizeWithRotation(1));
-            PdfCopy copy = new PdfCopy(doc, new FileOutputStream(file));
-            doc.open();
-
-            List<Integer> pagelist = parsePageList(pages);
-            
-            for (int pageNum = 1; pageNum <= pdfReader.getNumberOfPages(); pageNum++) 
-            {
-            	if (pagelist.contains(pageNum) && !delete) {
-            		copy.addPage(copy.getImportedPage(pdfReader, pageNum));
-            	}
-            }
-            doc.close();
-
-            destinationNode = createDestinationNode(fileName, 
-            		(NodeRef)params.get(PARAM_DESTINATION_FOLDER), targetNodeRef, inplace);
-            writer = cs.getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
-
-            writer.setEncoding(targetReader.getEncoding());
-            writer.setMimetype(FILE_MIMETYPE);
-
-            // Put it in the repository
-            writer.putContent(file);
-
-            // Clean up
-            file.delete();
-
-        }
-        catch (IOException e)
-        {
-            throw new AlfrescoRuntimeException(e.getMessage(), e);
-        } 
-        catch (DocumentException e) 
-        {
-			throw new AlfrescoRuntimeException(e.getMessage(), e);
-		}
-        catch (Exception e)
-        {
-        	throw new AlfrescoRuntimeException(e.getMessage(), e);
-        }
-        finally
-        {
-            if (pdfReader != null)
-            {
-            	pdfReader.close();
-            }
-            if (is != null)
-            {
-                try
-                {
-                    is.close();
-                }
-                catch (IOException e)
-                {
-                    throw new AlfrescoRuntimeException(e.getMessage(), e);
-                }
-            }
-
-            if (tempDir != null)
-            {
-                tempDir.delete();
-            }
-        }
-        return destinationNode;
-	}
-	
 	@Override
 	public NodeRef rotatePDF(NodeRef targetNodeRef, Map<String, Serializable> params) 
 	{
@@ -1309,6 +1219,96 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
             }
         }
         return destinationNode;
+	}
+
+	private NodeRef subsetPDFDocument(NodeRef targetNodeRef, Map<String, Serializable> params, String pages, boolean delete) 
+	{
+		InputStream is = null;
+	    File tempDir = null;
+	    ContentWriter writer = null;
+	    PdfReader pdfReader = null;
+	    NodeRef destinationNode = null;
+	    
+	    try
+	    {
+	    	ContentReader targetReader = getReader(targetNodeRef);
+	        is = targetReader.getContentInputStream();
+	
+	        File alfTempDir = TempFileProvider.getTempDir();
+	        tempDir = new File(alfTempDir.getPath() + File.separatorChar + targetNodeRef.getId());
+	        tempDir.mkdir();
+	        
+	        Boolean inplace = Boolean.valueOf(String.valueOf(params.get(PARAM_INPLACE)));
+	        
+	        String fileName = getFilename(params, targetNodeRef);
+	        
+	        File file = new File(tempDir, ffs.getFileInfo(targetNodeRef).getName());
+	
+	        pdfReader = new PdfReader(is);
+	        Document doc = new Document(pdfReader.getPageSizeWithRotation(1));
+	        PdfCopy copy = new PdfCopy(doc, new FileOutputStream(file));
+	        doc.open();
+	
+	        List<Integer> pagelist = parsePageList(pages);
+	        
+	        for (int pageNum = 1; pageNum <= pdfReader.getNumberOfPages(); pageNum++) 
+	        {
+	        	if (pagelist.contains(pageNum) && !delete) {
+	        		copy.addPage(copy.getImportedPage(pdfReader, pageNum));
+	        	}
+	        }
+	        doc.close();
+	
+	        destinationNode = createDestinationNode(fileName, 
+	        		(NodeRef)params.get(PARAM_DESTINATION_FOLDER), targetNodeRef, inplace);
+	        writer = cs.getWriter(destinationNode, ContentModel.PROP_CONTENT, true);
+	
+	        writer.setEncoding(targetReader.getEncoding());
+	        writer.setMimetype(FILE_MIMETYPE);
+	
+	        // Put it in the repository
+	        writer.putContent(file);
+	
+	        // Clean up
+	        file.delete();
+	
+	    }
+	    catch (IOException e)
+	    {
+	        throw new AlfrescoRuntimeException(e.getMessage(), e);
+	    } 
+	    catch (DocumentException e) 
+	    {
+			throw new AlfrescoRuntimeException(e.getMessage(), e);
+		}
+	    catch (Exception e)
+	    {
+	    	throw new AlfrescoRuntimeException(e.getMessage(), e);
+	    }
+	    finally
+	    {
+	        if (pdfReader != null)
+	        {
+	        	pdfReader.close();
+	        }
+	        if (is != null)
+	        {
+	            try
+	            {
+	                is.close();
+	            }
+	            catch (IOException e)
+	            {
+	                throw new AlfrescoRuntimeException(e.getMessage(), e);
+	            }
+	        }
+	
+	        if (tempDir != null)
+	        {
+	            tempDir.delete();
+	        }
+	    }
+	    return destinationNode;
 	}
 
 	private ContentReader getReader(NodeRef nodeRef)

@@ -29,9 +29,9 @@ public class PDFExtractPageActionExecuter extends BasePDFActionExecuter {
     @Override
     protected void addParameterDefinitions(List<ParameterDefinition> paramList)
     {
-        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_FOLDER, DataTypeDefinition.NODE_REF, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_FOLDER)));
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_FOLDER, DataTypeDefinition.NODE_REF, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_FOLDER)));
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_EXTRACT_PAGES, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_DELETE_PAGES)));
-        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_NAME)));
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_NAME)));
         
         super.addParameterDefinitions(paramList);
     }
@@ -39,7 +39,7 @@ public class PDFExtractPageActionExecuter extends BasePDFActionExecuter {
 	@Override
 	protected void executeImpl(Action action, NodeRef actionedUponNodeRef) 
 	{
-		NodeRef result = pdfToolkitService.deletePagesFromPDF(actionedUponNodeRef, action.getParameterValues());
+		NodeRef result = pdfToolkitService.extractPagesFromPDF(actionedUponNodeRef, action.getParameterValues());
 		action.setParameterValue(PARAM_RESULT, result);
 	}
 }
