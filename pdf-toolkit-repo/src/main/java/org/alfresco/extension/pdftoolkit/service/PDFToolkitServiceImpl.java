@@ -1114,6 +1114,19 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 	@Override
 	public NodeRef deletePagesFromPDF(NodeRef targetNodeRef, Map<String, Serializable> params) 
 	{
+		String pages = String.valueOf(params.get(PARAM_DELETE_PAGES));
+		return subsetPDFDocument(targetNodeRef, params, pages, true);
+	}
+
+	@Override
+	public NodeRef extractPagesFromPDF(NodeRef targetNodeRef, Map<String, Serializable> params) 
+	{
+		String pages = String.valueOf(params.get(PARAM_EXTRACT_PAGES));
+		return subsetPDFDocument(targetNodeRef, params, pages, false);
+	}
+
+	private NodeRef subsetPDFDocument(NodeRef targetNodeRef, Map<String, Serializable> params, String pages, boolean delete) 
+	{
 		InputStream is = null;
         File tempDir = null;
         ContentWriter writer = null;
@@ -1140,11 +1153,11 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
             PdfCopy copy = new PdfCopy(doc, new FileOutputStream(file));
             doc.open();
 
-            List<Integer> toDelete = parseDeleteList(params.get(PARAM_DELETE_PAGES).toString());
+            List<Integer> pagelist = parsePageList(pages);
             
             for (int pageNum = 1; pageNum <= pdfReader.getNumberOfPages(); pageNum++) 
             {
-            	if (!toDelete.contains(pageNum)) {
+            	if (pagelist.contains(pageNum) && !delete) {
             		copy.addPage(copy.getImportedPage(pdfReader, pageNum));
             	}
             }
@@ -1200,13 +1213,6 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
             }
         }
         return destinationNode;
-	}
-
-	@Override
-	public NodeRef extractPagesFromPDF(NodeRef targetNodeRef, Map<String, Serializable> params) 
-	{
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	@Override
@@ -1423,23 +1429,23 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 	 * @param list
 	 * @return
 	 */
-	private List<Integer> parseDeleteList(String list)
+	private List<Integer> parsePageList(String list)
 	{
-		List<Integer> toDelete = new ArrayList<Integer>();
+		List<Integer> pages = new ArrayList<Integer>();
 		String[] tokens = list.split(",");
 		for(String token : tokens)
 		{
 			//parse each, if one is not an int, log it but keep going
 			try 
 			{
-				toDelete.add(Integer.parseInt(token));
+				pages.add(Integer.parseInt(token));
 			}
 			catch(NumberFormatException nfe)
 			{
-				logger.warn("Delete list contains non-numeric values");
+				logger.warn("Page list contains non-numeric values");
 			}
 		}
-		return toDelete;
+		return pages;
 	}
 	
     /**
