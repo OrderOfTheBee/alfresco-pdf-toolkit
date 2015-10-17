@@ -14,6 +14,7 @@ Current Functionality:
 * Split At - Split PDF into two PDFs at a specific page, generating two new PDFs.
 * Insert PDF - Insert PDF at a specific Page
 * Delete page(s) from a PDF document
+* Extract page(s) from a PDF document
 * PDF Watermarking
 * PDF Encryption / decryption
 * Digital Signatures
@@ -34,5 +35,4 @@ http://www.youtube.com/watch?v=cJYpFgx037E
 
 Functionality in development:
 
-* Extract Pages
 * Minimally requires Alfresco 3.4 for the repository tier actions, 4.1 for the Share UI components.
