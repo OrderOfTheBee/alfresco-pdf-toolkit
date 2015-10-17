@@ -1298,7 +1298,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
         return destinationNode;
 	}
 
-	public ContentReader getReader(NodeRef nodeRef)
+	private ContentReader getReader(NodeRef nodeRef)
     {
 		// first, make sure the node exists
 		if (ns.exists(nodeRef) == false)
@@ -1365,7 +1365,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
         return destinationNode;
     }
     
-    public int getInteger(Serializable val)
+    private int getInteger(Serializable val)
     {
     	if(val == null)
     	{ 
@@ -1381,7 +1381,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
     	}
     }
     
-    public File getTempFile(NodeRef nodeRef)
+    private File getTempFile(NodeRef nodeRef)
     {
     	File alfTempDir = TempFileProvider.getTempDir();
         File toolkitTempDir = new File(alfTempDir.getPath() + File.separatorChar + nodeRef.getId());
@@ -1389,15 +1389,6 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
         File file = new File(toolkitTempDir, ffs.getFileInfo(nodeRef).getName());
         
         return file;
-    }
-    
-    public File nodeRefToTempFile(NodeRef nodeRef)
-    {
-        File tempFromFile = TempFileProvider.createTempFile("PDFAConverter-", nodeRef.getId()
-                + FILE_EXTENSION);
-        ContentReader reader = cs.getReader(nodeRef, ContentModel.PROP_CONTENT);
-        reader.getContent(tempFromFile);
-        return tempFromFile;
     }
     
     private String getFilename(Map<String, Serializable> params, NodeRef targetNodeRef)
@@ -1536,7 +1527,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
      * @param extension
      * @return
      */
-    public String removeExtension(String fileName, String extension)
+    private String removeExtension(String fileName, String extension)
     {
         // Does the file have the extension?
         if (fileName != null && fileName.contains(extension))
@@ -1550,7 +1541,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
         return fileName;
     }
 
-    protected String getFilename(NodeRef targetNodeRef)
+    private String getFilename(NodeRef targetNodeRef)
     {
         FileInfo fileInfo = ffs.getFileInfo(targetNodeRef);
         String filename = fileInfo.getName();
@@ -1558,7 +1549,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
         return filename;
     }
 
-    protected String getFilenameSansExt(NodeRef targetNodeRef, String extension)
+    private String getFilenameSansExt(NodeRef targetNodeRef, String extension)
     {
         String filenameSansExt;
         filenameSansExt = removeExtension(getFilename(targetNodeRef), extension);
@@ -1961,7 +1952,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
      * @param numpages
      * @return
      */
-    protected boolean checkPage(String pages, int current, int numpages)
+    private boolean checkPage(String pages, int current, int numpages)
     {
 
         boolean markPage = false;
@@ -2009,7 +2000,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
      * @param img
      * @return
      */
-    protected float getCenterX(Rectangle r, Image img)
+    private float getCenterX(Rectangle r, Image img)
     {
         float x = 0;
         float pdfwidth = r.getWidth();
@@ -2027,7 +2018,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
      * @param img
      * @return
      */
-    protected float getCenterY(Rectangle r, Image img)
+    private float getCenterY(Rectangle r, Image img)
     {
         float y = 0;
         float pdfheight = r.getHeight();
