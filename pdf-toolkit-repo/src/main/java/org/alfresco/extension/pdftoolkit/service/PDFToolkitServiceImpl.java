@@ -1260,8 +1260,13 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 	        
 	        for (int pageNum = 1; pageNum <= pdfReader.getNumberOfPages(); pageNum++) 
 	        {
-	        	if (pagelist.contains(pageNum) && !delete) {
+	        	if (pagelist.contains(pageNum) && !delete) 
+	        	{
 	        		copy.addPage(copy.getImportedPage(pdfReader, pageNum));
+	        	}
+	        	else if (!pagelist.contains(pageNum) && delete)
+	        	{
+	        		copy.addPage(copy.getImportedPage(pdfReader,  pageNum));
 	        	}
 	        }
 	        doc.close();
