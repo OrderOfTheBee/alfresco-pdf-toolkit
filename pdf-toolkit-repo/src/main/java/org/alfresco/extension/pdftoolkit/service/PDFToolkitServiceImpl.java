@@ -778,14 +778,14 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 			ContentReader targetReader = getReader(targetNodeRef);
 
 			// Get the split frequency
-			int splitFrequency = 0;
+			int splitPageNumber = 0;
 
-			String splitFrequencyString = params.get(PARAM_SPLIT_AT_PAGE).toString();
-			if (!splitFrequencyString.equals(""))
+			String splitPage = params.get(PARAM_PAGE).toString();
+			if (!splitPage.equals(""))
 			{
 				try
 				{
-					splitFrequency = Integer.valueOf(splitFrequencyString);
+					splitPageNumber = Integer.valueOf(splitPage);
 				}
 				catch (NumberFormatException e)
 				{
@@ -800,7 +800,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 			// split the PDF and put the pages in a list
 			Splitter splitter = new Splitter();
 			// Need to adjust the input value to get the split at the right page
-			splitter.setSplitAtPage(splitFrequency - 1);
+			splitter.setSplitAtPage(splitPageNumber - 1);
 
 			// Split the pages
 			List<PDDocument> pdfs = splitter.split(pdf);
@@ -891,7 +891,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 
 			// This is where we should save the appended PDF
 			// put together the name and save the PDF
-			secondPDF.save(tempDir + "" + File.separatorChar + fileNameSansExt + pg + splitFrequency + lastPage + FILE_EXTENSION);
+			secondPDF.save(tempDir + "" + File.separatorChar + fileNameSansExt + pg + splitPageNumber + lastPage + FILE_EXTENSION);
 
 			for (File file : tempDir.listFiles())
 			{
@@ -980,7 +980,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 
         	ContentReader targetReader = getReader(targetNodeRef);
         	ContentReader insertReader = getReader((NodeRef)params.get(PARAM_TARGET_NODE));
-            int insertAt = Integer.valueOf((String)params.get(PARAM_INSERT_AT_PAGE)).intValue();
+            int insertAt = Integer.valueOf((String)params.get(PARAM_PAGE)).intValue();
             Boolean inplace = Boolean.valueOf(String.valueOf(params.get(PARAM_INPLACE)));
             
             // Get contentReader inputStream
@@ -1114,14 +1114,14 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 	@Override
 	public NodeRef deletePagesFromPDF(NodeRef targetNodeRef, Map<String, Serializable> params) 
 	{
-		String pages = String.valueOf(params.get(PARAM_DELETE_PAGES));
+		String pages = String.valueOf(params.get(PARAM_PAGE));
 		return subsetPDFDocument(targetNodeRef, params, pages, true);
 	}
 
 	@Override
 	public NodeRef extractPagesFromPDF(NodeRef targetNodeRef, Map<String, Serializable> params) 
 	{
-		String pages = String.valueOf(params.get(PARAM_EXTRACT_PAGES));
+		String pages = String.valueOf(params.get(PARAM_PAGE));
 		return subsetPDFDocument(targetNodeRef, params, pages, false);
 	}
 
@@ -1145,6 +1145,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
             
             Boolean inplace = Boolean.valueOf(String.valueOf(params.get(PARAM_INPLACE)));
             Integer degrees = Integer.valueOf(String.valueOf(params.get(PARAM_DEGREES)));
+            String pages = String.valueOf(params.get(PARAM_PAGE));
             
             if(degrees % 90 != 0)
             {
@@ -1160,12 +1161,18 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
             
             int rotation = 0;
             PdfDictionary pageDictionary;
-            for (int pageNum = 1; pageNum <= pdfReader.getNumberOfPages(); pageNum++) 
+            int numPages = pdfReader.getNumberOfPages();
+            for (int pageNum = 1; pageNum <= numPages; pageNum++) 
             {
-            	rotation = pdfReader.getPageRotation(pageNum);
-            	pageDictionary = pdfReader.getPageN(pageNum);
-                pageDictionary.put(PdfName.ROTATE, new PdfNumber(rotation + degrees));
+                // only apply stamp to requested pages
+                if (checkPage(pages, pageNum, numPages))
+                {
+                	rotation = pdfReader.getPageRotation(pageNum);
+                	pageDictionary = pdfReader.getPageN(pageNum);
+                    pageDictionary.put(PdfName.ROTATE, new PdfNumber(rotation + degrees));
+                }
             }
+            
             stamp.close();
             pdfReader.close();
 
@@ -1968,6 +1975,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
     private boolean checkPage(String pages, int current, int numpages)
     {
 
+    	
         boolean markPage = false;
 
         if (pages.equals(PAGE_EVEN))
@@ -1998,9 +2006,18 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
                 markPage = true;
             }
         }
-        else
+        else if (pages.equals(PAGE_ALL))
         {
             markPage = true;
+        }
+        else
+        {
+        	// if we get here, a scheme wasn't selected, so we can treat this like a page list
+        	List<Integer> pageList = parsePageList(pages);
+        	if(pageList.contains(current))
+        	{
+        		markPage = true;
+        	}
         }
 
         return markPage;

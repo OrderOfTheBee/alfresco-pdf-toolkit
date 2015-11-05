@@ -58,6 +58,14 @@ PDFToolkit.Util = {};
 			 * @type boolean
 			 */
 			showPageScheme: false,
+			
+			/**
+			 * Do we permit multiple pages to be selected?
+			 * 
+			 * @property allowMultiPageSelect
+			 * @type boolean
+			 */
+			allowMultiPageSelect: false
 		},
 
 		schemesModule: null,
@@ -198,7 +206,16 @@ PDFToolkit.Util = {};
 			{
 				if(pageSelect.selectedIndex != -1)
 				{
-					hiddenValue.value = pageSelect.options[pageSelect.selectedIndex].value;
+					var selected = [];
+					var options = pageSelect.options;
+					for(var i = 0; i < options.length; i++)
+					{
+						if(options[i].selected)
+						{
+							selected.push(options[i].value)
+						}
+					}
+					hiddenValue.value = selected;
 				}
 			}
 		}

@@ -15,10 +15,6 @@ public abstract class PDFToolkitConstants
     
     public static final String PARAM_TARGET_NODE    				= "target-node";
     
-    public static final String PARAM_DELETE_PAGES 	    			= "delete-pages";
-    
-    public static final String PARAM_EXTRACT_PAGES 	    			= "extract-pages";
-    
     public static final String PARAM_USER_PASSWORD                 	= "user-password";
     public static final String PARAM_OWNER_PASSWORD                	= "owner-password";
     public static final String PARAM_ALLOW_PRINT                   	= "allow-print";
@@ -33,7 +29,6 @@ public abstract class PDFToolkitConstants
     public static final String PARAM_EXCLUDE_METADATA              	= "exclude-metadata";
     public static final String PARAM_OPTIONS_LEVEL                 	= "level-options";
     
-    public static final String PARAM_INSERT_AT_PAGE     			= "insert-at-page";
     public static final String PARAM_INSERT_CONTENT     			= "insert-content";
     
     public static final String PARAM_DEGREES     					= "degrees";
@@ -50,8 +45,6 @@ public abstract class PDFToolkitConstants
     public static final String PARAM_STORE_PASSWORD     			= "store-password";
     
     public static final String PARAM_SPLIT_FREQUENCY    			= "split-frequency";
-
-    public static final String PARAM_SPLIT_AT_PAGE      			= "split-at-page";
     
     public static final String PARAM_WATERMARK_IMAGE    			= "watermark-image";
     public static final String PARAM_WATERMARK_DEPTH    			= "watermark-depth";

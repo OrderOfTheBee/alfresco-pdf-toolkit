@@ -273,6 +273,7 @@
                     <field id="page">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
                         	<control-param name="showPageScheme">false</control-param>
+                        	<control-param name="allowMultiPageSelect">false</control-param>
                         </control>
                     </field>
                     <field id="position">
@@ -312,6 +313,7 @@
                     <field id="page">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
                         	<control-param name="showPageScheme">true</control-param>
+                        	<control-param name="allowMultiPageSelect">true</control-param>
                         </control>
                     </field>
                     <field id="position">
@@ -337,7 +339,7 @@
         			<show id="destination-name"/>
         			<show id="destination-folder"/>
         			<show id="insert-content"/>
-        			<show id="insert-at-page"/>
+        			<show id="page"/>
         		</field-visibility>
                 <appearance>
                 	<field id="inplace">
@@ -345,9 +347,10 @@
                         	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
                         </control>
                 	</field>
-                	<field id="insert-at-page">
+                	<field id="page">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
                         	<control-param name="showPageScheme">false</control-param>
+                        	<control-param name="allowMultiPageSelect">false</control-param>
                         </control>
                     </field>
                 </appearance>
@@ -362,7 +365,7 @@
         		    <show id="inplace"/>
         			<show id="destination-name"/>
         			<show id="destination-folder"/>
-        			<show id="delete-pages"/>
+        			<show id="page"/>
         		</field-visibility>
                 <appearance>
                 	<field id="inplace">
@@ -370,6 +373,12 @@
                         	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
                         </control>
                 	</field>
+                	<field id="page">
+                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
+                        	<control-param name="showPageScheme">true</control-param>
+                        	<control-param name="allowMultiPageSelect">true</control-param>
+                        </control>
+                    </field>
                 </appearance>
             </form>
         </forms>
@@ -381,9 +390,15 @@
         		<field-visibility>
         			<show id="destination-name"/>
         			<show id="destination-folder"/>
-        			<show id="extract-pages"/>
+        			<show id="page"/>
         		</field-visibility>
                 <appearance>
+                	<field id="page">
+                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
+                        	<control-param name="showPageScheme">true</control-param>
+                        	<control-param name="allowMultiPageSelect">true</control-param>
+                        </control>
+                    </field>
                 </appearance>
             </form>
         </forms>
@@ -407,12 +422,13 @@
         	<form>
             	<field-visibility>
             		<show id="destination-folder"/>
-            		<show id="split-at-page"/>
+            		<show id="page"/>
                 </field-visibility>
                 <appearance>
-                	<field id="split-at-page">
+                	<field id="page">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
                         	<control-param name="showPageScheme">false</control-param>
+                        	<control-param name="allowMultiPageSelect">true</control-param>
                         </control>
                     </field>
                 </appearance>
@@ -428,6 +444,7 @@
         			<show id="destination-name"/>
         			<show id="destination-folder"/>
         			<show id="degrees"/>
+        			<show id="page"/>
         		</field-visibility>
                 <appearance>
                 	<field id="inplace">
@@ -435,6 +452,12 @@
                         	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
                         </control>
                 	</field>
+                	<field id="page">
+                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
+                        	<control-param name="showPageScheme">true</control-param>
+                        	<control-param name="allowMultiPageSelect">true</control-param>
+                        </control>
+                    </field>
                 </appearance>
             </form>
         </forms>

@@ -75,7 +75,7 @@ public class PDFSplitAtPageActionExecuter extends BasePDFActionExecuter
     protected void addParameterDefinitions(List<ParameterDefinition> paramList)
     {
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_FOLDER, DataTypeDefinition.NODE_REF, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_FOLDER)));
-        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_SPLIT_AT_PAGE, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_SPLIT_AT_PAGE)));
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_PAGE, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_PAGE)));
         
         super.addParameterDefinitions(paramList);
     }

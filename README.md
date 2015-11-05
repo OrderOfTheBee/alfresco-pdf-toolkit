@@ -28,7 +28,8 @@ All of the actions are available as actions that can be used in content rules, a
 
 Note that as of Version 1.2, the legacy Explorer UI components will no longer be maintained and will be fully removed in version 1.3.
 
-NOTE:  The latest 5.x version removes the PDF/A conversion action.  I'm committed to keeping this project 100% compatible with Alfresco community.  The PDF/A action will be released as a separate module for Alfresco Enterprise.
+NOTE:  The latest 1.3 betas remove the PDF/A conversion action, since that action has dependencies on Alfresco Enterprise.  I'm committed to keeping this project 100% compatible with Alfresco community.  The PDF/A action will be released as a separate module for Alfresco Enterprise.
+
 A teaser screencast is available here:
 
 http://www.youtube.com/watch?v=cJYpFgx037E
