@@ -428,7 +428,7 @@
                 	<field id="page">
                     	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
                         	<control-param name="showPageScheme">false</control-param>
-                        	<control-param name="allowMultiPageSelect">true</control-param>
+                        	<control-param name="allowMultiPageSelect">false</control-param>
                         </control>
                     </field>
                 </appearance>
