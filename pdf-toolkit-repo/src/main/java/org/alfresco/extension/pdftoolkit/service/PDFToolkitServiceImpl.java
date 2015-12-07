@@ -1528,7 +1528,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
     	}
     	else if (position.equals(POSITION_BOTTOMRIGHT))
     	{
-    		r = new Rectangle(pageWidth - width, pageHeight, pageWidth, pageHeight - height);
+    		r = new Rectangle(pageWidth - width, height, pageWidth, 0);
     	}
     	else if (position.equals(POSITION_TOPLEFT))
     	{
@@ -1536,7 +1536,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
     	}
     	else if (position.equals(POSITION_TOPRIGHT))
     	{
-    		r = new Rectangle(pageWidth - width, height, pageWidth, 0);
+    		r = new Rectangle(pageWidth - width, pageHeight, pageWidth, pageHeight - height);
     	}
     	else if (position.equals(POSITION_CENTER))
     	{
