@@ -86,6 +86,7 @@ public class PDFSignatureActionExecuter extends BasePDFStampActionExecuter
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_ALIAS, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_ALIAS)));
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_STORE_PASSWORD, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_STORE_PASSWORD)));
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_NAME)));
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_NEW_REVISION, DataTypeDefinition.BOOLEAN, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_NEW_REVISION), false));
 
         super.addParameterDefinitions(paramList);
 
