@@ -9,3 +9,4 @@ solr/solr_home
 *.log.*
 *.log
 
+pdf-toolkit-repo/bin

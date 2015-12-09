@@ -33,7 +33,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.alfresco</groupId>
-			<artifactId>alfresco-enterprise-repository</artifactId>
+			<artifactId>alfresco-repository</artifactId>
 			<version>${alfresco.version}</version>
 			<scope>provided</scope>
 		</dependency>
