@@ -11,35 +11,36 @@ import org.alfresco.service.cmr.repository.NodeRef;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class PDFDeletePageActionExecuter extends BasePDFActionExecuter {
+public class PDFRotateActionExecuter extends BasePDFActionExecuter {
 
-    /**
+	/**
      * The logger
      */
-    private static Log         logger                   	= LogFactory.getLog(PDFDeletePageActionExecuter.class);
+    private static Log         logger                   = LogFactory.getLog(PDFRotateActionExecuter.class);
 
     /**
      * Action constants
      */
-    public static final String NAME                     	= "pdf-delete-page";
+    public static final String NAME                     = "pdf-rotate";
+    
+	@Override
+	protected void executeImpl(Action action, NodeRef actionedUponNodeRef) 
+	{
+		NodeRef result = pdfToolkitService.rotatePDF(actionedUponNodeRef, action.getParameterValues());
+		action.setParameterValue(PARAM_RESULT, result);
+	}
 
-    /**
+	/**
      * Add parameter definitions
      */
     @Override
     protected void addParameterDefinitions(List<ParameterDefinition> paramList)
     {
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_FOLDER, DataTypeDefinition.NODE_REF, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_FOLDER)));
-        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_PAGE, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_PAGE)));
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DEGREES, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_DEGREES)));
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_NAME)));
-        
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_PAGE, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_PAGE), false));
+
         super.addParameterDefinitions(paramList);
     }
-    
-	@Override
-	protected void executeImpl(Action action, NodeRef actionedUponNodeRef) 
-	{
-		NodeRef result = pdfToolkitService.deletePagesFromPDF(actionedUponNodeRef, action.getParameterValues());
-		action.setParameterValue(PARAM_RESULT, result);
-	}
 }

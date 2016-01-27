@@ -58,6 +58,14 @@ PDFToolkit.Util = {};
 			 * @type boolean
 			 */
 			showPageScheme: false,
+			
+			/**
+			 * Do we permit multiple pages to be selected?
+			 * 
+			 * @property allowMultiPageSelect
+			 * @type boolean
+			 */
+			allowMultiPageSelect: false
 		},
 
 		schemesModule: null,
@@ -178,7 +186,11 @@ PDFToolkit.Util = {};
 		
 		setValue: function SelectPage_setValues(event, that)
 		{
-			var useScheme = YAHOO.util.Dom.get(that.id + "-useScheme").checked;
+			var useScheme = false;
+			if(YAHOO.util.Dom.get(that.id + "-useScheme"))
+			{
+				useScheme = YAHOO.util.Dom.get(that.id + "-useScheme").checked;
+			}
 			var schemeSelect = YAHOO.util.Dom.get(that.id + "-schemes");
 			var pageSelect = YAHOO.util.Dom.get(that.id + "-pages");
 			var hiddenValue = YAHOO.util.Dom.get(that.id);
@@ -194,7 +206,16 @@ PDFToolkit.Util = {};
 			{
 				if(pageSelect.selectedIndex != -1)
 				{
-					hiddenValue.value = pageSelect.options[pageSelect.selectedIndex].value;
+					var selected = [];
+					var options = pageSelect.options;
+					for(var i = 0; i < options.length; i++)
+					{
+						if(options[i].selected)
+						{
+							selected.push(options[i].value)
+						}
+					}
+					hiddenValue.value = selected;
 				}
 			}
 		}
@@ -288,19 +309,17 @@ PDFToolkit.Util = {};
 
 (function()
 {
-	PDFToolkit.Util.HideDependentControls = function(element, htmlIdPrefix)
+	PDFToolkit.Util.HideDependentControls = function(fieldHtmlId, htmlIdPrefix)
 	{
-		// get the field html id
-		var fieldHtmlId = element.id;
 		// set the value of the hidden field
-		var value = YAHOO.util.Dom.get(fieldHtmlId).checked;
-		YAHOO.util.Dom.get(fieldHtmlId + "-hidden").value = value;
+		var value = YAHOO.util.Dom.get(fieldHtmlId +"-entry").checked;
+		YAHOO.util.Dom.get(fieldHtmlId).value = value;
 		// find and hide the dependent controls
 		var controls = YAHOO.util.Dom.get(fieldHtmlId + "-tohide").value.split(",");
 
 		for(index in controls)
 		{
-			var control = new YAHOO.util.Dom.get((htmlIdPrefix + "_" + controls[index] + "-cntrl"));
+			var control = new YAHOO.util.Dom.get((htmlIdPrefix + "_" + controls[index]));
 			var container = control.parentElement;
 			if(value)
 			{

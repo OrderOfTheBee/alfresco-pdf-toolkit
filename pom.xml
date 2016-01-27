@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.alfresco.extension</groupId>
     <artifactId>pdf-toolkit</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.3-SNAPSHOT</version>
     <name>Quickstart of Alfresco and Share with DB and runner embedded</name>
     <description>This All-in-One project allows to manage all the components involved in Alfresco development (Repo, Share, Solr, AMPs) in one project</description>
     <packaging>pom</packaging>    
@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.alfresco.maven</groupId>
         <artifactId>alfresco-sdk-parent</artifactId>
-        <version>1.1.1</version>
+        <version>2.1.0</version>
     </parent>
     
     <!-- 
@@ -24,7 +24,7 @@
             | NOTE: Please Refer to Alfresco Support for access to Enterprise artifacts -->
         <alfresco.groupId>org.alfresco</alfresco.groupId>
         <!-- Defines the Alfresco version to work against. Allowed values are: org.alfresco | org.alfresco.enterprise -->
-        <alfresco.version>4.2.f</alfresco.version>
+        <alfresco.version>5.0.d</alfresco.version>
         <!-- This control the root logging level for all apps -->
         <app.log.root.level>WARN</app.log.root.level>
         <!-- This controls the default data location for dir.root -->
@@ -51,33 +51,12 @@
      </dependencies>
   </dependencyManagement>
   
-    <!-- This repository is only needed to retrieve Alfresco parent POM. 
-        NOTE: This can be removed when/if Alfresco will be on Maven Central 
-        
-        NOTE: The repository to be used for Alfresco Enterprise artifacts is
-        https://artifacts.alfresco.com/nexus/content/groups/private/. Please check
-        with Alfresco Support to get credentials to add to your ~/.m2/settings.xml
-        if you are a Enterprise customer or Partner  
-        -->
-    <repositories>
-        <repository>
-            <id>alfresco-public</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
-        </repository>
-        <repository>
-            <id>alfresco-private</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/private</url>
-        </repository>
-        <repository>
-            <id>alfresco-public-snapshots</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/public-snapshots</url>
-        </repository>
-    </repositories>
+    
   <modules>
     <module>pdf-toolkit-repo</module>
     <module>pdf-toolkit-share</module>
-    <module>alfresco</module>
-    <module>solr</module>
+    <module>repo</module>
+    <module>solr-config</module>
     <module>share</module>
     <module>runner</module>
   </modules>

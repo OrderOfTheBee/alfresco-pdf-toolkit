@@ -121,10 +121,42 @@
 					</actions>
 					<actionGroups>
 						<actionGroup id="document-browse">
-							<action index="507" id="pdf-encryption"/>
+							<action index="508" id="pdf-encryption"/>
 						</actionGroup>
 						<actionGroup id="document-details">
-							<action index="507" id="pdf-encryption"/>
+							<action index="508" id="pdf-encryption"/>
+						</actionGroup>
+					</actionGroups>
+				</config>
+			</configurations>
+		</module>
+		<module>
+			<id>PDF Toolkit Actions UI - Decryption</id>
+			<description>Expose the decryption action doclib action UI</description>
+			<version>1.2</version>
+			<auto-deploy>true</auto-deploy>
+			<configurations>
+				<config evaluator="string-compare" condition="DocLibActions">
+					<actions>
+						<action id="pdf-decryption"
+							type="javascript"
+							label="actions.pdftoolkit.decryptPDF">
+							<param name="function">onActionFormDialog</param>
+			        		<param name="itemKind">pdf-action</param>
+			        		<param name="itemId">pdf-decryption</param>
+			        		<param name="mode">create</param>
+			        		<param name="destination">{node.nodeRef}</param>
+			        		<param name="successMessage">message.pdf-decryption.success</param>
+			        		<param name="failureMessage">message.pdf-decryption.failure</param>
+			        		<evaluator>evaluator.pdftoolkit.doclib.action.pdfToolkitMimetype</evaluator>
+						</action>
+					</actions>
+					<actionGroups>
+						<actionGroup id="document-browse">
+							<action index="509" id="pdf-decryption"/>
+						</actionGroup>
+						<actionGroup id="document-details">
+							<action index="509" id="pdf-decryption"/>
 						</actionGroup>
 					</actionGroups>
 				</config>
@@ -260,33 +292,66 @@
 			</configurations>
 		</module>
 		<module>
-			<id>PDF Toolkit Actions UI - Transform to PDF/A</id>
-			<description>Expose the PDF/A transformation action doclib action UI</description>
+			<id>PDF Toolkit Actions UI - Extract Page</id>
+			<description>Expose the extract page action doclib action UI</description>
 			<version>1.2</version>
 			<auto-deploy>true</auto-deploy>
 			<configurations>
 				<!-- Share config elements for the doclib actions -->
 				<config evaluator="string-compare" condition="DocLibActions">
 					<actions>
-						<action id="pdf-convert-to-archivable"
+						<action id="pdf-extract-page"
 							type="javascript"
-							label="actions.pdftoolkit.convertToArchivable">
+							label="actions.pdftoolkit.extractPDFpages">
 			        		<param name="function">onActionFormDialog</param>
 			        		<param name="itemKind">pdf-action</param>
-			        		<param name="itemId">pdf-convert-to-archivable</param>
+			        		<param name="itemId">pdf-extract-page</param>
 			        		<param name="mode">create</param>
 			        		<param name="destination">{node.nodeRef}</param>
-			        		<param name="successMessage">message.convert-to-archivable.success</param>
-			        		<param name="failureMessage">message.convert-to-archivable.failure</param>
+			        		<param name="successMessage">message.pdf-extract-page.success</param>
+			        		<param name="failureMessage">message.pdf-extract-page.failure</param>
 			        		<evaluator>evaluator.pdftoolkit.doclib.action.pdfToolkitMimetype</evaluator>
 						</action>
 					</actions>
 					<actionGroups>
 						<actionGroup id="document-browse">
-							<action index="508" id="pdf-convert-to-archivable"/>
+							<action index="510" id="pdf-extract-page"/>
 						</actionGroup>
 						<actionGroup id="document-details">
-							<action index="508" id="pdf-convert-to-archivable"/>
+							<action index="510" id="pdf-extract-page"/>
+						</actionGroup>
+					</actionGroups>
+				</config>
+			</configurations>
+		</module>
+		<module>
+			<id>PDF Toolkit Actions UI - Rotate Page</id>
+			<description>Expose the rotate pages action doclib action UI</description>
+			<version>1.2</version>
+			<auto-deploy>true</auto-deploy>
+			<configurations>
+				<!-- Share config elements for the doclib actions -->
+				<config evaluator="string-compare" condition="DocLibActions">
+					<actions>
+						<action id="pdf-rotate"
+							type="javascript"
+							label="actions.pdftoolkit.rotate">
+			        		<param name="function">onActionFormDialog</param>
+			        		<param name="itemKind">pdf-action</param>
+			        		<param name="itemId">pdf-rotate</param>
+			        		<param name="mode">create</param>
+			        		<param name="destination">{node.nodeRef}</param>
+			        		<param name="successMessage">message.pdf-rotate.success</param>
+			        		<param name="failureMessage">message.pdf-rotate.failure</param>
+			        		<evaluator>evaluator.pdftoolkit.doclib.action.pdfToolkitMimetype</evaluator>
+						</action>
+					</actions>
+					<actionGroups>
+						<actionGroup id="document-browse">
+							<action index="507" id="pdf-rotate"/>
+						</actionGroup>
+						<actionGroup id="document-details">
+							<action index="507" id="pdf-rotate"/>
 						</actionGroup>
 					</actionGroups>
 				</config>

@@ -11,17 +11,17 @@ import org.alfresco.service.cmr.repository.NodeRef;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class PDFDeletePageActionExecuter extends BasePDFActionExecuter {
+public class PDFExtractPageActionExecuter extends BasePDFActionExecuter {
 
-    /**
+	/**
      * The logger
      */
-    private static Log         logger                   	= LogFactory.getLog(PDFDeletePageActionExecuter.class);
+    private static Log         logger                   	= LogFactory.getLog(PDFExtractPageActionExecuter.class);
 
     /**
      * Action constants
      */
-    public static final String NAME                     	= "pdf-delete-page";
+    public static final String NAME                     	= "pdf-extract-page";
 
     /**
      * Add parameter definitions
@@ -29,9 +29,9 @@ public class PDFDeletePageActionExecuter extends BasePDFActionExecuter {
     @Override
     protected void addParameterDefinitions(List<ParameterDefinition> paramList)
     {
-        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_FOLDER, DataTypeDefinition.NODE_REF, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_FOLDER)));
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_FOLDER, DataTypeDefinition.NODE_REF, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_FOLDER)));
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_PAGE, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_PAGE)));
-        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_NAME)));
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_DESTINATION_NAME, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_DESTINATION_NAME)));
         
         super.addParameterDefinitions(paramList);
     }
@@ -39,7 +39,7 @@ public class PDFDeletePageActionExecuter extends BasePDFActionExecuter {
 	@Override
 	protected void executeImpl(Action action, NodeRef actionedUponNodeRef) 
 	{
-		NodeRef result = pdfToolkitService.deletePagesFromPDF(actionedUponNodeRef, action.getParameterValues());
+		NodeRef result = pdfToolkitService.extractPagesFromPDF(actionedUponNodeRef, action.getParameterValues());
 		action.setParameterValue(PARAM_RESULT, result);
 	}
 }
