@@ -128,6 +128,6 @@
 	
 	<!-- Page count web script -->
     <bean id="webscript.org.alfresco.extension.pdftoolkit.pagecount.get" class="org.alfresco.extension.pdftoolkit.webscripts.GetPageCount" parent="webscript">
-		<property name="ServiceRegistry" ref="ServiceRegistry"/>
+		<property name="serviceRegistry" ref="ServiceRegistry"/>
 	</bean>
 </beans>
