@@ -411,7 +411,14 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 		int height = getInteger(params.get(PARAM_HEIGHT));
 		int width = getInteger(params.get(PARAM_WIDTH));
 		int pageNumber = getInteger(params.get(PARAM_PAGE));
-
+		
+		// By default, append the signature as a new PDF revision to avoid
+		// invalidating any signatures that might already exist on the doc
+		boolean appendToExisting = true;
+		if (params.get(PARAM_NEW_REVISION) != null) {
+			appendToExisting = Boolean.valueOf(String.valueOf(params.get(PARAM_NEW_REVISION)));
+		}
+		
 		// New keystore parameters
 		String alias = (String)params.get(PARAM_ALIAS);
 		String storePassword = (String)params.get(PARAM_STORE_PASSWORD);
@@ -464,7 +471,15 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 			File file = new File(tempDir, ffs.getFileInfo(targetNodeRef).getName());
 
 			FileOutputStream fout = new FileOutputStream(file);
-			PdfStamper stamp = PdfStamper.createSignature(reader, fout, '\0');
+			
+			// When adding a second signature, append must be called on PdfStamper.createSignature
+			// to avoid invalidating previous signatures
+			PdfStamper stamp = null;
+			if (appendToExisting) {
+				stamp = PdfStamper.createSignature(reader, fout, '\0', tempDir, true);
+			} else {
+				stamp = PdfStamper.createSignature(reader, fout, '\0');
+			}
 			PdfSignatureAppearance sap = stamp.getSignatureAppearance();
 			sap.setCrypto(key, chain, null, PdfSignatureAppearance.WINCER_SIGNED);
 
@@ -1528,7 +1543,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
     	}
     	else if (position.equals(POSITION_BOTTOMRIGHT))
     	{
-    		r = new Rectangle(pageWidth - width, pageHeight, pageWidth, pageHeight - height);
+    		r = new Rectangle(pageWidth - width, height, pageWidth, 0);
     	}
     	else if (position.equals(POSITION_TOPLEFT))
     	{
@@ -1536,7 +1551,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
     	}
     	else if (position.equals(POSITION_TOPRIGHT))
     	{
-    		r = new Rectangle(pageWidth - width, height, pageWidth, 0);
+    		r = new Rectangle(pageWidth - width, pageHeight, pageWidth, pageHeight - height);
     	}
     	else if (position.equals(POSITION_CENTER))
     	{
