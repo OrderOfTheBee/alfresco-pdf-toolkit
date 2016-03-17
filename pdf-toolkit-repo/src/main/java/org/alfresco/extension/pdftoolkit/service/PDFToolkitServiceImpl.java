@@ -464,6 +464,25 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 			ContentReader pdfReader = getReader(targetNodeRef);
 			PdfReader reader = new PdfReader(pdfReader.getContentInputStream());
 
+			// If the page number is 0 because it couldn't be parsed or for
+			// some other reason, set it to the first page, which is 1.
+			// If the page number is negative, assume the intent is to "wrap".
+			// For example, -1 would always be the last page.
+			int numPages = reader.getNumberOfPages();
+			if (pageNumber < 1 && pageNumber == 0) {
+				pageNumber = 1; // use the first page
+			} else {
+				// page number is negative
+				pageNumber = numPages + 1 + pageNumber;
+				if (pageNumber <= 0) pageNumber = 1;
+			}
+			
+			// if the page number specified is more than the num of pages,
+			// use the last page
+			if (pageNumber > numPages) {
+				pageNumber = numPages;
+			}
+			
 			// create temp dir to store file
 			File alfTempDir = TempFileProvider.getTempDir();
 			tempDir = new File(alfTempDir.getPath() + File.separatorChar + targetNodeRef.getId());
@@ -486,7 +505,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 			// set reason for signature and location of signer
 			sap.setReason(reason);
 			sap.setLocation(location);
-
+	
 			if (visibility.equalsIgnoreCase(VISIBILITY_VISIBLE))
 			{
 				//create the signature rectangle using either the provided position or
