@@ -11,7 +11,18 @@
         <artifactId>pdf-toolkit</artifactId>
         <version>1.3-SNAPSHOT</version>
     </parent>
-
+    
+    <properties>
+        <!-- Defines the target WAR artifactId to run this amp, only used with the -Pamp-to-war switch
+        .    | Allowed values: alfresco | share. Defaults to a repository AMP, but could point to your custom corporate Alfresco WAR -->
+        <alfresco.client.war>alfresco</alfresco.client.war>
+        <!-- Defines the target WAR groupId to run this amp, only used with the -Pamp-to-war switch
+        .    | Could be org.alfresco | org.alfresco.enterprise or your corporate groupId -->
+        <!-- <alfresco.client.war.groupId>org.alfresco</alfresco.client.war.groupId> -->
+        <!-- Defines the target WAR version to run this amp, only used with the -Pamp-to-war switch -->
+        <!-- <alfresco.client.war.version>${alfresco.version}</alfresco.client.war.version> -->
+    </properties>
+    
     <!--
     Following dependencies are needed for compiling Java code in src/main/java; <scope>provided</scope>
     is inherited for each of the following; for more info, please refer to alfresco-integration-parent
@@ -32,12 +43,6 @@
 			<artifactId>alfresco-repository</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.alfresco</groupId>
-			<artifactId>alfresco-enterprise-repository</artifactId>
-			<version>${alfresco.version}</version>
-			<scope>provided</scope>
-		</dependency>
-        <dependency>
 			<groupId>org.apache.pdfbox</groupId>
 			<artifactId>pdfbox</artifactId>
 			<version>1.7.0-alfresco-patched</version>
@@ -73,15 +78,30 @@
       	</dependency>
     </dependencies>
     
-    <properties>
-        <!-- Defines the target WAR artifactId to run this amp, only used with the -Pamp-to-war switch
-        .    | Allowed values: alfresco | share. Defaults to a repository AMP, but could point to your custom corporate Alfresco WAR -->
-        <alfresco.client.war>alfresco</alfresco.client.war>
-        <!-- Defines the target WAR groupId to run this amp, only used with the -Pamp-to-war switch
-        .    | Could be org.alfresco | org.alfresco.enterprise or your corporate groupId -->
-        <!-- <alfresco.client.war.groupId>org.alfresco</alfresco.client.war.groupId> -->
-        <!-- Defines the target WAR version to run this amp, only used with the -Pamp-to-war switch -->
-        <!-- <alfresco.client.war.version>${alfresco.version}</alfresco.client.war.version> -->
-    </properties>
+     <profiles>
+
+        <!--
+            Brings in the extra Enterprise specific repository classes,
+            if the 'enterprise' profile has been activated, needs to be activated manually. -->
+        <profile>
+            <id>enterprise</id>
+            <dependencies>
+                <dependency>
+                    <groupId>${alfresco.groupId}</groupId>
+                    <artifactId>alfresco-enterprise-repository</artifactId>
+                    <version>${alfresco.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <!-- If we are running in embedded Tomcat skip unit tests -->
+        <profile>
+            <id>run</id>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </profile>
+    </profiles>
     
 </project>

@@ -43,7 +43,8 @@ public abstract class PDFToolkitConstants
     public static final String PARAM_KEY_TYPE          				= "key-type";
     public static final String PARAM_ALIAS              			= "alias";
     public static final String PARAM_STORE_PASSWORD     			= "store-password";
-    
+    public static final String PARAM_NEW_REVISION    				= "new-revision";
+
     public static final String PARAM_SPLIT_FREQUENCY    			= "split-frequency";
     
     public static final String PARAM_WATERMARK_IMAGE    			= "watermark-image";
