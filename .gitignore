@@ -8,4 +8,6 @@ alf_data_dev/*
 solr/solr_home
 *.log.*
 *.log
+Users/*
+Users
 

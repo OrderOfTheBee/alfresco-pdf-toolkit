@@ -13,6 +13,12 @@
         <version>1.3-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <!-- Used in share-config-custom.xml when testing.
+             By default points to standard location (local) of Alfresco Repository -->
+        <alfresco.repo.url>http://localhost:8080/alfresco</alfresco.repo.url>
+    </properties>
+    
     <dependencies>
         <dependency>
             <groupId>${alfresco.groupId}</groupId>
@@ -28,11 +34,39 @@
         </dependency>
        
     </dependencies>
-    <build>
+    
+  	<build>
         <plugins>
+            <plugin>
+                <!-- Bring in the Maven Dependency plugin so we can unpack and store the MANIFEST.MF file.
+                     It will be used in the custom Share WAR that is produced by the WAR plugin,
+                     it otherwise gets overwritten by the overlay process. -->
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeTypes>war</includeTypes>
+                            <includeGroupIds>org.alfresco</includeGroupIds>
+                            <includeArtifactIds>share</includeArtifactIds>
+                            <includes>META-INF/MANIFEST.MF</includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
+                    <!-- Bring in the MANIFEST.MF file from the original share.war, it contains version information
+                         that is needed for it to operate properly -->
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifestFile>${project.build.directory}/dependency/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
                     <!-- Here is can control the order of overlay of your (WAR, AMP, etc.) dependencies
                         | NOTE: At least one WAR dependency must be uncompressed first 
                         | NOTE: In order to have a dependency effectively added to the WAR you need to 
@@ -40,21 +74,30 @@
                         | NOTE: First-win resource strategy is used by the WAR plugin 
                         -->
                     <overlays>
-                        <!-- The current project customizations -->
+                        <!-- Current project customizations. This is normally empty, since customizations come from the AMPs -->
                         <overlay/>
                         <!-- The Share WAR -->
                         <overlay>
                             <groupId>${alfresco.groupId}</groupId>
-                            <artifactId>share</artifactId>
+                            <artifactId>${alfresco.share.artifactId}</artifactId>
                             <type>war</type>
                             <!-- To allow inclusion of META-INF -->
                             <excludes/>
                         </overlay>
+                        <!-- Add / sort your AMPs here -->
                         <overlay>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>pdf-toolkit-share</artifactId>
                             <type>amp</type>
                         </overlay>
+                        <!-- Uncomment if you are using RM module -->
+                        <!--
+                        <overlay>
+                            <groupId>${alfresco.groupId}</groupId>
+                            <artifactId>alfresco-rm-share</artifactId>
+                            <type>amp</type>
+                        </overlay>
+                        -->
                     </overlays>
                 </configuration>
             </plugin>
