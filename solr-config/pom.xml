@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.alfresco.extension</groupId>
         <artifactId>pdf-toolkit</artifactId>
-        <version>1.3-SNAPSHOT</version>
+        <version>1.4.0</version>
     </parent>
 
     <!-- Build Solr Configuration only when we run an embedded Tomcat (i.e. profile run is enabled).
@@ -21,7 +21,7 @@
             <id>run</id>
 
             <properties>
-                <alfresco.solr.dir>${project.parent.basedir}/${alfresco.data.location}/solr4</alfresco.solr.dir>
+                <alfresco.solr.dir>${alfresco.data.location}/solr4</alfresco.solr.dir>
                 <alfresco.solr.home.dir>${alfresco.solr.dir}/config</alfresco.solr.home.dir>
                 <alfresco.solr.data.dir>${alfresco.solr.dir}/data</alfresco.solr.data.dir>
             </properties>
