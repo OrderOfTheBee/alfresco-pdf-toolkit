@@ -37,3 +37,12 @@ http://www.youtube.com/watch?v=cJYpFgx037E
 Functionality in development:
 
 * Minimally requires Alfresco 3.4 for the repository tier actions, 4.1 for the Share UI components.
+
+LICENSING
+
+The Alfresco PDF Toolkit is an unsupported, community developed open source project.  The project code itself is released under the 
+AGPL License.
+
+iText - Affero GPL 3 (http://itextpdf.com/terms-of-use/agpl.php)
+
+
