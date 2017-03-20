@@ -1,7 +1,7 @@
 {
 	"schemes": [
-	{"name":"odd", "value":"odd"},
-	{"name":"even", "value":"even"},
-	{"name":"all", "value":"all"}
+	{"name": "${msg("pdftoolkit.form.pagescheme.odd")}", "value":"odd"},
+	{"name": "${msg("pdftoolkit.form.pagescheme.even")}", "value":"even"},
+	{"name":"${msg("pdftoolkit.form.pagescheme.all")}", "value":"all"}
 	]
 }
