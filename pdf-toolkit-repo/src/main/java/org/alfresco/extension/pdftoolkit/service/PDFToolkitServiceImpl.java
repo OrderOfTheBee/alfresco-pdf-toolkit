@@ -1013,7 +1013,7 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
         {
 
         	ContentReader targetReader = getReader(targetNodeRef);
-        	ContentReader insertReader = getReader((NodeRef)params.get(PARAM_TARGET_NODE));
+        	ContentReader insertReader = getReader((NodeRef)params.get(PARAM_INSERT_CONTENT));
             int insertAt = Integer.valueOf((String)params.get(PARAM_PAGE)).intValue();
             Boolean inplace = Boolean.valueOf(String.valueOf(params.get(PARAM_INPLACE)));
             
