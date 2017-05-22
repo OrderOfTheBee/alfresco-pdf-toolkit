@@ -9,7 +9,7 @@ scheme provided by the server
 <div class="form-field">
 		<label for="${fieldHtmlId}">${field.label?html}:<#if field.mandatory><span class="mandatory-indicator">${msg("form.required.fields.marker")}</span></#if></label>
 		<#if showPageScheme == "true">
-		Use Page Scheme: 
+		${msg("pdftoolkit.form.pagescheme")}
 		<input class="formsCheckBox" id="${fieldHtmlId}-useScheme" type="checkbox" tabindex="0" name="-" 
              value="true" checked="checked"/>
         <div id="${fieldHtmlId}-schemeModule">
