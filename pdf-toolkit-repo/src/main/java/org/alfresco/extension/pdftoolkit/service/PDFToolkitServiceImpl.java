@@ -54,6 +54,7 @@ import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFMergerUtility;
 import org.apache.pdfbox.util.Splitter;
+import org.springframework.extensions.surf.util.I18NUtil;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -72,7 +73,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToolkitService 
 {
-    
+    private final static String MSGID_PAGE_NUMBERING_PATTERN_MULTIPLE="pdftoolkit.split-page-numbering-pattern-multiple";
+    private final static String MSGID_PAGE_NUMBERING_PATTERN_SINGLE="pdftoolkit.split-page-numbering-pattern-single";
+	
 	private ServiceRegistry serviceRegistry;
     private NodeService ns;
     private ContentService cs;
@@ -680,10 +683,6 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 
             while (it.hasNext())
             {
-                // Pulling together the right string split pages
-                String pagePlus = "";
-                String pg = "_pg";
-
                 // Get the split document and save it into the temp dir with new
                 // name
                 PDDocument splitpdf = (PDDocument)it.next();
@@ -693,15 +692,11 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
                 if (splitFrequency > 0)
                 {
                     endPage = endPage + pagesInPDF;
-
-                    pagePlus = "-" + endPage;
-                    pg = "_pgs";
-
                 }
 
                 // put together the name and save the PDF
                 String fileNameSansExt = getFilenameSansExt(targetNodeRef, FILE_EXTENSION);
-                splitpdf.save(tempDir + "" + File.separatorChar + fileNameSansExt + pg + page + pagePlus + FILE_EXTENSION);
+                splitpdf.save(tempDir + "" + File.separatorChar + fileNameSansExt + formatPageNumbering(page, endPage) + FILE_EXTENSION);
 
                 // increment page count
                 if (splitFrequency > 0)
@@ -853,17 +848,15 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 
 			int pagesInFirstPDF = firstPDF.getNumberOfPages();
 
-			String lastPage = "";
-			String pg = "_pg";
+			int lastPage = 0;
 
 			if (pagesInFirstPDF > 1)
 			{
-				pg = "_pgs";
-				lastPage = "-" + pagesInFirstPDF;
+				lastPage = pagesInFirstPDF;
 			}
 
 			String fileNameSansExt = getFilenameSansExt(targetNodeRef, FILE_EXTENSION);
-			firstPDF.save(tempDir + "" + File.separatorChar + fileNameSansExt + pg + page + lastPage + FILE_EXTENSION);
+			firstPDF.save(tempDir + "" + File.separatorChar + fileNameSansExt + formatPageNumbering(page, lastPage) + FILE_EXTENSION);
 
 			try
 			{
@@ -914,18 +907,16 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 
 			if (pagesInSecondPDF > 1)
 			{
-				pg = "_pgs";
-				lastPage = "-" + (pagesInSecondPDF + pagesInFirstPDF);
+				lastPage = pagesInSecondPDF + pagesInFirstPDF;
 			}
 			else
 			{
-				pg = "_pg";
-				lastPage = "";
+				lastPage = 0;
 			}
 
 			// This is where we should save the appended PDF
 			// put together the name and save the PDF
-			secondPDF.save(tempDir + "" + File.separatorChar + fileNameSansExt + pg + splitPageNumber + lastPage + FILE_EXTENSION);
+			secondPDF.save(tempDir + "" + File.separatorChar + fileNameSansExt + formatPageNumbering(splitPageNumber, lastPage) + FILE_EXTENSION);
 
 			for (File file : tempDir.listFiles())
 			{
@@ -2096,6 +2087,27 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
         y = (pdfheight - imgheight) / 2;
 
         return y;
+    }
+
+    /**
+     * Format the page numbers according to the localized string in messages
+     * 
+     * @param currentPage
+     * @param lastPage
+     * @return
+     */
+    private String formatPageNumbering(int currentPage, int lastPage)
+    {
+    	String text = "";
+    	if (lastPage==0) 
+    	{
+    		text = I18NUtil.getMessage(MSGID_PAGE_NUMBERING_PATTERN_SINGLE, new Object[]{currentPage});
+    	}
+    	else
+    	{
+    		text = I18NUtil.getMessage(MSGID_PAGE_NUMBERING_PATTERN_MULTIPLE, new Object[]{currentPage, lastPage});
+    	}
+    	return text;
     }
     
     /**
