@@ -7,6 +7,14 @@
 			<description>Expose the signature action doclib action UI</description>
 			<version>${project.version}</version>
 			<auto-deploy>true</auto-deploy>
+			<evaluator type="site.module.evaluator">
+				<params>
+					<sites>.*</sites>
+					<applyForNonSites>false</applyForNonSites>
+					<groups>SiteManager,SiteCollaborator,SiteContributor</groups>
+					<groupsRelation>OR</groupsRelation>
+				</params>
+			</evaluator>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
 					<actions>
@@ -39,6 +47,14 @@
 			<description>Expose the watermark action doclib action UI</description>
 			<version>${project.version}</version>
 			<auto-deploy>true</auto-deploy>
+			<evaluator type="site.module.evaluator">
+				<params>
+					<sites>.*</sites>
+					<applyForNonSites>false</applyForNonSites>
+					<groups>SiteManager,SiteCollaborator,SiteContributor</groups>
+					<groupsRelation>OR</groupsRelation>
+				</params>
+			</evaluator>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
 					<actions>
@@ -71,6 +87,14 @@
 			<description>Expose the append action doclib action UI</description>
 			<version>${project.version}</version>
 			<auto-deploy>true</auto-deploy>
+			<evaluator type="site.module.evaluator">
+				<params>
+					<sites>.*</sites>
+					<applyForNonSites>false</applyForNonSites>
+					<groups>SiteManager,SiteCollaborator,SiteContributor</groups>
+					<groupsRelation>OR</groupsRelation>
+				</params>
+			</evaluator>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
 					<actions>
@@ -103,6 +127,14 @@
 			<description>Expose the encryption action doclib action UI</description>
 			<version>${project.version}</version>
 			<auto-deploy>true</auto-deploy>
+			<evaluator type="site.module.evaluator">
+				<params>
+					<sites>.*</sites>
+					<applyForNonSites>false</applyForNonSites>
+					<groups>SiteManager,SiteCollaborator,SiteContributor</groups>
+					<groupsRelation>OR</groupsRelation>
+				</params>
+			</evaluator>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
 					<actions>
@@ -135,6 +167,14 @@
 			<description>Expose the decryption action doclib action UI</description>
 			<version>${project.version}</version>
 			<auto-deploy>true</auto-deploy>
+			<evaluator type="site.module.evaluator">
+				<params>
+					<sites>.*</sites>
+					<applyForNonSites>false</applyForNonSites>
+					<groups>SiteManager,SiteCollaborator,SiteContributor</groups>
+					<groupsRelation>OR</groupsRelation>
+				</params>
+			</evaluator>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
 					<actions>
@@ -167,6 +207,14 @@
 			<description>Expose the insert at page action doclib action UI</description>
 			<version>${project.version}</version>
 			<auto-deploy>true</auto-deploy>
+			<evaluator type="site.module.evaluator">
+				<params>
+					<sites>.*</sites>
+					<applyForNonSites>false</applyForNonSites>
+					<groups>SiteManager,SiteCollaborator,SiteContributor</groups>
+					<groupsRelation>OR</groupsRelation>
+				</params>
+			</evaluator>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
 					<actions>
@@ -199,6 +247,14 @@
 			<description>Expose the split action doclib action UI</description>
 			<version>${project.version}</version>
 			<auto-deploy>true</auto-deploy>
+			<evaluator type="site.module.evaluator">
+				<params>
+					<sites>.*</sites>
+					<applyForNonSites>false</applyForNonSites>
+					<groups>SiteManager,SiteCollaborator,SiteContributor</groups>
+					<groupsRelation>OR</groupsRelation>
+				</params>
+			</evaluator>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
 					<actions>
@@ -231,6 +287,14 @@
 			<description>Expose the split at page action doclib action UI</description>
 			<version>${project.version}</version>
 			<auto-deploy>true</auto-deploy>
+			<evaluator type="site.module.evaluator">
+				<params>
+					<sites>.*</sites>
+					<applyForNonSites>false</applyForNonSites>
+					<groups>SiteManager,SiteCollaborator,SiteContributor</groups>
+					<groupsRelation>OR</groupsRelation>
+				</params>
+			</evaluator>
 			<configurations>
 				<config evaluator="string-compare" condition="DocLibActions">
 					<actions>
@@ -263,8 +327,15 @@
 			<description>Expose the delete page action doclib action UI</description>
 			<version>${project.version}</version>
 			<auto-deploy>true</auto-deploy>
+			<evaluator type="site.module.evaluator">
+				<params>
+					<sites>.*</sites>
+					<applyForNonSites>false</applyForNonSites>
+					<groups>SiteManager,SiteCollaborator,SiteContributor</groups>
+					<groupsRelation>OR</groupsRelation>
+				</params>
+			</evaluator>
 			<configurations>
-				<!-- Share config elements for the doclib actions -->
 				<config evaluator="string-compare" condition="DocLibActions">
 					<actions>
 						<action id="pdf-delete-page"
@@ -296,8 +367,15 @@
 			<description>Expose the extract page action doclib action UI</description>
 			<version>${project.version}</version>
 			<auto-deploy>true</auto-deploy>
+			<evaluator type="site.module.evaluator">
+				<params>
+					<sites>.*</sites>
+					<applyForNonSites>false</applyForNonSites>
+					<groups>SiteManager,SiteCollaborator,SiteContributor</groups>
+					<groupsRelation>OR</groupsRelation>
+				</params>
+			</evaluator>
 			<configurations>
-				<!-- Share config elements for the doclib actions -->
 				<config evaluator="string-compare" condition="DocLibActions">
 					<actions>
 						<action id="pdf-extract-page"
@@ -329,8 +407,15 @@
 			<description>Expose the rotate pages action doclib action UI</description>
 			<version>${project.version}</version>
 			<auto-deploy>true</auto-deploy>
+			<evaluator type="site.module.evaluator">
+				<params>
+					<sites>.*</sites>
+					<applyForNonSites>false</applyForNonSites>
+					<groups>SiteManager,SiteCollaborator,SiteContributor</groups>
+					<groupsRelation>OR</groupsRelation>
+				</params>
+			</evaluator>
 			<configurations>
-				<!-- Share config elements for the doclib actions -->
 				<config evaluator="string-compare" condition="DocLibActions">
 					<actions>
 						<action id="pdf-rotate"
