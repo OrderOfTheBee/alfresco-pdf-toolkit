@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.alfresco.extension</groupId>
 	<artifactId>pdf-toolkit</artifactId>
-	<version>1.4.1</version>
+	<version>1.4.2</version>
 	<name>Quickstart of Alfresco and Share with DB and runner embedded</name>
 	<description>This All-in-One project allows to manage all the components involved in Alfresco development (Repo, Share, Solr, AMPs) in one project</description>
 	<packaging>pom</packaging>
