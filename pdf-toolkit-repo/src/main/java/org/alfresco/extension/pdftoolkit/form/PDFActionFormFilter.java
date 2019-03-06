@@ -51,8 +51,6 @@ public class PDFActionFormFilter extends AbstractFilter<Object, ActionFormResult
 	public void beforePersist(Object obj, FormData formData) {
 		logger.debug("beforePersist");
 		
-		NodeService ns = serviceRegistry.getNodeService();
-		
 		//check the action, is it one we need to handle?
 		if(obj != null)
 		{

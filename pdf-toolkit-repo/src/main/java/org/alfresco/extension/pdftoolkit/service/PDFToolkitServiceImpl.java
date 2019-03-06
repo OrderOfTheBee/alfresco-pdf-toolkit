@@ -50,10 +50,9 @@ import org.alfresco.service.namespace.QName;
 import org.alfresco.util.TempFileProvider;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
+import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.util.PDFMergerUtility;
-import org.apache.pdfbox.util.Splitter;
 import org.springframework.extensions.surf.util.I18NUtil;
 
 import com.itextpdf.text.Document;
@@ -63,10 +62,12 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfCopy;
+import com.itextpdf.text.pdf.PdfDate;
 import com.itextpdf.text.pdf.PdfDictionary;
 import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfNumber;
 import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfSignature;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -165,10 +166,6 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
                     throw new AlfrescoRuntimeException("Failed to process file.", e);
                 }
             }
-        }
-        catch (COSVisitorException e)
-        {
-            throw new AlfrescoRuntimeException(e.getMessage(), e);
         }
         catch (IOException e)
         {
@@ -502,13 +499,21 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 			} else {
 				stamp = PdfStamper.createSignature(reader, fout, '\0');
 			}
+			
 			PdfSignatureAppearance sap = stamp.getSignatureAppearance();
-			sap.setCrypto(key, chain, null, PdfSignatureAppearance.WINCER_SIGNED);
-
 			// set reason for signature and location of signer
 			sap.setReason(reason);
 			sap.setLocation(location);
-	
+						
+			PdfSignature dic = new PdfSignature(
+					PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_DETACHED);
+					dic.setReason(sap.getReason());
+					dic.setLocation(sap.getLocation());
+					dic.setContact(sap.getContact());
+					dic.setDate(new PdfDate(sap.getSignDate()));
+					
+			//sap.setCrypto(key, chain, null, PdfSignatureAppearance.WINCER_SIGNED);
+			
 			if (visibility.equalsIgnoreCase(VISIBILITY_VISIBLE))
 			{
 				//create the signature rectangle using either the provided position or
@@ -524,6 +529,8 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 					sap.setVisibleSignature(new Rectangle(locationX, locationY, locationX + width, locationY - height), pageNumber, null);
 				}
 			}
+			
+			sap.setCryptoDictionary(dic);
 
 			stamp.close();
 
@@ -749,10 +756,6 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
                 }
             }
         }
-        catch (COSVisitorException e)
-        {
-            throw new AlfrescoRuntimeException(e.getMessage(), e);
-        }
         catch (IOException e)
         {
             throw new AlfrescoRuntimeException(e.getMessage(), e);
@@ -947,10 +950,6 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 				}
 			}
 		}
-		catch (COSVisitorException e)
-		{
-			throw new AlfrescoRuntimeException(e.getMessage(), e);
-		}
 		catch (IOException e)
 		{
 			throw new AlfrescoRuntimeException(e.getMessage(), e);
@@ -1093,10 +1092,6 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
             }
         }
         // TODO add better handling
-        catch (COSVisitorException e)
-        {
-            throw new AlfrescoRuntimeException(e.getMessage(), e);
-        }
         catch (IOException e)
         {
             throw new AlfrescoRuntimeException(e.getMessage(), e);
