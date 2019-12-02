@@ -1,5 +1,3 @@
-# This project is no longer being maintained.  It does not fully work with the latest versions of Alfresco Share, nor does it currenly work with the Alfresco App Dev Framework (ADF) to my knowledge.  If somebody wants to take over the project, feel free.
-
 alfresco-pdf-toolkit
 ====================
 
