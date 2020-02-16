@@ -1,0 +1,7 @@
+<webscript>
+  <shortname>Page Schemes</shortname>
+  <description>Get PDF document page stamping schemes</description>
+  <url>/pdftoolkit/pageschemes?{nodeRef}</url>
+  <format default="json">extension</format>
+  <authentication>user</authentication>
+</webscript>
