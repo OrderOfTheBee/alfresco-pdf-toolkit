@@ -6,11 +6,11 @@
     <!--
     Note that the Module dependency specified in the configuration section for the Alfresco Maven Plugin
     needs to be set to amp if any 3rd party libs should be applied by MMT:
-    `
-    <shareModules>
+`
+    <platformModules>
         <moduleDependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>some-share</artifactId>
+            <artifactId>some-platform</artifactId>
             <version>${project.version}</version>
             <type>amp</type>
         </moduleDependency>

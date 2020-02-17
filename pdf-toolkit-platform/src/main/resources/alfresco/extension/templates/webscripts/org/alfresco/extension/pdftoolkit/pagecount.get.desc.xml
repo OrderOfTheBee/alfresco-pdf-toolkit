@@ -1,0 +1,7 @@
+<webscript>
+  <shortname>Page Count</shortname>
+  <description>Get PDF document page count</description>
+  <url>/pdftoolkit/pagecount?{nodeRef}</url>
+  <format default="json">extension</format>
+  <authentication>user</authentication>
+</webscript>

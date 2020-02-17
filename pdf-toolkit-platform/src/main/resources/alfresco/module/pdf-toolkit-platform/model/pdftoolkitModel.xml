@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Definition of new Model -->
+<model name="pdft:pdftoolkitmodel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+    
+    <description>PDF Toolkit content model</description>
+    <author>Nathan McMinn</author>
+    <version>1.0</version>
+
+    <imports>
+        <!-- Import Alfresco Dictionary Definitions -->
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+        <!-- Import Alfresco Content Domain Model Definitions -->
+        <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+    </imports>
+    
+    <!-- create the PDF toolkit namespace -->
+    <namespaces>
+        <namespace uri="http://www.alfresco.com/model/pdftoolkit/1.0" prefix="pdft" />
+    </namespaces>
+
+    <aspects>
+    	<!-- applied when a PDF document is digitally signed -->
+        <aspect name="pdft:signed">
+            <title>Signed</title>
+            <properties>
+            	<property name="pdft:signedby">
+            		<title>Signed By</title>
+            		<type>d:text</type>
+            	</property>
+                <property name="pdft:signaturedate">
+                    <title>Signature Date</title>
+                    <type>d:datetime</type>
+                </property>
+                <property name="pdft:location">
+                    <title>Location</title>
+                    <type>d:text</type>
+                </property>
+                <property name="pdft:reason">
+                    <title>Reason</title>
+                    <type>d:text</type>
+                </property>
+            </properties>
+        </aspect>
+        
+        <!-- applied when a PDF document is encrypted -->
+        <aspect name="pdft:encrypted">
+            <title>Encrypted</title>
+            <properties>
+            	<property name="pdft:encryptedby">
+            		<title>Encrypted By</title>
+            		<type>d:text</type>
+            	</property>
+                <property name="pdft:encryptiondate">
+                    <title>Encryption Date</title>
+                    <type>d:datetime</type>
+                </property>
+            </properties>
+        </aspect>
+        
+    </aspects>
+</model>
