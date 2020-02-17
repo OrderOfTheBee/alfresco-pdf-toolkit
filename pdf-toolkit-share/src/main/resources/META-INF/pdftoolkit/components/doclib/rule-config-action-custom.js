@@ -18,7 +18,7 @@ PDFToolKIT.RuleConfigActionCustom = function(htmlId)
    return this;
 };
 
-hideParameterCustom= function (parameterDefinitions)
+hideParameterCustom = function (parameterDefinitions)
       {
       
                for (var i = 0, il = parameterDefinitions.length; i < il; i++)
@@ -39,9 +39,9 @@ YAHOO.extend(PDFToolKIT.RuleConfigActionCustom, Alfresco.RuleConfigAction,
 
    customisations:
    {         
-      WaterMarkPDF:
+      PDFToolKITDestination:
       {
-         text: function(configDef, ruleConfig, configEl)
+       text: function(configDef, ruleConfig, configEl)
          {
               // Display as path
               this._getParamDef(configDef, "destination-folder")._type = "path";
@@ -68,6 +68,7 @@ YAHOO.extend(PDFToolKIT.RuleConfigActionCustom, Alfresco.RuleConfigAction,
              
              return configDef;
          }
+      
       },
    },
 

@@ -72,6 +72,36 @@
        <group>
          <action name="pdf-watermark"/>
       </group> 
+       <group>
+         <action name="pdf-decryption"/>
+      </group>
+       <group>
+         <action name="pdf-insert-at-page"/>
+      </group>
+       <group>
+         <action name="pdf-split"/>
+      </group>
+       <group>
+         <action name="pdf-split-at-page"/>
+      </group>
+       <group>
+         <action name="pdf-signature"/>
+      </group>
+       <group>
+         <action name="pdf-append"/>
+      </group>
+       <group>
+         <action name="pdf-extract-page"/>
+      </group>
+       <group>
+         <action name="pdf-encryption"/>
+      </group>
+       <group>
+         <action name="pdf-delete-page"/>
+      </group>
+       <group>
+         <action name="pdf-rotate"/>
+      </group>
       <group>
          <action name="*"/>
       </group>
@@ -94,7 +124,17 @@
       <action name="transform-image">Transform</action>
       <action name="import">Import</action>
       <action name="set-property-value">SetPropertyValue</action>
-      <action name="pdf-watermark">WaterMarkPDF</action> 
+      <action name="pdf-watermark">PDFToolKITDestination</action>
+      <action name="pdf-decryption">PDFToolKITDestination</action> 
+      <action name="pdf-insert-at-page">PDFToolKITDestination</action> 
+      <action name="pdf-split">PDFToolKITDestination</action> 
+      <action name="pdf-split-at-page">PDFToolKITDestination</action> 
+      <action name="pdf-signature">PDFToolKITDestination</action> 
+      <action name="pdf-extract-page">PDFToolKITDestination</action> 
+	  <action name="pdf-append">PDFToolKITDestination</action> 
+      <action name="pdf-encryption">PDFToolKITDestination</action> 
+      <action name="pdf-delete-page">PDFToolKITDestination</action> 
+      <action name="pdf-rotate">PDFToolKITDestination</action> 
    </customise>
 
 </rule-config>
