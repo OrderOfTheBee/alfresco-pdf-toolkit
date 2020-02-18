@@ -1,0 +1,140 @@
+<rule-config type="action">
+
+   <!-- This defines the client-side JavaScript widget to instantiate -->
+   <component>PDFToolKIT.RuleConfigActionCustom</component>
+
+   <!-- The "webscript" attribute defines a repository WebScript from which to retrieve some
+        data. The remove element will be processed to remove any matching elements from the 
+        return data. -->
+   <config-definitions webscript="/api/actiondefinitions">
+      <!--
+         Public Action Definitions that we don't want displayed in the menu
+      -->
+      <remove>
+         <action name="copy-to-web-project"/>
+         <action name="blog-post"/>
+      </remove>
+   </config-definitions>
+
+   <constraints webscript="/api/actionConstraints"/>
+
+   <menu>
+      <group>
+			<item id="select"/>
+		</group>
+      <group>
+			<action name="script"/>
+		</group>
+		<group>
+			<action name="copy"/>
+			<action name="move"/>
+		</group>
+		<group>
+			<action name="check-in"/>
+			<action name="check-out"/>
+		</group>
+		<group>
+			<action name="tag"/>
+			<action name="link-category"/>
+		</group>
+		<group>
+			<action name="add-features"/>
+			<action name="remove-features"/>
+		</group>
+		<group>
+			<action name="simple-workflow"/>
+		</group>
+		<group>
+			<action name="mail"/>
+		</group>
+		<group>
+			<action name="transform"/>
+			<action name="transform-image"/>
+		</group>
+		<group>
+			<action name="extract-metadata"/>
+		</group>
+		<group>
+			<action name="create-thumbnail"/>
+		</group>
+		<group>
+			<action name="import"/>
+		</group>
+		<group>
+			<action name="specialise-type"/>
+		</group>
+		<group>
+			<action name="counter"/>
+		</group>
+      <group>
+         <action name="set-property-value"/>
+      </group>
+       <group>
+         <action name="pdf-watermark"/>
+      </group> 
+       <group>
+         <action name="pdf-decryption"/>
+      </group>
+       <group>
+         <action name="pdf-insert-at-page"/>
+      </group>
+       <group>
+         <action name="pdf-split"/>
+      </group>
+       <group>
+         <action name="pdf-split-at-page"/>
+      </group>
+       <group>
+         <action name="pdf-signature"/>
+      </group>
+       <group>
+         <action name="pdf-append"/>
+      </group>
+       <group>
+         <action name="pdf-extract-page"/>
+      </group>
+       <group>
+         <action name="pdf-encryption"/>
+      </group>
+       <group>
+         <action name="pdf-delete-page"/>
+      </group>
+       <group>
+         <action name="pdf-rotate"/>
+      </group>
+      <group>
+         <action name="*"/>
+      </group>
+   </menu>
+
+   <customise>
+      <item id="select">Select</item>
+      <action name="specialise-type">SpecialiseType</action>
+      <action name="add-features">AddFeatures</action>
+      <action name="remove-features">RemoveFeatures</action>
+      <action name="check-in">CheckIn</action>
+      <action name="check-out">Checkout</action>
+      <action name="copy">Copy</action>
+      <action name="move">Move</action>
+      <action name="simple-workflow">SimpleWorkflow</action>
+      <action name="mail">Mail</action>
+      <action name="link-category">LinkCategory</action>
+      <action name="script">Script</action>
+      <action name="transform">Transform</action>
+      <action name="transform-image">Transform</action>
+      <action name="import">Import</action>
+      <action name="set-property-value">SetPropertyValue</action>
+      <action name="pdf-watermark">PDFToolKITDestination</action>
+      <action name="pdf-decryption">PDFToolKITDestination</action> 
+      <action name="pdf-insert-at-page">PDFToolKITDestination</action> 
+      <action name="pdf-split">PDFToolKITDestination</action> 
+      <action name="pdf-split-at-page">PDFToolKITDestination</action> 
+      <action name="pdf-signature">PDFToolKITDestination</action> 
+      <action name="pdf-extract-page">PDFToolKITDestination</action> 
+	  <action name="pdf-append">PDFToolKITDestination</action> 
+      <action name="pdf-encryption">PDFToolKITDestination</action> 
+      <action name="pdf-delete-page">PDFToolKITDestination</action> 
+      <action name="pdf-rotate">PDFToolKITDestination</action> 
+   </customise>
+
+</rule-config>
