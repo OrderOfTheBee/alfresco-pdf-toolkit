@@ -10,7 +10,7 @@ any existing web resources in the Share.WAR.
 `
 <moduleDependency>
     <groupId>${project.groupId}</groupId>
-    <artifactId>some-share</artifactId>
+    <artifactId>some-share-jar</artifactId>
     <version>${project.version}</version>
     <type>amp</type>
 </moduleDependency>
