@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+
+	<!-- Add messages for pdf toolkit extension -->
+	<bean id="pdftoolkit.share.resources"
+		class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
+		<property name="resourceBundles">
+			<list>
+				<value>alfresco.web-extension.messages.pdftoolkit</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- evaluator to only show actions on correct mime type -->
+	<bean id="evaluator.pdftoolkit.doclib.action.pdfToolkitMimetype" parent="evaluator.doclib.action.isMimetype">
+		<property name="mimetypes">
+			<list>
+				<value>application/pdf</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- evaluator to show indicator if doc is signed -->
+	<bean id="evaluator.pdftoolkit.doclib.indicator.isDocumentSigned" class="org.alfresco.web.evaluator.HasAspectEvaluator">
+		<property name="aspects">
+			<list>
+				<value>pdft:signed</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- evaluator to show indicator if doc is encrypted -->
+	<bean id="evaluator.pdftoolkit.doclib.indicator.isDocumentEncrypted" class="org.alfresco.web.evaluator.HasAspectEvaluator">
+		<property name="aspects">
+			<list>
+				<value>pdft:encrypted</value>
+			</list>
+		</property>
+	</bean>
+</beans>
