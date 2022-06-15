@@ -12,3 +12,7 @@ Users/*
 Users
 
 pdf-toolkit-repo/bin
+
+# ignore IntelliJ files
+.idea/
+*.iml
